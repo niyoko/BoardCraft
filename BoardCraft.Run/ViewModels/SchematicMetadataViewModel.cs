@@ -14,15 +14,20 @@ namespace BoardCraft.Run.ViewModels
 
     class SchematicMetadataViewModel : ViewModelBase
     {
-        public Schematic Schematic { get; }
+        public Schematic Schematic { get; }      
+
         public SchematicMetadataViewModel(Schematic schematic, string tabTitle)
         {
             Schematic = schematic;
             TabTitle = tabTitle;
+
+            Properties = new SchematicProperties();
         }
 
         public string TabTitle { get; }
 
         public int ComponentCount => Schematic.Components.Count;
+
+        public SchematicProperties Properties { get; }
     }
 }

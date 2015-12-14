@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
     x:Class="BoardCraft.Run.Views.MainWindow"
     xmlns:vm="clr-namespace:BoardCraft.Run.ViewModels"
     xmlns:local="clr-namespace:BoardCraft.Run.Views"
@@ -23,23 +23,26 @@
                 <Button x:Name="BtnOpen" Content="Open" Padding="10 5 10 5" Command="{Binding OpenFileCommand}" />
             </ToolBar>
         </ToolBarTray>
-        <Grid DataContext=""></Grid>
-        <TabControl 
-            Height="404" 
-            VerticalAlignment="Top"
-            ItemsSource="{Binding OpenedSchematics}"
-            SelectedItem="{Binding SelectedItem}"
-        >
-            <TabControl.ItemTemplate>
+        <xcad:DockingManager DocumentsSource="{Binding OpenedSchematics}" Selec>
+            <xcad:DockingManager.Theme>
+                <xcad:AeroTheme></xcad:AeroTheme>
+            </xcad:DockingManager.Theme>
+            <xcad:DockingManager.LayoutItemContainerStyle>
+                <Style TargetType="{x:Type xcad:LayoutItem}">
+                    <Setter Property="CanFloat" Value="False"></Setter>
+                    <Setter Property="Title" Value="{Binding}"></Setter>
+                </Style>
+            </xcad:DockingManager.LayoutItemContainerStyle>
+            <xcad:LayoutRoot>
+                <xcad:LayoutPanel Orientation="Horizontal">
+                    <xcad:LayoutDocumentPane />
+                </xcad:LayoutPanel>
+            </xcad:LayoutRoot>
+            <xcad:DockingManager.LayoutItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding TabTitle}" />
+                    <local:SchematicMetadata />
                 </DataTemplate>
-            </TabControl.ItemTemplate>
-            <TabControl.ContentTemplate>
-                <DataTemplate>
-                    <local:SchematicMetadata DataContext="{Binding}" />
-                </DataTemplate>
-            </TabControl.ContentTemplate>
-        </TabControl>
+            </xcad:DockingManager.LayoutItemTemplate>
+        </xcad:DockingManager>
     </DockPanel>
 </Window>

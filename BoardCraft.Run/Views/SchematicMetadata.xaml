@@ -7,10 +7,34 @@
              mc:Ignorable="d" 
              xmlns:vm="clr-namespace:BoardCraft.Run.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
              d:DesignHeight="325.94" d:DesignWidth="219.925"
-             d:DataContext="{d:DesignInstance Type={x:Type vm:SchematicMetadataViewModel}}"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:SchematicMetadataViewModel}}" Loaded="UserControl_Loaded"
              >
     <Grid>
-        <TextBlock Text="{Binding ComponentCount}" />
+        <xcad:DockingManager>
+            <xcad:DockingManager.Theme>
+                <xcad:AeroTheme></xcad:AeroTheme>
+            </xcad:DockingManager.Theme>
+            <xcad:LayoutRoot>
+                <xcad:LayoutPanel Orientation="Horizontal">
+                    <xcad:LayoutAnchorablePane DockWidth="1*">
+                        <xcad:LayoutAnchorable Title="Properties">
+                            <xctk:PropertyGrid
+                                AutoGenerateProperties="True"
+                                SelectedObject="{Binding Properties}"
+                            >
+                            </xctk:PropertyGrid>
+                        </xcad:LayoutAnchorable>
+                    </xcad:LayoutAnchorablePane>
+                    <xcad:LayoutAnchorablePane DockWidth="4*">
+                        <xcad:LayoutAnchorable Title="Log Entries">
+                            <Canvas></Canvas>
+                        </xcad:LayoutAnchorable>
+                    </xcad:LayoutAnchorablePane>
+                </xcad:LayoutPanel>
+            </xcad:LayoutRoot>
+        </xcad:DockingManager>
     </Grid>
 </UserControl>
