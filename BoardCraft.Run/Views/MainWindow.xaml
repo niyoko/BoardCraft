@@ -1,0 +1,45 @@
+﻿<Window
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    x:Class="BoardCraft.Run.Views.MainWindow"
+    xmlns:vm="clr-namespace:BoardCraft.Run.ViewModels"
+    xmlns:local="clr-namespace:BoardCraft.Run.Views"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    mc:Ignorable="d"
+    Title="MainWindow" Height="467.978" Width="875" Loaded="Window_Loaded" WindowState="Maximized"
+    d:DataContext="{d:DesignInstance Type={x:Type vm:MainWindowViewModel}}"    
+    >
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadLibraryCommand}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button x:Name="BtnOpen" Content="Open" Padding="10 5 10 5" Command="{Binding OpenFileCommand}" />
+            </ToolBar>
+        </ToolBarTray>
+        <Grid DataContext=""></Grid>
+        <TabControl 
+            Height="404" 
+            VerticalAlignment="Top"
+            ItemsSource="{Binding OpenedSchematics}"
+            SelectedItem="{Binding SelectedItem}"
+        >
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding TabTitle}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <local:SchematicMetadata DataContext="{Binding}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </DockPanel>
+</Window>

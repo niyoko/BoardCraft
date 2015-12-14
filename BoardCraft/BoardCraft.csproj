@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{45332C5C-1496-458F-822D-4625ED16E030}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BoardCraft</RootNamespace>
+    <AssemblyName>BoardCraft</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=3.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.3.9.0\lib\net40\MathNet.Numerics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Drawing\Canvas.cs" />
+    <Compile Include="Drawing\ICanvas.cs" />
+    <Compile Include="Drawing\Matrix.cs" />
+    <Compile Include="Drawing\Point.cs" />
+    <Compile Include="Drawing\Shapes\Circle.cs" />
+    <Compile Include="Drawing\Shapes\Ellipse.cs" />
+    <Compile Include="Drawing\Shapes\Line.cs" />
+    <Compile Include="Drawing\Shapes\Rectangle.cs" />
+    <Compile Include="Drawing\Shapes\Shape.cs" />
+    <Compile Include="Drawing\Shapes\Square.cs" />
+    <Compile Include="Drawing\Transform.cs" />
+    <Compile Include="Helpers\CollectionHelper.cs" />
+    <Compile Include="Input\ComponentRepositoryBase.cs" />
+    <Compile Include="Input\IComponentRepository.cs" />
+    <Compile Include="Input\IInputParser.cs" />
+    <Compile Include="Input\InvalidNameException.cs" />
+    <Compile Include="Input\LibraryParseException.cs" />
+    <Compile Include="Input\ParseException.cs" />
+    <Compile Include="Models\Boundaries.cs" />
+    <Compile Include="Models\Component.cs" />
+    <Compile Include="Models\ComponentClass.cs" />
+    <Compile Include="Models\Connection.cs" />
+    <Compile Include="Models\Schematic.cs" />
+    <Compile Include="Models\Orientation.cs" />
+    <Compile Include="Models\Package.cs" />
+    <Compile Include="Models\ComponentPlacement.cs" />
+    <Compile Include="Models\Pin.cs" />
+    <Compile Include="Models\PlacementInfo.cs" />
+    <Compile Include="Output\IPlacementModelRenderer.cs" />
+    <Compile Include="Placement\GA\CrossoverOperator.cs" />
+    <Compile Include="Placement\GA\FitnessEvaluator.cs" />
+    <Compile Include="Placement\GA\ICrossoverOperator.cs" />
+    <Compile Include="Placement\GA\IFitnessEvaluator.cs" />
+    <Compile Include="Placement\GA\IGeneticOperator.cs" />
+    <Compile Include="Placement\GA\IPopulationGenerator.cs" />
+    <Compile Include="Placement\GA\IReproductionOperator.cs" />
+    <Compile Include="Placement\GA\ISelectionOperator.cs" />
+    <Compile Include="Placement\GA\MutationOperator.cs" />
+    <Compile Include="Placement\GA\OnePointCrossover.cs" />
+    <Compile Include="Placement\GA\Population.cs" />
+    <Compile Include="Placement\GA\GAPlacer.cs" />
+    <Compile Include="Placement\GA\RandomPopulationGenerator.cs" />
+    <Compile Include="Placement\GA\ReproductionOperator.cs" />
+    <Compile Include="Placement\GA\TournamentSelectionOperator.cs" />
+    <Compile Include="Placement\IPlacer.cs" />
+    <Compile Include="Placement\RandomPlacer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Core.cd" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

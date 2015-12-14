@@ -1,0 +1,18 @@
+﻿{
+  "title": "JSON schema for component library",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+
+  "type": "object",
+  "required": [ "name" ],
+
+  "properties": {
+    "name": {
+      "description": "Name of this library",
+      "type": "string"
+    },
+    "packages": {
+      "description": "List of packages",
+      "type": "array"
+    }
+  }
+}

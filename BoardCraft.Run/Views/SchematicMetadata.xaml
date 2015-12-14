@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="BoardCraft.Run.Views.SchematicMetadata"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BoardCraft.Run"
+             mc:Ignorable="d" 
+             xmlns:vm="clr-namespace:BoardCraft.Run.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             d:DesignHeight="325.94" d:DesignWidth="219.925"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:SchematicMetadataViewModel}}"
+             >
+    <Grid>
+        <TextBlock Text="{Binding ComponentCount}" />
+    </Grid>
+</UserControl>

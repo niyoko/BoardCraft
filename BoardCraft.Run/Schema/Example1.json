@@ -1,0 +1,1005 @@
+﻿{
+  "components": [
+    {
+      "id": "R1",
+      "value": "1M3",
+      "package": "RES40"
+    },
+    {
+      "id": "R2",
+      "value": "1R6",
+      "package": "RES40"
+    },
+    {
+      "id": "R3",
+      "value": "36K",
+      "package": "RES40"
+    },
+    {
+      "id": "R4",
+      "value": "3M",
+      "package": "RES40"
+    },
+    {
+      "id": "R5",
+      "value": "9M1",
+      "package": "RES40"
+    },
+    {
+      "id": "R6",
+      "value": "6M8",
+      "package": "RES40"
+    },
+    {
+      "id": "R7",
+      "value": "8K2",
+      "package": "RES40"
+    },
+    {
+      "id": "R8",
+      "value": "68K",
+      "package": "RES40"
+    },
+    {
+      "id": "R9",
+      "value": "16R",
+      "package": "RES40"
+    },
+    {
+      "id": "R10",
+      "value": "8M2",
+      "package": "RES40"
+    },
+    {
+      "id": "R11",
+      "value": "120K",
+      "package": "RES40"
+    },
+    {
+      "id": "R12",
+      "value": "3M3",
+      "package": "RES40"
+    },
+    {
+      "id": "R13",
+      "value": "75R",
+      "package": "RES40"
+    },
+    {
+      "id": "R14",
+      "value": "39R",
+      "package": "RES40"
+    },
+    {
+      "id": "R15",
+      "value": "1R6",
+      "package": "RES40"
+    },
+    {
+      "id": "R16",
+      "value": "1R2",
+      "package": "RES40"
+    },
+    {
+      "id": "R17",
+      "value": "10R",
+      "package": "RES40"
+    },
+    {
+      "id": "R18",
+      "value": "8R2",
+      "package": "RES40"
+    },
+    {
+      "id": "R19",
+      "value": "360R",
+      "package": "RES40"
+    },
+    {
+      "id": "R20",
+      "value": "180K",
+      "package": "RES40"
+    },
+    {
+      "id": "R21",
+      "value": "220K",
+      "package": "RES40"
+    },
+    {
+      "id": "R22",
+      "value": "6K8",
+      "package": "RES40"
+    },
+    {
+      "id": "R23",
+      "value": "2K4",
+      "package": "RES40"
+    },
+    {
+      "id": "R24",
+      "value": "22R",
+      "package": "RES40"
+    },
+    {
+      "id": "R25",
+      "value": "8M2",
+      "package": "RES40"
+    },
+    {
+      "id": "R26",
+      "value": "120K",
+      "package": "RES40"
+    },
+    {
+      "id": "R27",
+      "value": "270K",
+      "package": "RES40"
+    },
+    {
+      "id": "R28",
+      "value": "2M4",
+      "package": "RES40"
+    },
+    {
+      "id": "R29",
+      "value": "24K",
+      "package": "RES40"
+    },
+    {
+      "id": "R30",
+      "value": "1K",
+      "package": "RES40"
+    },
+    {
+      "id": "R31",
+      "value": "11K",
+      "package": "RES40"
+    },
+    {
+      "id": "R32",
+      "value": "43R",
+      "package": "RES40"
+    },
+    {
+      "id": "R33",
+      "value": "51K",
+      "package": "RES40"
+    },
+    {
+      "id": "R34",
+      "value": "10K",
+      "package": "RES40"
+    },
+    {
+      "id": "R35",
+      "value": "330R",
+      "package": "RES40"
+    },
+    {
+      "id": "R36",
+      "value": "680R",
+      "package": "RES40"
+    },
+    {
+      "id": "R37",
+      "value": "3K9",
+      "package": "RES40"
+    },
+    {
+      "id": "R38",
+      "value": "430K",
+      "package": "RES40"
+    },
+    {
+      "id": "R39",
+      "value": "12R",
+      "package": "RES40"
+    },
+    {
+      "id": "R40",
+      "value": "33R",
+      "package": "RES40"
+    },
+    {
+      "id": "R41",
+      "value": "22R",
+      "package": "RES40"
+    },
+    {
+      "id": "R42",
+      "value": "120K",
+      "package": "RES40"
+    },
+    {
+      "id": "R43",
+      "value": "910K",
+      "package": "RES40"
+    },
+    {
+      "id": "R44",
+      "value": "200R",
+      "package": "RES40"
+    },
+    {
+      "id": "R45",
+      "value": "6R8",
+      "package": "RES40"
+    },
+    {
+      "id": "R46",
+      "value": "6M2",
+      "package": "RES40"
+    },
+    {
+      "id": "R47",
+      "value": "6K2",
+      "package": "RES40"
+    },
+    {
+      "id": "R48",
+      "value": "1M1",
+      "package": "RES40"
+    },
+    {
+      "id": "R49",
+      "value": "270R",
+      "package": "RES40"
+    },
+    {
+      "id": "R50",
+      "value": "5M1",
+      "package": "RES40"
+    },
+    {
+      "id": "R51",
+      "value": "33K",
+      "package": "RES40"
+    },
+    {
+      "id": "R52",
+      "value": "220K",
+      "package": "RES40"
+    },
+    {
+      "id": "R53",
+      "value": "510R",
+      "package": "RES40"
+    },
+    {
+      "id": "R54",
+      "value": "390K",
+      "package": "RES40"
+    },
+    {
+      "id": "R55",
+      "value": "39K",
+      "package": "RES40"
+    },
+    {
+      "id": "R56",
+      "value": "1K6",
+      "package": "RES40"
+    },
+    {
+      "id": "R57",
+      "value": "160R",
+      "package": "RES40"
+    },
+    {
+      "id": "R58",
+      "value": "180K",
+      "package": "RES40"
+    },
+    {
+      "id": "R59",
+      "value": "1R3",
+      "package": "RES40"
+    },
+    {
+      "id": "R60",
+      "value": "330K",
+      "package": "RES40"
+    },
+    {
+      "id": "R61",
+      "value": "56R",
+      "package": "RES40"
+    },
+    {
+      "id": "R62",
+      "value": "43K",
+      "package": "RES40"
+    },
+    {
+      "id": "R63",
+      "value": "3R9",
+      "package": "RES40"
+    },
+    {
+      "id": "R64",
+      "value": "1K5",
+      "package": "RES40"
+    },
+    {
+      "id": "R65",
+      "value": "62R",
+      "package": "RES40"
+    },
+    {
+      "id": "R66",
+      "value": "220R",
+      "package": "RES40"
+    },
+    {
+      "id": "R67",
+      "value": "8R2",
+      "package": "RES40"
+    },
+    {
+      "id": "R68",
+      "value": "12R",
+      "package": "RES40"
+    },
+    {
+      "id": "R69",
+      "value": "820K",
+      "package": "RES40"
+    },
+    {
+      "id": "R70",
+      "value": "120R",
+      "package": "RES40"
+    },
+    {
+      "id": "R71",
+      "value": "110R",
+      "package": "RES40"
+    },
+    {
+      "id": "R72",
+      "value": "910K",
+      "package": "RES40"
+    },
+    {
+      "id": "R73",
+      "value": "2R2",
+      "package": "RES40"
+    },
+    {
+      "id": "R74",
+      "value": "43K",
+      "package": "RES40"
+    },
+    {
+      "id": "R75",
+      "value": "330R",
+      "package": "RES40"
+    },
+    {
+      "id": "R76",
+      "value": "240K",
+      "package": "RES40"
+    },
+    {
+      "id": "R77",
+      "value": "51K",
+      "package": "RES40"
+    },
+    {
+      "id": "R78",
+      "value": "6K8",
+      "package": "RES40"
+    },
+    {
+      "id": "R79",
+      "value": "300R",
+      "package": "RES40"
+    },
+    {
+      "id": "R80",
+      "value": "51K",
+      "package": "RES40"
+    },
+    {
+      "id": "R81",
+      "value": "1M1",
+      "package": "RES40"
+    },
+    {
+      "id": "R82",
+      "value": "27R",
+      "package": "RES40"
+    },
+    {
+      "id": "R83",
+      "value": "3K6",
+      "package": "RES40"
+    },
+    {
+      "id": "R84",
+      "value": "4M3",
+      "package": "RES40"
+    },
+    {
+      "id": "R85",
+      "value": "300K",
+      "package": "RES40"
+    },
+    {
+      "id": "R86",
+      "value": "1R2",
+      "package": "RES40"
+    },
+    {
+      "id": "R87",
+      "value": "47K",
+      "package": "RES40"
+    },
+    {
+      "id": "R88",
+      "value": "5M6",
+      "package": "RES40"
+    },
+    {
+      "id": "R89",
+      "value": "1R",
+      "package": "RES40"
+    },
+    {
+      "id": "R90",
+      "value": "1M6",
+      "package": "RES40"
+    },
+    {
+      "id": "R91",
+      "value": "43R",
+      "package": "RES40"
+    },
+    {
+      "id": "R92",
+      "value": "510K",
+      "package": "RES40"
+    },
+    {
+      "id": "R93",
+      "value": "6K2",
+      "package": "RES40"
+    },
+    {
+      "id": "R94",
+      "value": "43K",
+      "package": "RES40"
+    },
+    {
+      "id": "R95",
+      "value": "150R",
+      "package": "RES40"
+    },
+    {
+      "id": "R96",
+      "value": "3R9",
+      "package": "RES40"
+    },
+    {
+      "id": "R97",
+      "value": "4M7",
+      "package": "RES40"
+    },
+    {
+      "id": "R98",
+      "value": "3K6",
+      "package": "RES40"
+    },
+    {
+      "id": "R99",
+      "value": "1K8",
+      "package": "RES40"
+    },
+    {
+      "id": "R100",
+      "value": "1M6",
+      "package": "RES40"
+    },
+    {
+      "id": "R101",
+      "value": "330K",
+      "package": "RES40"
+    },
+    {
+      "id": "R102",
+      "value": "1K6",
+      "package": "RES40"
+    },
+    {
+      "id": "R103",
+      "value": "1M6",
+      "package": "RES40"
+    },
+    {
+      "id": "R104",
+      "value": "1R5",
+      "package": "RES40"
+    },
+    {
+      "id": "R105",
+      "value": "33K",
+      "package": "RES40"
+    },
+    {
+      "id": "R106",
+      "value": "130R",
+      "package": "RES40"
+    },
+    {
+      "id": "R107",
+      "value": "24K",
+      "package": "RES40"
+    },
+    {
+      "id": "R108",
+      "value": "910K",
+      "package": "RES40"
+    },
+    {
+      "id": "R109",
+      "value": "68K",
+      "package": "RES40"
+    },
+    {
+      "id": "R110",
+      "value": "3K6",
+      "package": "RES40"
+    },
+    {
+      "id": "R111",
+      "value": "3R6",
+      "package": "RES40"
+    },
+    {
+      "id": "R112",
+      "value": "560K",
+      "package": "RES40"
+    },
+    {
+      "id": "R113",
+      "value": "560R",
+      "package": "RES40"
+    },
+    {
+      "id": "R114",
+      "value": "430K",
+      "package": "RES40"
+    },
+    {
+      "id": "R115",
+      "value": "150R",
+      "package": "RES40"
+    },
+    {
+      "id": "R116",
+      "value": "5M1",
+      "package": "RES40"
+    },
+    {
+      "id": "R117",
+      "value": "27K",
+      "package": "RES40"
+    },
+    {
+      "id": "R118",
+      "value": "30R",
+      "package": "RES40"
+    },
+    {
+      "id": "R119",
+      "value": "20K",
+      "package": "RES40"
+    },
+    {
+      "id": "R120",
+      "value": "220R",
+      "package": "RES40"
+    },
+    {
+      "id": "R121",
+      "value": "130R",
+      "package": "RES40"
+    },
+    {
+      "id": "R122",
+      "value": "16K",
+      "package": "RES40"
+    },
+    {
+      "id": "R123",
+      "value": "7K5",
+      "package": "RES40"
+    },
+    {
+      "id": "R124",
+      "value": "13K",
+      "package": "RES40"
+    },
+    {
+      "id": "R125",
+      "value": "11K",
+      "package": "RES40"
+    },
+    {
+      "id": "R126",
+      "value": "100R",
+      "package": "RES40"
+    },
+    {
+      "id": "R127",
+      "value": "750K",
+      "package": "RES40"
+    },
+    {
+      "id": "R128",
+      "value": "330R",
+      "package": "RES40"
+    },
+    {
+      "id": "R129",
+      "value": "330K",
+      "package": "RES40"
+    },
+    {
+      "id": "R130",
+      "value": "36R",
+      "package": "RES40"
+    },
+    {
+      "id": "R131",
+      "value": "22K",
+      "package": "RES40"
+    },
+    {
+      "id": "R132",
+      "value": "3R9",
+      "package": "RES40"
+    },
+    {
+      "id": "R133",
+      "value": "220R",
+      "package": "RES40"
+    },
+    {
+      "id": "R134",
+      "value": "1K2",
+      "package": "RES40"
+    },
+    {
+      "id": "R135",
+      "value": "2R2",
+      "package": "RES40"
+    },
+    {
+      "id": "R136",
+      "value": "180R",
+      "package": "RES40"
+    },
+    {
+      "id": "R137",
+      "value": "680K",
+      "package": "RES40"
+    },
+    {
+      "id": "R138",
+      "value": "20K",
+      "package": "RES40"
+    },
+    {
+      "id": "R139",
+      "value": "5R1",
+      "package": "RES40"
+    },
+    {
+      "id": "R140",
+      "value": "680R",
+      "package": "RES40"
+    },
+    {
+      "id": "R141",
+      "value": "3M3",
+      "package": "RES40"
+    },
+    {
+      "id": "R142",
+      "value": "11K",
+      "package": "RES40"
+    },
+    {
+      "id": "R143",
+      "value": "910K",
+      "package": "RES40"
+    },
+    {
+      "id": "R144",
+      "value": "3R9",
+      "package": "RES40"
+    },
+    {
+      "id": "R145",
+      "value": "1K6",
+      "package": "RES40"
+    },
+    {
+      "id": "R146",
+      "value": "24K",
+      "package": "RES40"
+    },
+    {
+      "id": "R147",
+      "value": "6M8",
+      "package": "RES40"
+    },
+    {
+      "id": "R148",
+      "value": "1R",
+      "package": "RES40"
+    },
+    {
+      "id": "R149",
+      "value": "82K",
+      "package": "RES40"
+    },
+    {
+      "id": "R150",
+      "value": "1K6",
+      "package": "RES40"
+    },
+    {
+      "id": "R151",
+      "value": "8M2",
+      "package": "RES40"
+    },
+    {
+      "id": "R152",
+      "value": "10K",
+      "package": "RES40"
+    },
+    {
+      "id": "R153",
+      "value": "5M1",
+      "package": "RES40"
+    },
+    {
+      "id": "R154",
+      "value": "36K",
+      "package": "RES40"
+    },
+    {
+      "id": "R155",
+      "value": "10R",
+      "package": "RES40"
+    },
+    {
+      "id": "R156",
+      "value": "3M6",
+      "package": "RES40"
+    },
+    {
+      "id": "R157",
+      "value": "3M",
+      "package": "RES40"
+    },
+    {
+      "id": "R158",
+      "value": "68R",
+      "package": "RES40"
+    },
+    {
+      "id": "R159",
+      "value": "470R",
+      "package": "RES40"
+    },
+    {
+      "id": "R160",
+      "value": "270K",
+      "package": "RES40"
+    },
+    {
+      "id": "R161",
+      "value": "430K",
+      "package": "RES40"
+    },
+    {
+      "id": "R162",
+      "value": "470K",
+      "package": "RES40"
+    },
+    {
+      "id": "R163",
+      "value": "5K6",
+      "package": "RES40"
+    },
+    {
+      "id": "R164",
+      "value": "24K",
+      "package": "RES40"
+    },
+    {
+      "id": "R165",
+      "value": "3M6",
+      "package": "RES40"
+    },
+    {
+      "id": "R166",
+      "value": "6K8",
+      "package": "RES40"
+    },
+    {
+      "id": "R167",
+      "value": "390R",
+      "package": "RES40"
+    },
+    {
+      "id": "R168",
+      "value": "360R",
+      "package": "RES40"
+    },
+    {
+      "id": "R169",
+      "value": "43K",
+      "package": "RES40"
+    },
+    {
+      "id": "R170",
+      "value": "3K",
+      "package": "RES40"
+    },
+    {
+      "id": "R171",
+      "value": "4M7",
+      "package": "RES40"
+    },
+    {
+      "id": "R172",
+      "value": "2R2",
+      "package": "RES40"
+    },
+    {
+      "id": "R173",
+      "value": "240K",
+      "package": "RES40"
+    },
+    {
+      "id": "R174",
+      "value": "130K",
+      "package": "RES40"
+    },
+    {
+      "id": "R175",
+      "value": "3M6",
+      "package": "RES40"
+    },
+    {
+      "id": "R176",
+      "value": "30R",
+      "package": "RES40"
+    },
+    {
+      "id": "R177",
+      "value": "6M2",
+      "package": "RES40"
+    },
+    {
+      "id": "R178",
+      "value": "2K4",
+      "package": "RES40"
+    },
+    {
+      "id": "R179",
+      "value": "470K",
+      "package": "RES40"
+    },
+    {
+      "id": "R180",
+      "value": "16R",
+      "package": "RES40"
+    },
+    {
+      "id": "R181",
+      "value": "100R",
+      "package": "RES40"
+    },
+    {
+      "id": "R182",
+      "value": "13K",
+      "package": "RES40"
+    },
+    {
+      "id": "R183",
+      "value": "3R6",
+      "package": "RES40"
+    },
+    {
+      "id": "R184",
+      "value": "3M3",
+      "package": "RES40"
+    },
+    {
+      "id": "R185",
+      "value": "5M6",
+      "package": "RES40"
+    },
+    {
+      "id": "R186",
+      "value": "3K",
+      "package": "RES40"
+    },
+    {
+      "id": "R187",
+      "value": "1K1",
+      "package": "RES40"
+    },
+    {
+      "id": "R188",
+      "value": "300R",
+      "package": "RES40"
+    },
+    {
+      "id": "R189",
+      "value": "8M2",
+      "package": "RES40"
+    },
+    {
+      "id": "R190",
+      "value": "20R",
+      "package": "RES40"
+    },
+    {
+      "id": "R191",
+      "value": "6M8",
+      "package": "RES40"
+    },
+    {
+      "id": "R192",
+      "value": "5M1",
+      "package": "RES40"
+    },
+    {
+      "id": "R193",
+      "value": "51K",
+      "package": "RES40"
+    },
+    {
+      "id": "R194",
+      "value": "1R",
+      "package": "RES40"
+    },
+    {
+      "id": "R195",
+      "value": "2K4",
+      "package": "RES40"
+    },
+    {
+      "id": "R196",
+      "value": "15R",
+      "package": "RES40"
+    },
+    {
+      "id": "R197",
+      "value": "2K4",
+      "package": "RES40"
+    },
+    {
+      "id": "R198",
+      "value": "680K",
+      "package": "RES40"
+    },
+    {
+      "id": "R199",
+      "value": "33K",
+      "package": "RES40"
+    },
+    {
+      "id": "R200",
+      "value": "12R",
+      "package": "RES40"
+    }
+  ]
+}
+
