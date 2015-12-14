@@ -7,8 +7,8 @@
     <ProjectGuid>{928E2386-4650-42B2-BF45-A13C6E4272D9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BoardCraft.Run</RootNamespace>
-    <AssemblyName>BoardCraft.Run</AssemblyName>
+    <RootNamespace>BoardCraft.Example.Wpf</RootNamespace>
+    <AssemblyName>BoardCraft.Example.Wpf</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace BoardCraft.Run.ViewModels
+namespace BoardCraft.Example.Wpf.ViewModels
 {
     class ViewModelBase : INotifyPropertyChanged
     {

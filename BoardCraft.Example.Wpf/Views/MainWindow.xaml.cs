@@ -1,4 +1,4 @@
-﻿namespace BoardCraft.Run.Views
+﻿namespace BoardCraft.Example.Wpf.Views
 {
     using System;
     using System.Diagnostics.CodeAnalysis;

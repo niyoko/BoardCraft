@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardCraft.Run.ViewModels
+namespace BoardCraft.Example.Wpf.ViewModels
 {
     using System.Diagnostics;
     using System.IO;

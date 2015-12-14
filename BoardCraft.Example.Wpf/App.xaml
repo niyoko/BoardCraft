@@ -1,7 +1,7 @@
-﻿<Application x:Class="BoardCraft.Run.App"
+﻿<Application x:Class="BoardCraft.Example.Wpf.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:BoardCraft.Run.Views"
+             xmlns:local="clr-namespace:BoardCraft.Example.Wpf.Views"
 >
     <Application.Resources>
         <ResourceDictionary>

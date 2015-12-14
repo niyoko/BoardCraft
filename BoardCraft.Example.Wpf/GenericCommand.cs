@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BoardCraft.Run
+namespace BoardCraft.Example.Wpf
 {
     using System.Windows.Input;
 

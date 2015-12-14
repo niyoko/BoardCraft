@@ -1,4 +1,4 @@
-﻿namespace BoardCraft.Run.ViewModels
+﻿namespace BoardCraft.Example.Wpf.ViewModels
 {
     using System.ComponentModel;
 

@@ -1,4 +1,4 @@
-﻿namespace BoardCraft.Run
+﻿namespace BoardCraft.Example.Wpf
 {
     using System.Diagnostics;
     using System.Windows;

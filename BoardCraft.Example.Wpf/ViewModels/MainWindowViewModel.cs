@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace BoardCraft.Run.ViewModels
+namespace BoardCraft.Example.Wpf.ViewModels
 {
     using System.Collections.Generic;
     using System.IO;
