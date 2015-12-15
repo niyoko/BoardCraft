@@ -1,6 +1,7 @@
 ﻿namespace BoardCraft.Example.Wpf.ViewModels
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
@@ -11,19 +12,27 @@
     internal class SchematicMetadataViewModel : ViewModelBase
     {
         private ComponentPlacement _currentPlacement;
-
+        private ComponentPlacement _showedPlacement;
         private bool _pauseRequested;
+        private readonly DispatcherTimer _timer;
 
         public SchematicMetadataViewModel(Schematic schematic, string tabTitle)
         {
             Schematic = schematic;
             TabTitle = tabTitle;
 
-            Properties = new SchematicProperties(Schematic);
             RunGACommand = new GenericCommand(StartGA);
             PauseGACommand = new GenericCommand(PauseGA);
 
             Placer = ConstructGAPlacer();
+
+            Properties = new SchematicProperties();
+            UpdatePropertiesFromSchema();
+
+            _timer = new DispatcherTimer(DispatcherPriority.Background, Application.Current.Dispatcher);
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += PeriodicalUpdate;
+            _timer.Start();
         }
 
         public Schematic Schematic { get; }
@@ -34,22 +43,18 @@
 
         public int ComponentCount => Schematic.Components.Count;
 
-        public ComponentPlacement CurrentPlacement
+        public ComponentPlacement ShowedPlacement
         {
-            get
-            {
-                return _currentPlacement;
-            }
-
+            get { return _showedPlacement; }
             set
             {
-                if (value == _currentPlacement)
+                if (value == _showedPlacement)
                 {
                     return;
                 }
 
-                _currentPlacement = value;
-                OnPropertyChanged(nameof(CurrentPlacement));
+                _showedPlacement = value;
+                OnPropertyChanged(nameof(ShowedPlacement));
             }
         }
 
@@ -74,11 +79,8 @@
                     }
 
                     Placer.NextGeneration();
-                    var bestP = Placer.CurrentPopulation.GetBestPlacement();
-
-                    Application.Current.Dispatcher.BeginInvoke(
-                        DispatcherPriority.Background,
-                        new Action(() => { CurrentPlacement = bestP; }));
+                    _currentPlacement = Placer.CurrentPopulation.GetBestPlacement();
+                    UpdatePropertiesFromPlacer();
                 }
             });
         }
@@ -88,31 +90,57 @@
             _pauseRequested = true;
         }
 
+        private void PeriodicalUpdate(object sender, EventArgs args)
+        {
+            //doing this will cause canvas to redraw itself
+            //ShowedPlacement = _currentPlacement;
+        }
+
         private GAPlacer ConstructGAPlacer()
         {
-            const int PopulationSize = 20;
+            const int populationSize = 20;
             IPopulationGenerator initPlacer = new RandomPopulationGenerator();
             IFitnessEvaluator fitnessEvaluator = new FitnessEvaluator();
             ISelectionOperator selectionOp = new TournamentSelectionOperator(8, 0.5);
-            const double CrossoverRate = 1.0;
+            const double crossoverRate = 1.0;
             var crossedMin = (int)(0.4 * Schematic.Components.Count);
             var crossedMax = (int)(0.6 * Schematic.Components.Count);
             var crossoverOp = new CrossoverOperator(crossedMin, crossedMax);
-            const double MutationRate = 0.1;
+            const double mutationRate = 0.1;
             IMutationOperator mutationOp = new MutationOperator();
+
             IReproductionOperator reproOp = new ReproductionOperator(
                 selectionOp,
-                CrossoverRate,
+                crossoverRate,
                 crossoverOp,
-                MutationRate,
+                mutationRate,
                 mutationOp);
 
-            return new GAPlacer(Schematic, PopulationSize, initPlacer, fitnessEvaluator, reproOp);
+            return new GAPlacer(Schematic, populationSize, initPlacer, fitnessEvaluator, reproOp);
         }
 
-        private void PlacerOnNewGeneration(ComponentPlacement componentPlacement)
+        private void UpdatePropertiesFromSchema()
         {
-            CurrentPlacement = componentPlacement;
+            Properties.ComponentCount = Schematic.Components.Count;
+        }
+
+        private void UpdatePropertiesFromPlacer()
+        {
+            var cp = Placer.CurrentPopulation;
+            var f = cp.Select(cp.GetFitnessFor).ToList();
+            
+            var currentGen = Placer.GenerationNumber;
+            var maxFitness = f.Max();
+            var avFitness = f.Average();
+
+            Application.Current.Dispatcher.BeginInvoke(
+                DispatcherPriority.Background,
+                new Action(() =>
+                {
+                    Properties.GenerationCount = currentGen;
+                    Properties.MaxFitness = maxFitness;
+                    Properties.AverageFitness = avFitness;
+                }));
         }
     }
 }

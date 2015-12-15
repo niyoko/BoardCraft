@@ -12,6 +12,11 @@
     Title="MainWindow" Height="467.978" Width="875" WindowState="Maximized"
     d:DataContext="{d:DesignInstance Type={x:Type vm:MainWindowViewModel}}"    
     >
+    <Window.Resources>
+        <ResourceDictionary>
+            <BitmapImage x:Key="IconOpen" UriSource="pack://application:,,,/Resources/folder_16.png" />
+        </ResourceDictionary>
+    </Window.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadLibraryCommand}" />
@@ -20,7 +25,12 @@
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <Button x:Name="BtnOpen" Content="Open" Padding="10 5 10 5" Command="{Binding OpenFileCommand}" />
+                <Button x:Name="BtnOpen" Padding="10 5 10 5" Command="{Binding OpenFileCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{StaticResource IconOpen}"></Image>
+                        <TextBlock Margin="5 0 0 0">Open</TextBlock>
+                    </StackPanel>
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <xcad:DockingManager DocumentsSource="{Binding OpenedSchematics}">

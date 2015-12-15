@@ -7,7 +7,7 @@
     using MathNet.Numerics.Random;
     using Models;
 
-    public class RandomPlacer : IPlacer
+    public class RandomPlacer
     {
         private const double GoldenRatio = 1.61803399;
 

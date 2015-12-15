@@ -172,6 +172,16 @@
   <ItemGroup>
     <Resource Include="Resources\folder_16.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\control_pause_32.png" />
+    <Resource Include="Resources\control_play_32.png" />
+    <Resource Include="Resources\control_stop_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\control_pause_16.png" />
+    <Resource Include="Resources\control_play_16.png" />
+    <Resource Include="Resources\control_stop_16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
   <PropertyGroup>
