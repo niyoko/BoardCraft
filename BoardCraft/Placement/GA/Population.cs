@@ -5,6 +5,7 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Threading.Tasks;
     using Models;
 
@@ -64,6 +65,18 @@
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public ComponentPlacement GetBestPlacement()
+        {
+            if (!_fitnessCalculated)
+            {
+                throw new InvalidOperationException("Fitness not calculated yet");
+            }
+
+            return _fitness.OrderByDescending(x => x.Value)
+                .Select(x => x.Key)
+                .First();
         }
     }
 }

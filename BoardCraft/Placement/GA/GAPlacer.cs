@@ -1,63 +1,64 @@
 ﻿namespace BoardCraft.Placement.GA
 {
-    using System;
-    using System.Diagnostics;
-    using System.Linq;
     using Models;
 
-    public class GAPlacer : IPlacer
+    public class GAPlacer
     {
         private readonly IPopulationGenerator _initialPopulationGenerator;
         private readonly IFitnessEvaluator _fitnessEvaluator;
         private readonly IReproductionOperator _reproductionOperator;
+        private readonly Schematic _schematic;
         private readonly int _populationSize;
 
-        public GAPlacer(
+        public GAPlacer
+            (
+            Schematic schematic,
             int populationSize,
             IPopulationGenerator initialPopulationGenerator,
             IFitnessEvaluator fitnessEvaluator,
             IReproductionOperator reproductionOperator
         )
         {
+            _schematic = schematic;
             _initialPopulationGenerator = initialPopulationGenerator;
             _populationSize = populationSize;
             _fitnessEvaluator = fitnessEvaluator;
             _reproductionOperator = reproductionOperator;
+
+            GenerationNumber = 0;
         }
 
-        public event Action<ComponentPlacement> NewGeneration;
+        public int GenerationNumber { get; private set; }
+        public Population CurrentPopulation { get; private set; }
 
-        public ComponentPlacement Place(Schematic schema)
+        public void NextGeneration()
         {
-            var pop = _initialPopulationGenerator.GeneratePopulation(schema, _populationSize);
-            pop.EvaluateFitness(_fitnessEvaluator);
-            var sw = new Stopwatch();
-            for (var i = 0; i < 5000; i++)
-            {   
-                sw.Start();
-                pop = _reproductionOperator.ProduceNextGeneration(pop);
-                var reproTime = sw.ElapsedMilliseconds;
-                sw.Restart();
-                pop.EvaluateFitness(_fitnessEvaluator);
-                var evaTime = sw.ElapsedMilliseconds;
-                sw.Reset();
-
-                var h = NewGeneration;
-
-                var pop1 = pop;
-                var best2 = pop.Select(x => new { x, f = pop1.GetFitnessFor(x) })
-                    .OrderByDescending(x => x.f)
-                    .First();
-
-                h?.Invoke(best2.x);
-                Debug.WriteLine($"Generation# : {i} Repro : {reproTime} Eva : {evaTime} Fitness : {best2.f}");
-
+            if (GenerationNumber == 0)
+            {
+                GenerateInitialPopulation();
             }
-
-            var best = pop.OrderByDescending(pop.GetFitnessFor)
-                .First();
-
-            return best;
+            else
+            {
+                NextPopulationInternal();
+            }
         }
+
+        private void GenerateInitialPopulation()
+        {
+            var pop = _initialPopulationGenerator.GeneratePopulation(_schematic, _populationSize);
+            pop.EvaluateFitness(_fitnessEvaluator);
+
+            CurrentPopulation = pop;
+            GenerationNumber = 1;
+        }
+
+        private void NextPopulationInternal()
+        {
+            var pop = _reproductionOperator.ProduceNextGeneration(CurrentPopulation);
+            pop.EvaluateFitness(_fitnessEvaluator);
+
+            CurrentPopulation = pop;
+            GenerationNumber++;
+        }        
     }
 }

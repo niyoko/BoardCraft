@@ -14,10 +14,5 @@ namespace BoardCraft.Example.Wpf.Views
         {
             InitializeComponent();
         }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            Debug.WriteLine(DataContext?.GetType().Name ?? "null");
-        }
     }
 }

@@ -92,6 +92,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GenericCommand.cs" />
+    <Compile Include="ViewModels\GAParameters.cs" />
     <Compile Include="ViewModels\SchematicProperties.cs" />
     <Compile Include="Views\SchematicMetadata.xaml.cs">
       <DependentUpon>SchematicMetadata.xaml</DependentUpon>

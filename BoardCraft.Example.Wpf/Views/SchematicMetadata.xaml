@@ -9,10 +9,21 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+             xmlns:o="clr-namespace:BoardCraft.Output.Wpf;assembly=BoardCraft.Output.Wpf"
              d:DesignHeight="325.94" d:DesignWidth="219.925"
-             d:DataContext="{d:DesignInstance Type={x:Type vm:SchematicMetadataViewModel}}" Loaded="UserControl_Loaded"
+             d:DataContext="{d:DesignInstance Type={x:Type vm:SchematicMetadataViewModel}}"
              >
-    <Grid>
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Padding="10 5 10 5" Command="{Binding RunGACommand}">
+                    Start
+                </Button>
+                <Button Padding="10 5 10 5" Command="{Binding PauseGACommand}">
+                    Pause
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
         <xcad:DockingManager>
             <xcad:DockingManager.Theme>
                 <xcad:AeroTheme></xcad:AeroTheme>
@@ -27,14 +38,21 @@
                             >
                             </xctk:PropertyGrid>
                         </xcad:LayoutAnchorable>
+                        <xcad:LayoutAnchorable Title="GA Parameters">
+                            <xctk:PropertyGrid
+                                AutoGenerateProperties="True"
+                                SelectedObject="{Binding Properties}"
+                            >
+                            </xctk:PropertyGrid>
+                        </xcad:LayoutAnchorable>
                     </xcad:LayoutAnchorablePane>
                     <xcad:LayoutAnchorablePane DockWidth="4*">
                         <xcad:LayoutAnchorable Title="Log Entries">
-                            <Canvas></Canvas>
+                            <o:BoardCanvas ComponentPlacement="{Binding CurrentPlacement}" />
                         </xcad:LayoutAnchorable>
                     </xcad:LayoutAnchorablePane>
                 </xcad:LayoutPanel>
             </xcad:LayoutRoot>
         </xcad:DockingManager>
-    </Grid>
+    </DockPanel>
 </UserControl>

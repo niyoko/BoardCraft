@@ -40,7 +40,7 @@
             </xcad:LayoutRoot>
             <xcad:DockingManager.LayoutItemTemplate>
                 <DataTemplate>
-                    <local:SchematicMetadata DataContext="{Binding Model}" />
+                    <local:SchematicMetadata DataContext="{Binding Content}" />
                 </DataTemplate>
             </xcad:DockingManager.LayoutItemTemplate>
         </xcad:DockingManager>
