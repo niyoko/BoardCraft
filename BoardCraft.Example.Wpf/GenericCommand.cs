@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BoardCraft.Example.Wpf
+﻿namespace BoardCraft.Example.Wpf
 {
+    using System;
     using System.Windows.Input;
 
-    class GenericCommand : ICommand
+    internal class GenericCommand : ICommand
     {
         private readonly Action _action;
         private readonly Func<bool> _canExecute;
@@ -37,6 +32,8 @@ namespace BoardCraft.Example.Wpf
             _canExecute = canExecute;
         }
 
+        public event EventHandler CanExecuteChanged;
+
         public bool CanExecute(object parameter)
         {
             return _canExecute();
@@ -46,8 +43,6 @@ namespace BoardCraft.Example.Wpf
         {
             _action.Invoke();
         }
-
-        public event EventHandler CanExecuteChanged;
 
         public void RaiseCanExecuteChanged()
         {

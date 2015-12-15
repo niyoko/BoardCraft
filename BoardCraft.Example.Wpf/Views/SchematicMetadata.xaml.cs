@@ -1,12 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-
-namespace BoardCraft.Example.Wpf.Views
+﻿namespace BoardCraft.Example.Wpf.Views
 {
-    using System.Diagnostics;
+    using System.Windows.Controls;
 
     /// <summary>
-    /// Interaction logic for SchematicMetadata.xaml
+    ///     Interaction logic for SchematicMetadata.xaml
     /// </summary>
     public partial class SchematicMetadata : UserControl
     {

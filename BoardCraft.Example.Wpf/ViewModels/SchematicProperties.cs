@@ -3,10 +3,8 @@
     using System.ComponentModel;
     using Models;
 
-    class SchematicProperties
+    internal class SchematicProperties
     {
-        private Schematic Schematic { get; }
-
         public SchematicProperties(Schematic schematic)
         {
             Schematic = schematic;
@@ -17,6 +15,6 @@
         [Description("Jumlah komponen yang terdapat pada skema elektronika")]
         public int ComponentCount => Schematic.Components.Count;
 
-
+        private Schematic Schematic { get; }
     }
 }

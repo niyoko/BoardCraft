@@ -9,12 +9,12 @@
     xmlns:local="clr-namespace:BoardCraft.Example.Wpf.Views"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     mc:Ignorable="d"
-    Title="MainWindow" Height="467.978" Width="875" Loaded="Window_Loaded" WindowState="Maximized"
+    Title="MainWindow" Height="467.978" Width="875" WindowState="Maximized"
     d:DataContext="{d:DesignInstance Type={x:Type vm:MainWindowViewModel}}"    
     >
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadLibraryCommand}"></i:InvokeCommandAction>
+            <i:InvokeCommandAction Command="{Binding LoadLibraryCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <DockPanel>
@@ -25,12 +25,12 @@
         </ToolBarTray>
         <xcad:DockingManager DocumentsSource="{Binding OpenedSchematics}">
             <xcad:DockingManager.Theme>
-                <xcad:AeroTheme></xcad:AeroTheme>
+                <xcad:AeroTheme />
             </xcad:DockingManager.Theme>
             <xcad:DockingManager.LayoutItemContainerStyle>
                 <Style TargetType="{x:Type xcad:LayoutItem}">
-                    <Setter Property="CanFloat" Value="False"></Setter>
-                    <Setter Property="Title" Value="{Binding Model.TabTitle}"></Setter>
+                    <Setter Property="CanFloat" Value="False" />
+                    <Setter Property="Title" Value="{Binding Model.TabTitle}" />
                 </Style>
             </xcad:DockingManager.LayoutItemContainerStyle>
             <xcad:LayoutRoot>

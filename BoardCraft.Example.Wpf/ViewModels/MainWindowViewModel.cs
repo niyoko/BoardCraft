@@ -1,21 +1,21 @@
-﻿using Microsoft.Win32;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Windows.Input;
-
-namespace BoardCraft.Example.Wpf.ViewModels
+﻿namespace BoardCraft.Example.Wpf.ViewModels
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.IO;
     using System.Threading.Tasks;
+    using System.Windows.Input;
     using Input;
+    using Microsoft.Win32;
 
-    class MainWindowViewModel : ViewModelBase
+    internal class MainWindowViewModel : ViewModelBase
     {
-        private bool _libraryLoaded;
         private readonly List<GenericCommand> _canExecuteChangedOnLibraryLoaded;
+        private bool _libraryLoaded;
 
         private IComponentRepository _repository;
+
+        private SchematicMetadataViewModel _selectedItem;
 
         public MainWindowViewModel()
         {
@@ -23,24 +23,49 @@ namespace BoardCraft.Example.Wpf.ViewModels
 
             _canExecuteChangedOnLibraryLoaded = new List<GenericCommand>(5);
 
-            var ofCommand = new GenericCommand(OpenFile, ()=>_libraryLoaded);
-            OpenFileCommand = ofCommand;
-            _canExecuteChangedOnLibraryLoaded.Add(ofCommand);
+            var openFileCmd = new GenericCommand(OpenFile, () => _libraryLoaded);
+            OpenFileCommand = openFileCmd;
+            _canExecuteChangedOnLibraryLoaded.Add(openFileCmd);
 
             LoadLibraryCommand = new GenericCommand(LoadRepository);
         }
 
-        async void LoadRepository()
+        public ObservableCollection<SchematicMetadataViewModel> OpenedSchematics { get; }
+
+        public SchematicMetadataViewModel SelectedItem
         {
-            JsonFileLibrary cRepo = null;
+            get
+            {
+                return _selectedItem;
+            }
+
+            set
+            {
+                if (value == _selectedItem)
+                {
+                    return;
+                }
+
+                _selectedItem = value;
+                OnPropertyChanged(nameof(SelectedItem));
+            }
+        }
+
+        public ICommand OpenFileCommand { get; }
+
+        public ICommand LoadLibraryCommand { get; }
+
+        private async void LoadRepository()
+        {
+            JsonFileLibrary repo = null;
             await Task.Run(() =>
             {
-                cRepo = new JsonFileLibrary(@"..\..\Library");
-                cRepo.Load();
+                repo = new JsonFileLibrary(@"..\..\Library");
+                repo.Load();
             });
 
             _libraryLoaded = true;
-            _repository = cRepo;
+            _repository = repo;
 
             foreach (var command in _canExecuteChangedOnLibraryLoaded)
             {
@@ -48,7 +73,7 @@ namespace BoardCraft.Example.Wpf.ViewModels
             }
         }
 
-        void OpenFile()
+        private void OpenFile()
         {
             var o = new OpenFileDialog
             {
@@ -74,24 +99,5 @@ namespace BoardCraft.Example.Wpf.ViewModels
                 }
             }
         }
-
-        private SchematicMetadataViewModel _selectedItem;
-
-        public ObservableCollection<SchematicMetadataViewModel> OpenedSchematics { get; }
-        public SchematicMetadataViewModel SelectedItem
-        {
-            get { return _selectedItem; }
-            set
-            {
-                if (value == _selectedItem)
-                    return;
-
-                _selectedItem = value;
-                OnPropertyChanged(nameof(SelectedItem));
-            }
-        }
-
-        public ICommand OpenFileCommand { get; }
-        public ICommand LoadLibraryCommand { get; }
     }
 }
