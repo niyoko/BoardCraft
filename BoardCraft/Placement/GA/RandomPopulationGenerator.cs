@@ -54,7 +54,7 @@
                 shcs[i] = plc;
             });
 
-            return new Population(shcs);
+            return new Population(1, shcs);
         }
     }
 }

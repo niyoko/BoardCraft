@@ -5,67 +5,51 @@
     using System.Linq;
     using Models;
     using System.Collections.Concurrent;
+    using System.Diagnostics;
+    using Drawing;
 
     public class FitnessEvaluator : IFitnessEvaluator
     {
-        private ConcurrentDictionary<Package, double> _maxBounds = new ConcurrentDictionary<Package, double>();
+        private struct Bounds
+        {
+            public Bounds(double top, double right, double bottom, double left)
+            {
+                Top = top;
+                Right = right;
+                Bottom = bottom;
+                Left = left;
+            }
+
+            public double Top;
+            public double Right;
+            public double Bottom;
+            public double Left;
+        }
 
         public double OverlapFitness(ComponentPlacement board)
         {
             var componentList = board.Schema.Components.ToList();
             var count = componentList.Count;
+            var d = new Bounds[count];
+
+            for (var i = 0; i < count; i++)
+            {
+                var c = componentList[i];
+                var p = board.GetComponentPlacement(c);
+                d[i] = GetRealBound(p, c.Package);
+            }
 
             var sum = 0.0;
             for (var i = 0; i < count; i++)
             {
                 for (var j = i + 1; j < count; j++)
                 {
-                    var ci = componentList[i];
-                    var cj = componentList[j];
-
-                    var thi = GetThresold(ci.Package);
-                    var thj = GetThresold(cj.Package);
-                    var tht = thi + thj;
-
-                    var pi = board.GetComponentPlacement(ci).Position;
-                    var pj = board.GetComponentPlacement(cj).Position;
-
-                    var dx = pi.X - pj.X;
-                    var dy = pi.Y - pj.Y;
-
-                    if(dx < tht && dx > -tht && dy < tht && dy > -tht)
-                    {
-                        sum += GetOverlap(board, componentList, i, j);
-                    }
+                    sum += GetOverlap(d[i], d[j]);
                 }
             }
 
             var sumx = Math.Sqrt(sum) + 1;
             return 1 / sumx;
-        }
-
-        private double GetThresold(Package package)
-        {
-            double result;            
-            if (!_maxBounds.TryGetValue(package, out result))
-            {
-                var b = package.Boundaries;
-                var to = b.Top;
-                var ri = b.Right;
-                var bo = -b.Bottom;
-                var le = -b.Left;
-
-                var r = 0.0;
-                if (to > r) r = bo;
-                if (ri > r) r = ri;
-                if (bo > r) r = bo;
-                if (le > r) r = le;
-
-                _maxBounds[package] = r;
-                return r;
-            }
-
-            return result;          
         }
 
         public static double SizeFitness(ComponentPlacement board)
@@ -89,16 +73,12 @@
         {
             var ovlp = OverlapFitness(board);
             var sz = SizeFitness(board);
-
             return ovlp + sz;
         }
-
-        private static void GetRealBound(PlacementInfo metadata, Package p, out double left, out double top, out double right, out double bottom)
+        
+        private static Bounds GetRealBound(PlacementInfo metadata, Package p)
         {
-            left = 0;
-            top = 0;
-            bottom = 0;
-            right = 0;
+            double left = 0, top = 0, right = 0, bottom = 0;
             var package = p.Boundaries;
             switch (metadata.Orientation)
             {
@@ -132,28 +112,21 @@
             top = metadata.Position.Y + top;
             right = metadata.Position.X + right;
             bottom = metadata.Position.Y + bottom;
+
+            return new Bounds(top, right, bottom, left);
         }
 
-        private static double GetOverlap(ComponentPlacement board, IList<Component> list, int i, int j)
+        private static double GetOverlap(Bounds b1, Bounds b2)
         {
-            var c1 = list[i];
-            var c2 = list[j];
+            var rig = b1.Right < b2.Right ? b1.Right : b2.Right;
+            var lef = b1.Left > b2.Left ? b1.Left : b2.Left;
+            var top = b1.Top < b2.Top ? b1.Top : b2.Top;
+            var bot = b1.Bottom > b2.Bottom ? b1.Bottom : b2.Bottom;
 
-            var gene1 = board.GetComponentPlacement(c1);
-            var gene2 = board.GetComponentPlacement(c2);
+            if (lef >= rig || bot >= top)
+                return 0.0;
 
-            double l1, t1, r1, b1;
-            GetRealBound(gene1, c1.Package, out l1, out t1, out r1, out b1);
-
-            double l2, t2, r2, b2;
-            GetRealBound(gene2, c2.Package, out l2, out t2, out r2, out b2);
-
-            var overlapX = Math.Max(0, Math.Min(r1, r2) - Math.Max(l1, l2));
-            var overlapY = Math.Max(0, Math.Min(t1, t2) - Math.Max(b1, b2));
-
-            var overlap = overlapX * overlapY;
-
-            return overlap;
+            return (rig - lef)*(top - bot);
         }
     }
 }

@@ -16,7 +16,7 @@
         }
 
         public RandomPlacer(int randomSeed)
-            : this(randomSeed, 3.5, GoldenRatio)
+            : this(randomSeed, 5, GoldenRatio)
         {
         }
 

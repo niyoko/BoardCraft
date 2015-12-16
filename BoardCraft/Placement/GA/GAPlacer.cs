@@ -1,5 +1,7 @@
 ﻿namespace BoardCraft.Placement.GA
 {
+    using System;
+    using System.Diagnostics;
     using Models;
 
     public class GAPlacer
@@ -24,16 +26,25 @@
             _populationSize = populationSize;
             _fitnessEvaluator = fitnessEvaluator;
             _reproductionOperator = reproductionOperator;
-
-            GenerationNumber = 0;
         }
 
-        public int GenerationNumber { get; private set; }
+        public int Generation
+        {
+            get
+            {
+                if (CurrentPopulation == null)
+                {
+                    throw new InvalidOperationException("GA not initialized yet");
+                }
+
+                return CurrentPopulation.Generation;
+            }
+        }
         public Population CurrentPopulation { get; private set; }
 
         public void NextGeneration()
         {
-            if (GenerationNumber == 0)
+            if (CurrentPopulation == null)
             {
                 GenerateInitialPopulation();
             }
@@ -46,19 +57,22 @@
         private void GenerateInitialPopulation()
         {
             var pop = _initialPopulationGenerator.GeneratePopulation(_schematic, _populationSize);
+            var sw = Stopwatch.StartNew();
             pop.EvaluateFitness(_fitnessEvaluator);
+            sw.Stop();
+            Debug.WriteLine($"Generation #: {pop.Generation} Fitness Eval Time: {sw.ElapsedMilliseconds}");
 
             CurrentPopulation = pop;
-            GenerationNumber = 1;
         }
 
         private void NextPopulationInternal()
         {
             var pop = _reproductionOperator.ProduceNextGeneration(CurrentPopulation);
+            var sw = Stopwatch.StartNew();
             pop.EvaluateFitness(_fitnessEvaluator);
-
+            sw.Stop();
+            Debug.WriteLine($"Generation #: {pop.Generation} Fitness Eval Time: {sw.ElapsedMilliseconds}");
             CurrentPopulation = pop;
-            GenerationNumber++;
         }        
     }
 }

@@ -76,7 +76,7 @@
                 _mutationOperator.Mutate(m);
             }
 
-            return new Population(offspring);
+            return new Population(parents.Generation + 1, offspring);
         }
     }
 }

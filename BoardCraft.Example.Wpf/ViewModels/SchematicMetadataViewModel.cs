@@ -11,8 +11,11 @@
 
     internal class SchematicMetadataViewModel : ViewModelBase
     {
-        private ComponentPlacement _currentPlacement;
-        private ComponentPlacement _showedPlacement;
+        private Population _currentPopulation;
+        private Population _showedPopulation;
+
+        private ComponentPlacement _showedPlacement;        
+
         private bool _pauseRequested;
         private readonly DispatcherTimer _timer;
 
@@ -29,7 +32,7 @@
             Properties = new SchematicProperties();
             UpdatePropertiesFromSchema();
 
-            _timer = new DispatcherTimer(DispatcherPriority.Background, Application.Current.Dispatcher);
+            _timer = new DispatcherTimer(DispatcherPriority.Normal, Application.Current.Dispatcher);
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += PeriodicalUpdate;
             _timer.Start();
@@ -79,8 +82,7 @@
                     }
 
                     Placer.NextGeneration();
-                    _currentPlacement = Placer.CurrentPopulation.GetBestPlacement();
-                    UpdatePropertiesFromPlacer();
+                    _currentPopulation = Placer.CurrentPopulation;
                 }
             });
         }
@@ -92,8 +94,26 @@
 
         private void PeriodicalUpdate(object sender, EventArgs args)
         {
-            //doing this will cause canvas to redraw itself
-            //ShowedPlacement = _currentPlacement;
+            var c = _currentPopulation;
+            if(c == _showedPopulation) return;
+
+            _showedPopulation = c;
+            if (c == null)
+            {
+                ShowedPlacement = null;
+                Properties.GenerationCount = null;
+                Properties.MaxFitness = null;
+                Properties.AverageFitness = null;
+            }
+            else
+            {
+                var fits = c.Select(c.GetFitnessFor).ToList();
+
+                ShowedPlacement = c.BestPlacement;
+                Properties.GenerationCount = c.Generation;
+                Properties.AverageFitness = fits.Average();
+                Properties.MaxFitness = fits.Max();
+            }
         }
 
         private GAPlacer ConstructGAPlacer()
@@ -121,26 +141,7 @@
 
         private void UpdatePropertiesFromSchema()
         {
-            Properties.ComponentCount = Schematic.Components.Count;
-        }
-
-        private void UpdatePropertiesFromPlacer()
-        {
-            var cp = Placer.CurrentPopulation;
-            var f = cp.Select(cp.GetFitnessFor).ToList();
-            
-            var currentGen = Placer.GenerationNumber;
-            var maxFitness = f.Max();
-            var avFitness = f.Average();
-
-            Application.Current.Dispatcher.BeginInvoke(
-                DispatcherPriority.Background,
-                new Action(() =>
-                {
-                    Properties.GenerationCount = currentGen;
-                    Properties.MaxFitness = maxFitness;
-                    Properties.AverageFitness = avFitness;
-                }));
+            Properties.ComponentCount = Schematic.Components.Count;            
         }
     }
 }

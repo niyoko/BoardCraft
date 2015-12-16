@@ -148,6 +148,7 @@
     </None>
     <AppDesigner Include="Properties\" />
     <None Include="Schema\Example1.json" />
+    <None Include="Schema\Example2.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

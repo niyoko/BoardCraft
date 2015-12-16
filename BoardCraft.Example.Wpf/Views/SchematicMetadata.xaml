@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:BoardCraft.Example.Wpf"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              xmlns:vm="clr-namespace:BoardCraft.Example.Wpf.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -11,6 +12,7 @@
              xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
              xmlns:o="clr-namespace:BoardCraft.Output.Wpf;assembly=BoardCraft.Output.Wpf"             
              d:DesignHeight="325.94" d:DesignWidth="219.925"
+             xmlns:interactivity="http://schemas.microsoft.com/expression/2010/interactivity"
              d:DataContext="{d:DesignInstance Type={x:Type vm:SchematicMetadataViewModel}}"
     >
     <UserControl.Resources>
@@ -20,6 +22,9 @@
             <BitmapImage x:Key="StopIcon" UriSource="pack://application:,,,/Resources/control_stop_16.png"></BitmapImage>
         </ResourceDictionary>
     </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <interactivity:EventTrigger EventName=""></interactivity:EventTrigger>
+    </i:Interaction.Triggers>
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
@@ -46,13 +51,20 @@
                     <xcad:LayoutAnchorablePane DockWidth="1*">
                         <xcad:LayoutAnchorable Title="Properties">
                             <xctk:PropertyGrid
+                                ShowTitle="False"
+                                IsReadOnly="True"
                                 AutoGenerateProperties="True"
-                                SelectedObject="{Binding Properties}" />
-                        </xcad:LayoutAnchorable>
-                        <xcad:LayoutAnchorable Title="GA Parameters">
-                            <xctk:PropertyGrid
-                                AutoGenerateProperties="True"
-                                SelectedObject="{Binding Properties}" />
+                                SelectedObject="{Binding Properties}">
+                                <xctk:PropertyGrid.EditorDefinitions>
+                                    <xctk:EditorTemplateDefinition TargetProperties="{x:Type sys:Double}">
+                                        <xctk:EditorTemplateDefinition.EditingTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding Value, StringFormat=F5}" />
+                                            </DataTemplate>
+                                        </xctk:EditorTemplateDefinition.EditingTemplate>
+                                    </xctk:EditorTemplateDefinition>
+                                </xctk:PropertyGrid.EditorDefinitions>
+                            </xctk:PropertyGrid>
                         </xcad:LayoutAnchorable>
                     </xcad:LayoutAnchorablePane>
                     <xcad:LayoutAnchorablePane DockWidth="4*">

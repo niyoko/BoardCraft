@@ -11,16 +11,21 @@
 
     public class Population : IEnumerable<ComponentPlacement>
     {
-        private readonly ConcurrentDictionary<ComponentPlacement, double> _fitness;
+        private readonly ConcurrentDictionary<ComponentPlacement, double> _fitness;        
         private bool _fitnessCalculated;
+        private ComponentPlacement _bestPlacement;
 
-        public Population(IEnumerable<ComponentPlacement> componentPlacements)
+        public Population(int generation, IEnumerable<ComponentPlacement> componentPlacements)
         {
             var list = new List<ComponentPlacement>(componentPlacements);
             ComponentPlacements = new ReadOnlyCollection<ComponentPlacement>(list);
             _fitness = new ConcurrentDictionary<ComponentPlacement, double>();
             _fitnessCalculated = false;
+
+            Generation = generation;
         }
+
+        public int Generation { get; }
 
         private void EnsureFitnessEvaluated()
         {
@@ -34,6 +39,8 @@
         {
             _fitnessCalculated = false;
             _fitness.Clear();
+            _bestPlacement = null;
+
             Parallel.ForEach(ComponentPlacements, p =>
             {
                 var fitness = evaluator.EvaluateFitness(p);
@@ -67,16 +74,25 @@
             return GetEnumerator();
         }
 
-        public ComponentPlacement GetBestPlacement()
+        public ComponentPlacement BestPlacement
         {
-            if (!_fitnessCalculated)
+            get
             {
-                throw new InvalidOperationException("Fitness not calculated yet");
-            }
+                if (!_fitnessCalculated)
+                {
+                    throw new InvalidOperationException("Fitness not calculated yet");
+                }
 
-            return _fitness.OrderByDescending(x => x.Value)
-                .Select(x => x.Key)
-                .First();
+                if (_bestPlacement == null)
+                {
+                    _bestPlacement = _fitness
+                        .OrderByDescending(x => x.Value)
+                        .Select(x => x.Key)
+                        .First();
+                }
+
+                return _bestPlacement;
+            }
         }
     }
 }

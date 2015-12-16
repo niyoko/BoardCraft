@@ -83,8 +83,7 @@
     <Compile Include="Placement\GA\RandomPopulationGenerator.cs" />
     <Compile Include="Placement\GA\ReproductionOperator.cs" />
     <Compile Include="Placement\GA\TournamentSelectionOperator.cs" />
-    <Compile Include="Placement\IPlacer.cs" />
-    <Compile Include="Placement\RandomPlacer.cs" />
+    <Compile Include="Placement\GA\RandomPlacer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
