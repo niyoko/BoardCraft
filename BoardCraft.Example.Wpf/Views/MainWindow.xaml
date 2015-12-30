@@ -9,8 +9,9 @@
     xmlns:local="clr-namespace:BoardCraft.Example.Wpf.Views"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     mc:Ignorable="d"
-    Title="MainWindow" Height="467.978" Width="875" WindowState="Maximized"
-    d:DataContext="{d:DesignInstance Type={x:Type vm:MainWindowViewModel}}"    
+    Title="Board Craft" Height="467.978" Width="875" WindowState="Maximized"
+    d:DataContext="{d:DesignInstance Type={x:Type vm:MainWindowViewModel}}"
+    Icon="../Resources/breeze_32.png"
     >
     <Window.Resources>
         <ResourceDictionary>

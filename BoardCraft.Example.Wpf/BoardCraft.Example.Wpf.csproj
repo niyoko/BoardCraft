@@ -183,6 +183,18 @@
     <Resource Include="Resources\control_play_16.png" />
     <Resource Include="Resources\control_stop_16.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\magic_wand_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\magic_wand_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\breeze_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\breeze_32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
   <PropertyGroup>

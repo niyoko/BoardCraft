@@ -12,7 +12,7 @@
       "footprint": [
         {
           "type": "rectangle",
-          "bottomLeft": [
+          "position": [
             -2.54,
             -0.635
           ],
@@ -70,7 +70,7 @@
       "footprint": [
         {
           "type": "rectangle",
-          "bottomLeft": [
+          "position": [
             -3.81,
             -0.635
           ],
@@ -128,7 +128,7 @@
       "footprint": [
         {
           "type": "rectangle",
-          "bottomLeft": [
+          "position": [
             -5.08,
             -1.27
           ],
@@ -186,7 +186,7 @@
       "footprint": [
         {
           "type": "rectangle",
-          "bottomLeft": [
+          "position": [
             -8.89,
             -1.27
           ],
@@ -235,3 +235,4 @@
     }
   ]
 }
+

@@ -1,6 +1,7 @@
 ﻿namespace BoardCraft.Input.Parsers.Library
 {
     using System.Collections.Generic;
+    using System.Diagnostics;
     using Models;
     using Newtonsoft.Json.Linq;
     using Library = Input.Library;
@@ -28,7 +29,7 @@
 
             var packParser = new PackageParser();
             foreach (var jpack in jpacks)
-            {
+            {                
                 var pack = packParser.Parse(jpack);
                 packs.Add(pack);
             }

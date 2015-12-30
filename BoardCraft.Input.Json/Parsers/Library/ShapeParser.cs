@@ -35,7 +35,7 @@
 
         public Rectangle ParseRectangle(JObject obj)
         {
-            var jbl = obj.GetValue("bottomLeft");
+            var jbl = obj.GetValue("position");
             var bl = new PointParser().Parse(jbl);
             var w = obj.GetValue("width").Value<double>();
             var h = obj.GetValue("height").Value<double>();
@@ -64,7 +64,7 @@
 
         public Square ParseSquare(JObject obj)
         {
-            var jbl = obj.GetValue("bottomLeft");
+            var jbl = obj.GetValue("position");
             var bl = new PointParser().Parse(jbl);
 
             var side = obj.GetValue("side").Value<double>();
