@@ -1,11 +1,8 @@
 ﻿namespace BoardCraft.Placement.GA
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Models;
-    using System.Collections.Concurrent;
-    using System.Diagnostics;
     using Drawing;
 
     public class FitnessEvaluator : IFitnessEvaluator
@@ -26,18 +23,38 @@
             public double Left;
         }
 
-        public double OverlapFitness(ComponentPlacement board)
+        private struct Size
         {
-            var componentList = board.Schema.Components.ToList();
+            public Size(double width, double height)
+            {
+                Width = width;
+                Height = height;
+            }
+
+            public double Width;
+            public double Height;
+        }
+
+        private Bounds[] CalculateBounds(ComponentPlacement placement)
+        {
+            var componentList = placement.Schema.Components.ToList();
             var count = componentList.Count;
             var d = new Bounds[count];
 
             for (var i = 0; i < count; i++)
             {
                 var c = componentList[i];
-                var p = board.GetComponentPlacement(c);
+                var p = placement.GetComponentPlacement(c);
                 d[i] = GetRealBound(p, c.Package);
             }
+
+            return d;
+        }
+
+        private double GetOverlappedArea(Bounds[] bounds)
+        {
+            var count = bounds.Length;
+            var d = bounds;
 
             var sum = 0.0;
             for (var i = 0; i < count; i++)
@@ -48,32 +65,89 @@
                 }
             }
 
-            var sumx = Math.Sqrt(sum) + 1;
-            return 1 / sumx;
+            return sum;
         }
 
-        public static double SizeFitness(ComponentPlacement board)
+        public static double AverageDistance(ComponentPlacement board)
         {
-            var compDists = (
-                from component in board.Schema.Components
-                select board.GetComponentPlacement(component)
-                into m
-                select m.Position.X * m.Position.X
-                       + m.Position.Y * m.Position.Y
-                into m1
-                select Math.Sqrt(m1)
-            );
+            var sum = 0.0;
 
-            var sum = compDists.Sum();
+            foreach (var c in board.Schema.Components)
+            {
+                var p = board.GetComponentPlacement(c);
+                var pos = p.Position;
 
-            return board.Schema.Components.Count / (sum + 1);
+                var xsq = pos.X * pos.X;
+                var ysq = pos.Y * pos.Y;
+
+                var dist = Math.Sqrt(xsq + ysq);
+                sum += dist;
+            }
+
+            var cnt = board.Schema.Components.Count;
+            return cnt == 0 ? 0 : sum / cnt;
+        }
+
+        private static readonly int[][] PointTransformer = new[]
+        {
+            new [] {1, 0, 0, 1}, //up
+            new [] {0, -1, 1, 0}, //left
+            new [] {-1, 0, 0, -1},
+            new [] {0, 1, -1, 0}
+        };
+
+        private double TidynessFitness(ComponentPlacement board, Size size)
+        {
+            var pinCount = board.Schema.Components.Select(x => x.Package.Pins.Count).Sum();
+            var points = new Point[pinCount];
+
+            var i = 0;
+            foreach (var c in board.Schema.Components)
+            {
+                var p = board.GetComponentPlacement(c);
+                var t = PointTransformer[(int)p.Orientation];
+
+                foreach (var pin in c.Package.Pins)
+                {
+                    var pos = pin.Position;
+                    var x = t[0] * pos.X + t[1] * pos.Y;
+                    var y = t[2] * pos.X + t[3] * pos.Y;
+
+                    points[i++] = new Point(x, y);
+                }
+            }
+        }
+
+        private Size GetBoardSize(Bounds[] bounds)
+        {
+            double w = 0, h = 0;
+            for (var i = 0; i < bounds.Length; i++)
+            {
+                var b = bounds[i];
+                if (b.Right > w)
+                {
+                    w = b.Right;
+                }
+
+                if (b.Top > h)
+                {
+                    h = b.Top;
+                }
+            }
+
+            return new Size(w, h);
         }
 
         public double EvaluateFitness(ComponentPlacement board)
         {
-            var ovlp = OverlapFitness(board);
-            var sz = SizeFitness(board);
-            return ovlp + sz;
+            var b = CalculateBounds(board);
+            var s = GetBoardSize(b);
+
+            var f1 = GetOverlappedArea(b);
+            var f2 = AverageDistance(board);
+            var f3 = TidynessFitness(board, s);
+
+            return (1 / (Math.Sqrt(f1) + 1)) + (1 / (f2 + 1));
         }
         
         private static Bounds GetRealBound(PlacementInfo metadata, Package p)
