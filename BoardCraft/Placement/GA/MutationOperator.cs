@@ -10,7 +10,7 @@
     {
   
 
-        public void Mutate(ComponentPlacement placement)
+        public void Mutate(Board placement)
         {
             var random = new Random(RandomSeed.Robust());
 
@@ -98,6 +98,6 @@
 
     public interface IMutationOperator
     {
-        void Mutate(ComponentPlacement population);
+        void Mutate(Board population);
     }
 }

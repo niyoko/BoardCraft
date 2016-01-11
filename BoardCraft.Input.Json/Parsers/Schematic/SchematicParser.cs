@@ -43,6 +43,13 @@
                 compParser.Parse(c, s);
             }
 
+            var jconn = o.GetValue("connections");
+            var jconnA = jconn as JArray;
+            if (jconnA == null)
+            {
+                throw new Exception("Connections should be array");
+            }
+
             return s;
         }
     }

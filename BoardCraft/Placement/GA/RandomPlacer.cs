@@ -38,7 +38,7 @@
 
         private double AspectRatio { get; }
 
-        public ComponentPlacement Place(Schematic schema)
+        public Board Place(Schematic schema)
         {
             if (schema == null)
             {
@@ -52,7 +52,7 @@
             var h = Math.Sqrt(boardArea / AspectRatio);
             var w = Math.Sqrt(boardArea * AspectRatio);
 
-            var p = new ComponentPlacement(schema);
+            var p = new Board(schema);
 
             foreach (var component in schema.Components)
             {

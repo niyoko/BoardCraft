@@ -52,6 +52,8 @@
     <Compile Include="Parsers\Library\PointParser.cs" />
     <Compile Include="Parsers\Library\ShapeParser.cs" />
     <Compile Include="Parsers\Schematic\ComponentParser.cs" />
+    <Compile Include="Parsers\Schematic\ConnectionParser.cs" />
+    <Compile Include="Parsers\Schematic\PinParser.cs" />
     <Compile Include="Parsers\Schematic\SchematicParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

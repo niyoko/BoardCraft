@@ -10,7 +10,7 @@ namespace BoardCraft.Placement.GA
 {
     public class OnePointCrossover : ICrossoverOperator
     {
-        public void Crossover(ComponentPlacement placement1, ComponentPlacement placement2)
+        public void Crossover(Board placement1, Board placement2)
         {
             if (placement1 == null)
             {

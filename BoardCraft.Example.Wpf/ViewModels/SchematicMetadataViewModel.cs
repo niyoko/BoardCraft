@@ -14,7 +14,7 @@
         private Population _currentPopulation;
         private Population _showedPopulation;
 
-        private ComponentPlacement _showedPlacement;        
+        private Board _showedPlacement;        
 
         private bool _pauseRequested;
         private readonly DispatcherTimer _timer;
@@ -46,7 +46,7 @@
 
         public int ComponentCount => Schematic.Components.Count;
 
-        public ComponentPlacement ShowedPlacement
+        public Board ShowedPlacement
         {
             get { return _showedPlacement; }
             set

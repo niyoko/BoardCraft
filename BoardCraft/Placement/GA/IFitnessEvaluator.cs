@@ -10,6 +10,6 @@ namespace BoardCraft.Placement.GA
 
     public interface IFitnessEvaluator
     {
-        double EvaluateFitness(ComponentPlacement schema);
+        double EvaluateFitness(Board schema);
     }
 }

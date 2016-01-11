@@ -2,227 +2,227 @@
   "components": [
     {
       "id": "R1",
-      "value": "1M3",
-      "package": "RES40"
-    },
-    {
-      "id": "R2",
-      "value": "1R6",
-      "package": "RES40"
-    },
-    {
-      "id": "R3",
-      "value": "36K",
-      "package": "RES40"
-    },
-    {
-      "id": "R4",
-      "value": "3M",
-      "package": "RES40"
-    },
-    {
-      "id": "R5",
-      "value": "9M1",
-      "package": "RES40"
-    },
-    {
-      "id": "R6",
-      "value": "6M8",
-      "package": "RES40"
-    },
-    {
-      "id": "R7",
-      "value": "8K2",
-      "package": "RES40"
-    },
-    {
-      "id": "R8",
-      "value": "68K",
-      "package": "RES40"
-    },
-    {
-      "id": "R9",
-      "value": "16R",
-      "package": "RES40"
-    },
-    {
-      "id": "R10",
-      "value": "8M2",
-      "package": "RES40"
-    },
-    {
-      "id": "R11",
-      "value": "120K",
-      "package": "RES40"
-    },
-    {
-      "id": "R12",
-      "value": "3M3",
-      "package": "RES40"
-    },
-    {
-      "id": "R13",
-      "value": "75R",
-      "package": "RES40"
-    },
-    {
-      "id": "R14",
-      "value": "39R",
-      "package": "RES40"
-    },
-    {
-      "id": "R15",
-      "value": "1R6",
-      "package": "RES40"
-    },
-    {
-      "id": "R16",
-      "value": "1R2",
-      "package": "RES40"
-    },
-    {
-      "id": "R17",
-      "value": "10R",
-      "package": "RES40"
-    },
-    {
-      "id": "R18",
-      "value": "8R2",
-      "package": "RES40"
-    },
-    {
-      "id": "R19",
-      "value": "360R",
-      "package": "RES40"
-    },
-    {
-      "id": "R20",
-      "value": "180K",
-      "package": "RES40"
-    },
-    {
-      "id": "R21",
-      "value": "220K",
-      "package": "RES40"
-    },
-    {
-      "id": "R22",
-      "value": "6K8",
-      "package": "RES40"
-    },
-    {
-      "id": "R23",
       "value": "2K4",
       "package": "RES40"
     },
     {
-      "id": "R24",
-      "value": "22R",
+      "id": "R2",
+      "value": "430R",
       "package": "RES40"
     },
     {
-      "id": "R25",
-      "value": "8M2",
+      "id": "R3",
+      "value": "300K",
       "package": "RES40"
     },
     {
-      "id": "R26",
-      "value": "120K",
+      "id": "R4",
+      "value": "5M6",
       "package": "RES40"
     },
     {
-      "id": "R27",
-      "value": "270K",
+      "id": "R5",
+      "value": "1M5",
       "package": "RES40"
     },
     {
-      "id": "R28",
-      "value": "2M4",
-      "package": "RES40"
-    },
-    {
-      "id": "R29",
-      "value": "24K",
-      "package": "RES40"
-    },
-    {
-      "id": "R30",
-      "value": "1K",
-      "package": "RES40"
-    },
-    {
-      "id": "R31",
-      "value": "11K",
-      "package": "RES40"
-    },
-    {
-      "id": "R32",
+      "id": "R6",
       "value": "43R",
       "package": "RES40"
     },
     {
-      "id": "R33",
-      "value": "51K",
-      "package": "RES40"
-    },
-    {
-      "id": "R34",
-      "value": "10K",
-      "package": "RES40"
-    },
-    {
-      "id": "R35",
-      "value": "330R",
-      "package": "RES40"
-    },
-    {
-      "id": "R36",
-      "value": "680R",
-      "package": "RES40"
-    },
-    {
-      "id": "R37",
-      "value": "3K9",
-      "package": "RES40"
-    },
-    {
-      "id": "R38",
+      "id": "R7",
       "value": "430K",
       "package": "RES40"
     },
     {
+      "id": "R8",
+      "value": "300K",
+      "package": "RES40"
+    },
+    {
+      "id": "R9",
+      "value": "1K5",
+      "package": "RES40"
+    },
+    {
+      "id": "R10",
+      "value": "750R",
+      "package": "RES40"
+    },
+    {
+      "id": "R11",
+      "value": "150K",
+      "package": "RES40"
+    },
+    {
+      "id": "R12",
+      "value": "20R",
+      "package": "RES40"
+    },
+    {
+      "id": "R13",
+      "value": "75K",
+      "package": "RES40"
+    },
+    {
+      "id": "R14",
+      "value": "22K",
+      "package": "RES40"
+    },
+    {
+      "id": "R15",
+      "value": "180R",
+      "package": "RES40"
+    },
+    {
+      "id": "R16",
+      "value": "36K",
+      "package": "RES40"
+    },
+    {
+      "id": "R17",
+      "value": "9R1",
+      "package": "RES40"
+    },
+    {
+      "id": "R18",
+      "value": "68K",
+      "package": "RES40"
+    },
+    {
+      "id": "R19",
+      "value": "100K",
+      "package": "RES40"
+    },
+    {
+      "id": "R20",
+      "value": "6K2",
+      "package": "RES40"
+    },
+    {
+      "id": "R21",
+      "value": "1M6",
+      "package": "RES40"
+    },
+    {
+      "id": "R22",
+      "value": "39R",
+      "package": "RES40"
+    },
+    {
+      "id": "R23",
+      "value": "6K2",
+      "package": "RES40"
+    },
+    {
+      "id": "R24",
+      "value": "2K7",
+      "package": "RES40"
+    },
+    {
+      "id": "R25",
+      "value": "30K",
+      "package": "RES40"
+    },
+    {
+      "id": "R26",
+      "value": "620K",
+      "package": "RES40"
+    },
+    {
+      "id": "R27",
+      "value": "8R2",
+      "package": "RES40"
+    },
+    {
+      "id": "R28",
+      "value": "3R9",
+      "package": "RES40"
+    },
+    {
+      "id": "R29",
+      "value": "30R",
+      "package": "RES40"
+    },
+    {
+      "id": "R30",
+      "value": "15K",
+      "package": "RES40"
+    },
+    {
+      "id": "R31",
+      "value": "18K",
+      "package": "RES40"
+    },
+    {
+      "id": "R32",
+      "value": "30R",
+      "package": "RES40"
+    },
+    {
+      "id": "R33",
+      "value": "8K2",
+      "package": "RES40"
+    },
+    {
+      "id": "R34",
+      "value": "510K",
+      "package": "RES40"
+    },
+    {
+      "id": "R35",
+      "value": "390R",
+      "package": "RES40"
+    },
+    {
+      "id": "R36",
+      "value": "9K1",
+      "package": "RES40"
+    },
+    {
+      "id": "R37",
+      "value": "3K3",
+      "package": "RES40"
+    },
+    {
+      "id": "R38",
+      "value": "300K",
+      "package": "RES40"
+    },
+    {
       "id": "R39",
-      "value": "12R",
+      "value": "11K",
       "package": "RES40"
     },
     {
       "id": "R40",
-      "value": "33R",
+      "value": "100R",
       "package": "RES40"
     },
     {
       "id": "R41",
-      "value": "22R",
+      "value": "20R",
       "package": "RES40"
     },
     {
       "id": "R42",
-      "value": "120K",
+      "value": "51R",
       "package": "RES40"
     },
     {
       "id": "R43",
-      "value": "910K",
+      "value": "270R",
       "package": "RES40"
     },
     {
       "id": "R44",
-      "value": "200R",
+      "value": "330K",
       "package": "RES40"
     },
     {
       "id": "R45",
-      "value": "6R8",
+      "value": "820K",
       "package": "RES40"
     },
     {
@@ -232,97 +232,97 @@
     },
     {
       "id": "R47",
-      "value": "6K2",
+      "value": "680K",
       "package": "RES40"
     },
     {
       "id": "R48",
-      "value": "1M1",
+      "value": "330R",
       "package": "RES40"
     },
     {
       "id": "R49",
-      "value": "270R",
+      "value": "7R5",
       "package": "RES40"
     },
     {
       "id": "R50",
-      "value": "5M1",
-      "package": "RES40"
-    },
-    {
-      "id": "R51",
-      "value": "33K",
-      "package": "RES40"
-    },
-    {
-      "id": "R52",
-      "value": "220K",
-      "package": "RES40"
-    },
-    {
-      "id": "R53",
-      "value": "510R",
-      "package": "RES40"
-    },
-    {
-      "id": "R54",
-      "value": "390K",
-      "package": "RES40"
-    },
-    {
-      "id": "R55",
-      "value": "39K",
-      "package": "RES40"
-    },
-    {
-      "id": "R56",
-      "value": "1K6",
-      "package": "RES40"
-    },
-    {
-      "id": "R57",
-      "value": "160R",
-      "package": "RES40"
-    },
-    {
-      "id": "R58",
-      "value": "180K",
-      "package": "RES40"
-    },
-    {
-      "id": "R59",
-      "value": "1R3",
-      "package": "RES40"
-    },
-    {
-      "id": "R60",
-      "value": "330K",
-      "package": "RES40"
-    },
-    {
-      "id": "R61",
-      "value": "56R",
-      "package": "RES40"
-    },
-    {
-      "id": "R62",
-      "value": "43K",
-      "package": "RES40"
-    },
-    {
-      "id": "R63",
       "value": "3R9",
       "package": "RES40"
     },
     {
+      "id": "R51",
+      "value": "6M2",
+      "package": "RES40"
+    },
+    {
+      "id": "R52",
+      "value": "1K3",
+      "package": "RES40"
+    },
+    {
+      "id": "R53",
+      "value": "820R",
+      "package": "RES40"
+    },
+    {
+      "id": "R54",
+      "value": "7K5",
+      "package": "RES40"
+    },
+    {
+      "id": "R55",
+      "value": "1K2",
+      "package": "RES40"
+    },
+    {
+      "id": "R56",
+      "value": "33R",
+      "package": "RES40"
+    },
+    {
+      "id": "R57",
+      "value": "1K1",
+      "package": "RES40"
+    },
+    {
+      "id": "R58",
+      "value": "3R3",
+      "package": "RES40"
+    },
+    {
+      "id": "R59",
+      "value": "10K",
+      "package": "RES40"
+    },
+    {
+      "id": "R60",
+      "value": "2K",
+      "package": "RES40"
+    },
+    {
+      "id": "R61",
+      "value": "220K",
+      "package": "RES40"
+    },
+    {
+      "id": "R62",
+      "value": "18R",
+      "package": "RES40"
+    },
+    {
+      "id": "R63",
+      "value": "24R",
+      "package": "RES40"
+    },
+    {
       "id": "R64",
-      "value": "1K5",
+      "value": "2K",
       "package": "RES40"
     },
     {
       "id": "R65",
-      "value": "62R",
+      "value": "12R",
       "package": "RES40"
     },
     {
@@ -332,673 +332,3275 @@
     },
     {
       "id": "R67",
-      "value": "8R2",
+      "value": "5M1",
       "package": "RES40"
     },
     {
       "id": "R68",
-      "value": "12R",
+      "value": "24R",
       "package": "RES40"
     },
     {
       "id": "R69",
-      "value": "820K",
+      "value": "15K",
       "package": "RES40"
     },
     {
       "id": "R70",
-      "value": "120R",
-      "package": "RES40"
-    },
-    {
-      "id": "R71",
-      "value": "110R",
-      "package": "RES40"
-    },
-    {
-      "id": "R72",
-      "value": "910K",
-      "package": "RES40"
-    },
-    {
-      "id": "R73",
-      "value": "2R2",
-      "package": "RES40"
-    },
-    {
-      "id": "R74",
-      "value": "43K",
-      "package": "RES40"
-    },
-    {
-      "id": "R75",
-      "value": "330R",
-      "package": "RES40"
-    },
-    {
-      "id": "R76",
-      "value": "240K",
-      "package": "RES40"
-    },
-    {
-      "id": "R77",
-      "value": "51K",
-      "package": "RES40"
-    },
-    {
-      "id": "R78",
-      "value": "6K8",
-      "package": "RES40"
-    },
-    {
-      "id": "R79",
-      "value": "300R",
-      "package": "RES40"
-    },
-    {
-      "id": "R80",
-      "value": "51K",
-      "package": "RES40"
-    },
-    {
-      "id": "R81",
-      "value": "1M1",
-      "package": "RES40"
-    },
-    {
-      "id": "R82",
-      "value": "27R",
-      "package": "RES40"
-    },
-    {
-      "id": "R83",
-      "value": "3K6",
-      "package": "RES40"
-    },
-    {
-      "id": "R84",
-      "value": "4M3",
-      "package": "RES40"
-    },
-    {
-      "id": "R85",
-      "value": "300K",
-      "package": "RES40"
-    },
-    {
-      "id": "R86",
-      "value": "1R2",
-      "package": "RES40"
-    },
-    {
-      "id": "R87",
-      "value": "47K",
-      "package": "RES40"
-    },
-    {
-      "id": "R88",
-      "value": "5M6",
-      "package": "RES40"
-    },
-    {
-      "id": "R89",
-      "value": "1R",
-      "package": "RES40"
-    },
-    {
-      "id": "R90",
-      "value": "1M6",
-      "package": "RES40"
-    },
-    {
-      "id": "R91",
-      "value": "43R",
-      "package": "RES40"
-    },
-    {
-      "id": "R92",
-      "value": "510K",
-      "package": "RES40"
-    },
-    {
-      "id": "R93",
-      "value": "6K2",
-      "package": "RES40"
-    },
-    {
-      "id": "R94",
-      "value": "43K",
-      "package": "RES40"
-    },
-    {
-      "id": "R95",
-      "value": "150R",
-      "package": "RES40"
-    },
-    {
-      "id": "R96",
-      "value": "3R9",
-      "package": "RES40"
-    },
-    {
-      "id": "R97",
-      "value": "4M7",
-      "package": "RES40"
-    },
-    {
-      "id": "R98",
-      "value": "3K6",
-      "package": "RES40"
-    },
-    {
-      "id": "R99",
-      "value": "1K8",
-      "package": "RES40"
-    },
-    {
-      "id": "R100",
-      "value": "1M6",
-      "package": "RES40"
-    },
-    {
-      "id": "R101",
-      "value": "330K",
-      "package": "RES40"
-    },
-    {
-      "id": "R102",
-      "value": "1K6",
-      "package": "RES40"
-    },
-    {
-      "id": "R103",
-      "value": "1M6",
-      "package": "RES40"
-    },
-    {
-      "id": "R104",
-      "value": "1R5",
-      "package": "RES40"
-    },
-    {
-      "id": "R105",
-      "value": "33K",
-      "package": "RES40"
-    },
-    {
-      "id": "R106",
-      "value": "130R",
-      "package": "RES40"
-    },
-    {
-      "id": "R107",
-      "value": "24K",
-      "package": "RES40"
-    },
-    {
-      "id": "R108",
-      "value": "910K",
-      "package": "RES40"
-    },
-    {
-      "id": "R109",
-      "value": "68K",
-      "package": "RES40"
-    },
-    {
-      "id": "R110",
-      "value": "3K6",
-      "package": "RES40"
-    },
-    {
-      "id": "R111",
-      "value": "3R6",
-      "package": "RES40"
-    },
-    {
-      "id": "R112",
-      "value": "560K",
-      "package": "RES40"
-    },
-    {
-      "id": "R113",
-      "value": "560R",
-      "package": "RES40"
-    },
-    {
-      "id": "R114",
-      "value": "430K",
-      "package": "RES40"
-    },
-    {
-      "id": "R115",
-      "value": "150R",
-      "package": "RES40"
-    },
-    {
-      "id": "R116",
-      "value": "5M1",
-      "package": "RES40"
-    },
-    {
-      "id": "R117",
-      "value": "27K",
-      "package": "RES40"
-    },
-    {
-      "id": "R118",
-      "value": "30R",
-      "package": "RES40"
-    },
-    {
-      "id": "R119",
-      "value": "20K",
-      "package": "RES40"
-    },
-    {
-      "id": "R120",
-      "value": "220R",
-      "package": "RES40"
-    },
-    {
-      "id": "R121",
-      "value": "130R",
-      "package": "RES40"
-    },
-    {
-      "id": "R122",
-      "value": "16K",
-      "package": "RES40"
-    },
-    {
-      "id": "R123",
-      "value": "7K5",
-      "package": "RES40"
-    },
-    {
-      "id": "R124",
-      "value": "13K",
-      "package": "RES40"
-    },
-    {
-      "id": "R125",
-      "value": "11K",
-      "package": "RES40"
-    },
-    {
-      "id": "R126",
-      "value": "100R",
-      "package": "RES40"
-    },
-    {
-      "id": "R127",
-      "value": "750K",
-      "package": "RES40"
-    },
-    {
-      "id": "R128",
-      "value": "330R",
-      "package": "RES40"
-    },
-    {
-      "id": "R129",
-      "value": "330K",
-      "package": "RES40"
-    },
-    {
-      "id": "R130",
-      "value": "36R",
-      "package": "RES40"
-    },
-    {
-      "id": "R131",
-      "value": "22K",
-      "package": "RES40"
-    },
-    {
-      "id": "R132",
-      "value": "3R9",
-      "package": "RES40"
-    },
-    {
-      "id": "R133",
-      "value": "220R",
-      "package": "RES40"
-    },
-    {
-      "id": "R134",
-      "value": "1K2",
-      "package": "RES40"
-    },
-    {
-      "id": "R135",
-      "value": "2R2",
-      "package": "RES40"
-    },
-    {
-      "id": "R136",
-      "value": "180R",
-      "package": "RES40"
-    },
-    {
-      "id": "R137",
-      "value": "680K",
-      "package": "RES40"
-    },
-    {
-      "id": "R138",
-      "value": "20K",
-      "package": "RES40"
-    },
-    {
-      "id": "R139",
-      "value": "5R1",
-      "package": "RES40"
-    },
-    {
-      "id": "R140",
-      "value": "680R",
-      "package": "RES40"
-    },
-    {
-      "id": "R141",
-      "value": "3M3",
-      "package": "RES40"
-    },
-    {
-      "id": "R142",
-      "value": "11K",
-      "package": "RES40"
-    },
-    {
-      "id": "R143",
-      "value": "910K",
-      "package": "RES40"
-    },
-    {
-      "id": "R144",
-      "value": "3R9",
-      "package": "RES40"
-    },
-    {
-      "id": "R145",
-      "value": "1K6",
-      "package": "RES40"
-    },
-    {
-      "id": "R146",
-      "value": "24K",
-      "package": "RES40"
-    },
-    {
-      "id": "R147",
-      "value": "6M8",
-      "package": "RES40"
-    },
-    {
-      "id": "R148",
-      "value": "1R",
-      "package": "RES40"
-    },
-    {
-      "id": "R149",
-      "value": "82K",
-      "package": "RES40"
-    },
-    {
-      "id": "R150",
-      "value": "1K6",
-      "package": "RES40"
-    },
-    {
-      "id": "R151",
-      "value": "8M2",
-      "package": "RES40"
-    },
-    {
-      "id": "R152",
-      "value": "10K",
-      "package": "RES40"
-    },
-    {
-      "id": "R153",
-      "value": "5M1",
-      "package": "RES40"
-    },
-    {
-      "id": "R154",
-      "value": "36K",
-      "package": "RES40"
-    },
-    {
-      "id": "R155",
-      "value": "10R",
-      "package": "RES40"
-    },
-    {
-      "id": "R156",
-      "value": "3M6",
-      "package": "RES40"
-    },
-    {
-      "id": "R157",
       "value": "3M",
       "package": "RES40"
     },
     {
-      "id": "R158",
-      "value": "68R",
+      "id": "R71",
+      "value": "5K1",
       "package": "RES40"
     },
     {
-      "id": "R159",
-      "value": "470R",
+      "id": "R72",
+      "value": "2M",
       "package": "RES40"
     },
     {
-      "id": "R160",
-      "value": "270K",
+      "id": "R73",
+      "value": "220K",
       "package": "RES40"
     },
     {
-      "id": "R161",
-      "value": "430K",
+      "id": "R74",
+      "value": "4R3",
       "package": "RES40"
     },
     {
-      "id": "R162",
-      "value": "470K",
+      "id": "R75",
+      "value": "1K2",
       "package": "RES40"
     },
     {
-      "id": "R163",
-      "value": "5K6",
+      "id": "R76",
+      "value": "51R",
       "package": "RES40"
     },
     {
-      "id": "R164",
-      "value": "24K",
-      "package": "RES40"
-    },
-    {
-      "id": "R165",
-      "value": "3M6",
-      "package": "RES40"
-    },
-    {
-      "id": "R166",
-      "value": "6K8",
-      "package": "RES40"
-    },
-    {
-      "id": "R167",
-      "value": "390R",
-      "package": "RES40"
-    },
-    {
-      "id": "R168",
-      "value": "360R",
-      "package": "RES40"
-    },
-    {
-      "id": "R169",
-      "value": "43K",
-      "package": "RES40"
-    },
-    {
-      "id": "R170",
-      "value": "3K",
-      "package": "RES40"
-    },
-    {
-      "id": "R171",
+      "id": "R77",
       "value": "4M7",
       "package": "RES40"
     },
     {
-      "id": "R172",
-      "value": "2R2",
+      "id": "R78",
+      "value": "5K6",
       "package": "RES40"
     },
     {
-      "id": "R173",
-      "value": "240K",
+      "id": "R79",
+      "value": "820K",
       "package": "RES40"
     },
     {
-      "id": "R174",
-      "value": "130K",
+      "id": "R80",
+      "value": "220K",
       "package": "RES40"
     },
     {
-      "id": "R175",
-      "value": "3M6",
+      "id": "R81",
+      "value": "7R5",
       "package": "RES40"
     },
     {
-      "id": "R176",
-      "value": "30R",
+      "id": "R82",
+      "value": "6R2",
       "package": "RES40"
     },
     {
-      "id": "R177",
-      "value": "6M2",
+      "id": "R83",
+      "value": "91R",
       "package": "RES40"
     },
     {
-      "id": "R178",
-      "value": "2K4",
+      "id": "R84",
+      "value": "75K",
       "package": "RES40"
     },
     {
-      "id": "R179",
-      "value": "470K",
+      "id": "R85",
+      "value": "47R",
       "package": "RES40"
     },
     {
-      "id": "R180",
-      "value": "16R",
-      "package": "RES40"
-    },
-    {
-      "id": "R181",
-      "value": "100R",
-      "package": "RES40"
-    },
-    {
-      "id": "R182",
-      "value": "13K",
-      "package": "RES40"
-    },
-    {
-      "id": "R183",
-      "value": "3R6",
-      "package": "RES40"
-    },
-    {
-      "id": "R184",
-      "value": "3M3",
-      "package": "RES40"
-    },
-    {
-      "id": "R185",
-      "value": "5M6",
-      "package": "RES40"
-    },
-    {
-      "id": "R186",
-      "value": "3K",
-      "package": "RES40"
-    },
-    {
-      "id": "R187",
-      "value": "1K1",
-      "package": "RES40"
-    },
-    {
-      "id": "R188",
-      "value": "300R",
-      "package": "RES40"
-    },
-    {
-      "id": "R189",
-      "value": "8M2",
-      "package": "RES40"
-    },
-    {
-      "id": "R190",
-      "value": "20R",
-      "package": "RES40"
-    },
-    {
-      "id": "R191",
-      "value": "6M8",
-      "package": "RES40"
-    },
-    {
-      "id": "R192",
-      "value": "5M1",
-      "package": "RES40"
-    },
-    {
-      "id": "R193",
+      "id": "R86",
       "value": "51K",
       "package": "RES40"
     },
     {
-      "id": "R194",
+      "id": "R87",
+      "value": "300R",
+      "package": "RES40"
+    },
+    {
+      "id": "R88",
+      "value": "180R",
+      "package": "RES40"
+    },
+    {
+      "id": "R89",
+      "value": "36K",
+      "package": "RES40"
+    },
+    {
+      "id": "R90",
+      "value": "3M6",
+      "package": "RES40"
+    },
+    {
+      "id": "R91",
+      "value": "62R",
+      "package": "RES40"
+    },
+    {
+      "id": "R92",
+      "value": "820K",
+      "package": "RES40"
+    },
+    {
+      "id": "R93",
       "value": "1R",
       "package": "RES40"
     },
     {
-      "id": "R195",
-      "value": "2K4",
+      "id": "R94",
+      "value": "1M5",
       "package": "RES40"
     },
     {
-      "id": "R196",
-      "value": "15R",
+      "id": "R95",
+      "value": "3R9",
       "package": "RES40"
     },
     {
-      "id": "R197",
-      "value": "2K4",
+      "id": "R96",
+      "value": "9K1",
       "package": "RES40"
     },
     {
-      "id": "R198",
+      "id": "R97",
+      "value": "9M1",
+      "package": "RES40"
+    },
+    {
+      "id": "R98",
+      "value": "2R7",
+      "package": "RES40"
+    },
+    {
+      "id": "R99",
+      "value": "27K",
+      "package": "RES40"
+    },
+    {
+      "id": "R100",
+      "value": "13K",
+      "package": "RES40"
+    },
+    {
+      "id": "R101",
+      "value": "62K",
+      "package": "RES40"
+    },
+    {
+      "id": "R102",
+      "value": "750R",
+      "package": "RES40"
+    },
+    {
+      "id": "R103",
+      "value": "1R5",
+      "package": "RES40"
+    },
+    {
+      "id": "R104",
+      "value": "110K",
+      "package": "RES40"
+    },
+    {
+      "id": "R105",
+      "value": "5R6",
+      "package": "RES40"
+    },
+    {
+      "id": "R106",
+      "value": "4K3",
+      "package": "RES40"
+    },
+    {
+      "id": "R107",
+      "value": "91R",
+      "package": "RES40"
+    },
+    {
+      "id": "R108",
+      "value": "430K",
+      "package": "RES40"
+    },
+    {
+      "id": "R109",
+      "value": "130R",
+      "package": "RES40"
+    },
+    {
+      "id": "R110",
+      "value": "110R",
+      "package": "RES40"
+    },
+    {
+      "id": "R111",
+      "value": "220K",
+      "package": "RES40"
+    },
+    {
+      "id": "R112",
       "value": "680K",
       "package": "RES40"
     },
     {
-      "id": "R199",
+      "id": "R113",
+      "value": "390K",
+      "package": "RES40"
+    },
+    {
+      "id": "R114",
+      "value": "4K7",
+      "package": "RES40"
+    },
+    {
+      "id": "R115",
+      "value": "330K",
+      "package": "RES40"
+    },
+    {
+      "id": "R116",
+      "value": "9K1",
+      "package": "RES40"
+    },
+    {
+      "id": "R117",
+      "value": "100R",
+      "package": "RES40"
+    },
+    {
+      "id": "R118",
+      "value": "47R",
+      "package": "RES40"
+    },
+    {
+      "id": "R119",
+      "value": "33R",
+      "package": "RES40"
+    },
+    {
+      "id": "R120",
+      "value": "24K",
+      "package": "RES40"
+    },
+    {
+      "id": "R121",
+      "value": "12R",
+      "package": "RES40"
+    },
+    {
+      "id": "R122",
+      "value": "51K",
+      "package": "RES40"
+    },
+    {
+      "id": "R123",
+      "value": "820K",
+      "package": "RES40"
+    },
+    {
+      "id": "R124",
+      "value": "36R",
+      "package": "RES40"
+    },
+    {
+      "id": "R125",
+      "value": "3K",
+      "package": "RES40"
+    },
+    {
+      "id": "R126",
+      "value": "15K",
+      "package": "RES40"
+    },
+    {
+      "id": "R127",
+      "value": "36R",
+      "package": "RES40"
+    },
+    {
+      "id": "R128",
+      "value": "2R2",
+      "package": "RES40"
+    },
+    {
+      "id": "R129",
+      "value": "30R",
+      "package": "RES40"
+    },
+    {
+      "id": "R130",
+      "value": "2K7",
+      "package": "RES40"
+    },
+    {
+      "id": "R131",
+      "value": "1K",
+      "package": "RES40"
+    },
+    {
+      "id": "R132",
+      "value": "6R2",
+      "package": "RES40"
+    },
+    {
+      "id": "R133",
+      "value": "160R",
+      "package": "RES40"
+    },
+    {
+      "id": "R134",
+      "value": "39R",
+      "package": "RES40"
+    },
+    {
+      "id": "R135",
+      "value": "68R",
+      "package": "RES40"
+    },
+    {
+      "id": "R136",
+      "value": "1K1",
+      "package": "RES40"
+    },
+    {
+      "id": "R137",
+      "value": "910R",
+      "package": "RES40"
+    },
+    {
+      "id": "R138",
+      "value": "2M4",
+      "package": "RES40"
+    },
+    {
+      "id": "R139",
+      "value": "1R1",
+      "package": "RES40"
+    },
+    {
+      "id": "R140",
+      "value": "5M1",
+      "package": "RES40"
+    },
+    {
+      "id": "R141",
+      "value": "1K",
+      "package": "RES40"
+    },
+    {
+      "id": "R142",
+      "value": "4K7",
+      "package": "RES40"
+    },
+    {
+      "id": "R143",
+      "value": "5K1",
+      "package": "RES40"
+    },
+    {
+      "id": "R144",
+      "value": "8K2",
+      "package": "RES40"
+    },
+    {
+      "id": "R145",
+      "value": "390K",
+      "package": "RES40"
+    },
+    {
+      "id": "R146",
+      "value": "5M6",
+      "package": "RES40"
+    },
+    {
+      "id": "R147",
+      "value": "2K4",
+      "package": "RES40"
+    },
+    {
+      "id": "R148",
+      "value": "3M9",
+      "package": "RES40"
+    },
+    {
+      "id": "R149",
+      "value": "8M2",
+      "package": "RES40"
+    },
+    {
+      "id": "R150",
       "value": "33K",
       "package": "RES40"
     },
     {
-      "id": "R200",
-      "value": "12R",
+      "id": "R151",
+      "value": "2K2",
       "package": "RES40"
+    },
+    {
+      "id": "R152",
+      "value": "180R",
+      "package": "RES40"
+    },
+    {
+      "id": "R153",
+      "value": "510K",
+      "package": "RES40"
+    },
+    {
+      "id": "R154",
+      "value": "510K",
+      "package": "RES40"
+    },
+    {
+      "id": "R155",
+      "value": "62R",
+      "package": "RES40"
+    },
+    {
+      "id": "R156",
+      "value": "750R",
+      "package": "RES40"
+    },
+    {
+      "id": "R157",
+      "value": "1M3",
+      "package": "RES40"
+    },
+    {
+      "id": "R158",
+      "value": "3K",
+      "package": "RES40"
+    },
+    {
+      "id": "R159",
+      "value": "27R",
+      "package": "RES40"
+    },
+    {
+      "id": "R160",
+      "value": "160K",
+      "package": "RES40"
+    },
+    {
+      "id": "R161",
+      "value": "22R",
+      "package": "RES40"
+    },
+    {
+      "id": "R162",
+      "value": "3K3",
+      "package": "RES40"
+    },
+    {
+      "id": "R163",
+      "value": "2R",
+      "package": "RES40"
+    },
+    {
+      "id": "R164",
+      "value": "100K",
+      "package": "RES40"
+    },
+    {
+      "id": "R165",
+      "value": "30R",
+      "package": "RES40"
+    },
+    {
+      "id": "R166",
+      "value": "9K1",
+      "package": "RES40"
+    },
+    {
+      "id": "R167",
+      "value": "470K",
+      "package": "RES40"
+    },
+    {
+      "id": "R168",
+      "value": "820K",
+      "package": "RES40"
+    },
+    {
+      "id": "R169",
+      "value": "300R",
+      "package": "RES40"
+    },
+    {
+      "id": "R170",
+      "value": "22R",
+      "package": "RES40"
+    },
+    {
+      "id": "R171",
+      "value": "150K",
+      "package": "RES40"
+    },
+    {
+      "id": "R172",
+      "value": "750R",
+      "package": "RES40"
+    },
+    {
+      "id": "R173",
+      "value": "1K2",
+      "package": "RES40"
+    },
+    {
+      "id": "R174",
+      "value": "5M6",
+      "package": "RES40"
+    },
+    {
+      "id": "R175",
+      "value": "910K",
+      "package": "RES40"
+    },
+    {
+      "id": "R176",
+      "value": "43R",
+      "package": "RES40"
+    },
+    {
+      "id": "R177",
+      "value": "4R7",
+      "package": "RES40"
+    },
+    {
+      "id": "R178",
+      "value": "11K",
+      "package": "RES40"
+    },
+    {
+      "id": "R179",
+      "value": "43K",
+      "package": "RES40"
+    },
+    {
+      "id": "R180",
+      "value": "9K1",
+      "package": "RES40"
+    },
+    {
+      "id": "R181",
+      "value": "3R3",
+      "package": "RES40"
+    },
+    {
+      "id": "R182",
+      "value": "4M3",
+      "package": "RES40"
+    },
+    {
+      "id": "R183",
+      "value": "1K6",
+      "package": "RES40"
+    },
+    {
+      "id": "R184",
+      "value": "2R2",
+      "package": "RES40"
+    },
+    {
+      "id": "R185",
+      "value": "390R",
+      "package": "RES40"
+    },
+    {
+      "id": "R186",
+      "value": "1M6",
+      "package": "RES40"
+    },
+    {
+      "id": "R187",
+      "value": "470K",
+      "package": "RES40"
+    },
+    {
+      "id": "R188",
+      "value": "20K",
+      "package": "RES40"
+    },
+    {
+      "id": "R189",
+      "value": "110R",
+      "package": "RES40"
+    },
+    {
+      "id": "R190",
+      "value": "30R",
+      "package": "RES40"
+    },
+    {
+      "id": "R191",
+      "value": "3K3",
+      "package": "RES40"
+    },
+    {
+      "id": "R192",
+      "value": "1M1",
+      "package": "RES40"
+    },
+    {
+      "id": "R193",
+      "value": "110R",
+      "package": "RES40"
+    },
+    {
+      "id": "R194",
+      "value": "2K2",
+      "package": "RES40"
+    },
+    {
+      "id": "R195",
+      "value": "22K",
+      "package": "RES40"
+    },
+    {
+      "id": "R196",
+      "value": "5M6",
+      "package": "RES40"
+    },
+    {
+      "id": "R197",
+      "value": "39R",
+      "package": "RES40"
+    },
+    {
+      "id": "R198",
+      "value": "2R7",
+      "package": "RES40"
+    },
+    {
+      "id": "R199",
+      "value": "36R",
+      "package": "RES40"
+    },
+    {
+      "id": "R200",
+      "value": "6R8",
+      "package": "RES40"
+    }
+  ],
+  "connections": [
+    {
+      "id": "Con1",
+      "pins": [
+        {
+          "component": "R0",
+          "pin": "p2"
+        },
+        {
+          "component": "R1",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con2",
+      "pins": [
+        {
+          "component": "R1",
+          "pin": "p2"
+        },
+        {
+          "component": "R2",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con3",
+      "pins": [
+        {
+          "component": "R2",
+          "pin": "p2"
+        },
+        {
+          "component": "R3",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con4",
+      "pins": [
+        {
+          "component": "R3",
+          "pin": "p2"
+        },
+        {
+          "component": "R4",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con5",
+      "pins": [
+        {
+          "component": "R4",
+          "pin": "p2"
+        },
+        {
+          "component": "R5",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con6",
+      "pins": [
+        {
+          "component": "R5",
+          "pin": "p2"
+        },
+        {
+          "component": "R6",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con7",
+      "pins": [
+        {
+          "component": "R6",
+          "pin": "p2"
+        },
+        {
+          "component": "R7",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con8",
+      "pins": [
+        {
+          "component": "R7",
+          "pin": "p2"
+        },
+        {
+          "component": "R8",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con9",
+      "pins": [
+        {
+          "component": "R8",
+          "pin": "p2"
+        },
+        {
+          "component": "R9",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con10",
+      "pins": [
+        {
+          "component": "R9",
+          "pin": "p2"
+        },
+        {
+          "component": "R10",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con11",
+      "pins": [
+        {
+          "component": "R10",
+          "pin": "p2"
+        },
+        {
+          "component": "R11",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con12",
+      "pins": [
+        {
+          "component": "R11",
+          "pin": "p2"
+        },
+        {
+          "component": "R12",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con13",
+      "pins": [
+        {
+          "component": "R12",
+          "pin": "p2"
+        },
+        {
+          "component": "R13",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con14",
+      "pins": [
+        {
+          "component": "R13",
+          "pin": "p2"
+        },
+        {
+          "component": "R14",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con15",
+      "pins": [
+        {
+          "component": "R14",
+          "pin": "p2"
+        },
+        {
+          "component": "R15",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con16",
+      "pins": [
+        {
+          "component": "R15",
+          "pin": "p2"
+        },
+        {
+          "component": "R16",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con17",
+      "pins": [
+        {
+          "component": "R16",
+          "pin": "p2"
+        },
+        {
+          "component": "R17",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con18",
+      "pins": [
+        {
+          "component": "R17",
+          "pin": "p2"
+        },
+        {
+          "component": "R18",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con19",
+      "pins": [
+        {
+          "component": "R18",
+          "pin": "p2"
+        },
+        {
+          "component": "R19",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con20",
+      "pins": [
+        {
+          "component": "R19",
+          "pin": "p2"
+        },
+        {
+          "component": "R20",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con21",
+      "pins": [
+        {
+          "component": "R20",
+          "pin": "p2"
+        },
+        {
+          "component": "R21",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con22",
+      "pins": [
+        {
+          "component": "R21",
+          "pin": "p2"
+        },
+        {
+          "component": "R22",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con23",
+      "pins": [
+        {
+          "component": "R22",
+          "pin": "p2"
+        },
+        {
+          "component": "R23",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con24",
+      "pins": [
+        {
+          "component": "R23",
+          "pin": "p2"
+        },
+        {
+          "component": "R24",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con25",
+      "pins": [
+        {
+          "component": "R24",
+          "pin": "p2"
+        },
+        {
+          "component": "R25",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con26",
+      "pins": [
+        {
+          "component": "R25",
+          "pin": "p2"
+        },
+        {
+          "component": "R26",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con27",
+      "pins": [
+        {
+          "component": "R26",
+          "pin": "p2"
+        },
+        {
+          "component": "R27",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con28",
+      "pins": [
+        {
+          "component": "R27",
+          "pin": "p2"
+        },
+        {
+          "component": "R28",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con29",
+      "pins": [
+        {
+          "component": "R28",
+          "pin": "p2"
+        },
+        {
+          "component": "R29",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con30",
+      "pins": [
+        {
+          "component": "R29",
+          "pin": "p2"
+        },
+        {
+          "component": "R30",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con31",
+      "pins": [
+        {
+          "component": "R30",
+          "pin": "p2"
+        },
+        {
+          "component": "R31",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con32",
+      "pins": [
+        {
+          "component": "R31",
+          "pin": "p2"
+        },
+        {
+          "component": "R32",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con33",
+      "pins": [
+        {
+          "component": "R32",
+          "pin": "p2"
+        },
+        {
+          "component": "R33",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con34",
+      "pins": [
+        {
+          "component": "R33",
+          "pin": "p2"
+        },
+        {
+          "component": "R34",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con35",
+      "pins": [
+        {
+          "component": "R34",
+          "pin": "p2"
+        },
+        {
+          "component": "R35",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con36",
+      "pins": [
+        {
+          "component": "R35",
+          "pin": "p2"
+        },
+        {
+          "component": "R36",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con37",
+      "pins": [
+        {
+          "component": "R36",
+          "pin": "p2"
+        },
+        {
+          "component": "R37",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con38",
+      "pins": [
+        {
+          "component": "R37",
+          "pin": "p2"
+        },
+        {
+          "component": "R38",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con39",
+      "pins": [
+        {
+          "component": "R38",
+          "pin": "p2"
+        },
+        {
+          "component": "R39",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con40",
+      "pins": [
+        {
+          "component": "R39",
+          "pin": "p2"
+        },
+        {
+          "component": "R40",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con41",
+      "pins": [
+        {
+          "component": "R40",
+          "pin": "p2"
+        },
+        {
+          "component": "R41",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con42",
+      "pins": [
+        {
+          "component": "R41",
+          "pin": "p2"
+        },
+        {
+          "component": "R42",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con43",
+      "pins": [
+        {
+          "component": "R42",
+          "pin": "p2"
+        },
+        {
+          "component": "R43",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con44",
+      "pins": [
+        {
+          "component": "R43",
+          "pin": "p2"
+        },
+        {
+          "component": "R44",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con45",
+      "pins": [
+        {
+          "component": "R44",
+          "pin": "p2"
+        },
+        {
+          "component": "R45",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con46",
+      "pins": [
+        {
+          "component": "R45",
+          "pin": "p2"
+        },
+        {
+          "component": "R46",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con47",
+      "pins": [
+        {
+          "component": "R46",
+          "pin": "p2"
+        },
+        {
+          "component": "R47",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con48",
+      "pins": [
+        {
+          "component": "R47",
+          "pin": "p2"
+        },
+        {
+          "component": "R48",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con49",
+      "pins": [
+        {
+          "component": "R48",
+          "pin": "p2"
+        },
+        {
+          "component": "R49",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con50",
+      "pins": [
+        {
+          "component": "R49",
+          "pin": "p2"
+        },
+        {
+          "component": "R50",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con51",
+      "pins": [
+        {
+          "component": "R50",
+          "pin": "p2"
+        },
+        {
+          "component": "R51",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con52",
+      "pins": [
+        {
+          "component": "R51",
+          "pin": "p2"
+        },
+        {
+          "component": "R52",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con53",
+      "pins": [
+        {
+          "component": "R52",
+          "pin": "p2"
+        },
+        {
+          "component": "R53",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con54",
+      "pins": [
+        {
+          "component": "R53",
+          "pin": "p2"
+        },
+        {
+          "component": "R54",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con55",
+      "pins": [
+        {
+          "component": "R54",
+          "pin": "p2"
+        },
+        {
+          "component": "R55",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con56",
+      "pins": [
+        {
+          "component": "R55",
+          "pin": "p2"
+        },
+        {
+          "component": "R56",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con57",
+      "pins": [
+        {
+          "component": "R56",
+          "pin": "p2"
+        },
+        {
+          "component": "R57",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con58",
+      "pins": [
+        {
+          "component": "R57",
+          "pin": "p2"
+        },
+        {
+          "component": "R58",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con59",
+      "pins": [
+        {
+          "component": "R58",
+          "pin": "p2"
+        },
+        {
+          "component": "R59",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con60",
+      "pins": [
+        {
+          "component": "R59",
+          "pin": "p2"
+        },
+        {
+          "component": "R60",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con61",
+      "pins": [
+        {
+          "component": "R60",
+          "pin": "p2"
+        },
+        {
+          "component": "R61",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con62",
+      "pins": [
+        {
+          "component": "R61",
+          "pin": "p2"
+        },
+        {
+          "component": "R62",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con63",
+      "pins": [
+        {
+          "component": "R62",
+          "pin": "p2"
+        },
+        {
+          "component": "R63",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con64",
+      "pins": [
+        {
+          "component": "R63",
+          "pin": "p2"
+        },
+        {
+          "component": "R64",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con65",
+      "pins": [
+        {
+          "component": "R64",
+          "pin": "p2"
+        },
+        {
+          "component": "R65",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con66",
+      "pins": [
+        {
+          "component": "R65",
+          "pin": "p2"
+        },
+        {
+          "component": "R66",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con67",
+      "pins": [
+        {
+          "component": "R66",
+          "pin": "p2"
+        },
+        {
+          "component": "R67",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con68",
+      "pins": [
+        {
+          "component": "R67",
+          "pin": "p2"
+        },
+        {
+          "component": "R68",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con69",
+      "pins": [
+        {
+          "component": "R68",
+          "pin": "p2"
+        },
+        {
+          "component": "R69",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con70",
+      "pins": [
+        {
+          "component": "R69",
+          "pin": "p2"
+        },
+        {
+          "component": "R70",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con71",
+      "pins": [
+        {
+          "component": "R70",
+          "pin": "p2"
+        },
+        {
+          "component": "R71",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con72",
+      "pins": [
+        {
+          "component": "R71",
+          "pin": "p2"
+        },
+        {
+          "component": "R72",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con73",
+      "pins": [
+        {
+          "component": "R72",
+          "pin": "p2"
+        },
+        {
+          "component": "R73",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con74",
+      "pins": [
+        {
+          "component": "R73",
+          "pin": "p2"
+        },
+        {
+          "component": "R74",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con75",
+      "pins": [
+        {
+          "component": "R74",
+          "pin": "p2"
+        },
+        {
+          "component": "R75",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con76",
+      "pins": [
+        {
+          "component": "R75",
+          "pin": "p2"
+        },
+        {
+          "component": "R76",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con77",
+      "pins": [
+        {
+          "component": "R76",
+          "pin": "p2"
+        },
+        {
+          "component": "R77",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con78",
+      "pins": [
+        {
+          "component": "R77",
+          "pin": "p2"
+        },
+        {
+          "component": "R78",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con79",
+      "pins": [
+        {
+          "component": "R78",
+          "pin": "p2"
+        },
+        {
+          "component": "R79",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con80",
+      "pins": [
+        {
+          "component": "R79",
+          "pin": "p2"
+        },
+        {
+          "component": "R80",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con81",
+      "pins": [
+        {
+          "component": "R80",
+          "pin": "p2"
+        },
+        {
+          "component": "R81",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con82",
+      "pins": [
+        {
+          "component": "R81",
+          "pin": "p2"
+        },
+        {
+          "component": "R82",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con83",
+      "pins": [
+        {
+          "component": "R82",
+          "pin": "p2"
+        },
+        {
+          "component": "R83",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con84",
+      "pins": [
+        {
+          "component": "R83",
+          "pin": "p2"
+        },
+        {
+          "component": "R84",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con85",
+      "pins": [
+        {
+          "component": "R84",
+          "pin": "p2"
+        },
+        {
+          "component": "R85",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con86",
+      "pins": [
+        {
+          "component": "R85",
+          "pin": "p2"
+        },
+        {
+          "component": "R86",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con87",
+      "pins": [
+        {
+          "component": "R86",
+          "pin": "p2"
+        },
+        {
+          "component": "R87",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con88",
+      "pins": [
+        {
+          "component": "R87",
+          "pin": "p2"
+        },
+        {
+          "component": "R88",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con89",
+      "pins": [
+        {
+          "component": "R88",
+          "pin": "p2"
+        },
+        {
+          "component": "R89",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con90",
+      "pins": [
+        {
+          "component": "R89",
+          "pin": "p2"
+        },
+        {
+          "component": "R90",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con91",
+      "pins": [
+        {
+          "component": "R90",
+          "pin": "p2"
+        },
+        {
+          "component": "R91",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con92",
+      "pins": [
+        {
+          "component": "R91",
+          "pin": "p2"
+        },
+        {
+          "component": "R92",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con93",
+      "pins": [
+        {
+          "component": "R92",
+          "pin": "p2"
+        },
+        {
+          "component": "R93",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con94",
+      "pins": [
+        {
+          "component": "R93",
+          "pin": "p2"
+        },
+        {
+          "component": "R94",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con95",
+      "pins": [
+        {
+          "component": "R94",
+          "pin": "p2"
+        },
+        {
+          "component": "R95",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con96",
+      "pins": [
+        {
+          "component": "R95",
+          "pin": "p2"
+        },
+        {
+          "component": "R96",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con97",
+      "pins": [
+        {
+          "component": "R96",
+          "pin": "p2"
+        },
+        {
+          "component": "R97",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con98",
+      "pins": [
+        {
+          "component": "R97",
+          "pin": "p2"
+        },
+        {
+          "component": "R98",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con99",
+      "pins": [
+        {
+          "component": "R98",
+          "pin": "p2"
+        },
+        {
+          "component": "R99",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con100",
+      "pins": [
+        {
+          "component": "R99",
+          "pin": "p2"
+        },
+        {
+          "component": "R100",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con101",
+      "pins": [
+        {
+          "component": "R100",
+          "pin": "p2"
+        },
+        {
+          "component": "R101",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con102",
+      "pins": [
+        {
+          "component": "R101",
+          "pin": "p2"
+        },
+        {
+          "component": "R102",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con103",
+      "pins": [
+        {
+          "component": "R102",
+          "pin": "p2"
+        },
+        {
+          "component": "R103",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con104",
+      "pins": [
+        {
+          "component": "R103",
+          "pin": "p2"
+        },
+        {
+          "component": "R104",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con105",
+      "pins": [
+        {
+          "component": "R104",
+          "pin": "p2"
+        },
+        {
+          "component": "R105",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con106",
+      "pins": [
+        {
+          "component": "R105",
+          "pin": "p2"
+        },
+        {
+          "component": "R106",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con107",
+      "pins": [
+        {
+          "component": "R106",
+          "pin": "p2"
+        },
+        {
+          "component": "R107",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con108",
+      "pins": [
+        {
+          "component": "R107",
+          "pin": "p2"
+        },
+        {
+          "component": "R108",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con109",
+      "pins": [
+        {
+          "component": "R108",
+          "pin": "p2"
+        },
+        {
+          "component": "R109",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con110",
+      "pins": [
+        {
+          "component": "R109",
+          "pin": "p2"
+        },
+        {
+          "component": "R110",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con111",
+      "pins": [
+        {
+          "component": "R110",
+          "pin": "p2"
+        },
+        {
+          "component": "R111",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con112",
+      "pins": [
+        {
+          "component": "R111",
+          "pin": "p2"
+        },
+        {
+          "component": "R112",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con113",
+      "pins": [
+        {
+          "component": "R112",
+          "pin": "p2"
+        },
+        {
+          "component": "R113",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con114",
+      "pins": [
+        {
+          "component": "R113",
+          "pin": "p2"
+        },
+        {
+          "component": "R114",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con115",
+      "pins": [
+        {
+          "component": "R114",
+          "pin": "p2"
+        },
+        {
+          "component": "R115",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con116",
+      "pins": [
+        {
+          "component": "R115",
+          "pin": "p2"
+        },
+        {
+          "component": "R116",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con117",
+      "pins": [
+        {
+          "component": "R116",
+          "pin": "p2"
+        },
+        {
+          "component": "R117",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con118",
+      "pins": [
+        {
+          "component": "R117",
+          "pin": "p2"
+        },
+        {
+          "component": "R118",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con119",
+      "pins": [
+        {
+          "component": "R118",
+          "pin": "p2"
+        },
+        {
+          "component": "R119",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con120",
+      "pins": [
+        {
+          "component": "R119",
+          "pin": "p2"
+        },
+        {
+          "component": "R120",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con121",
+      "pins": [
+        {
+          "component": "R120",
+          "pin": "p2"
+        },
+        {
+          "component": "R121",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con122",
+      "pins": [
+        {
+          "component": "R121",
+          "pin": "p2"
+        },
+        {
+          "component": "R122",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con123",
+      "pins": [
+        {
+          "component": "R122",
+          "pin": "p2"
+        },
+        {
+          "component": "R123",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con124",
+      "pins": [
+        {
+          "component": "R123",
+          "pin": "p2"
+        },
+        {
+          "component": "R124",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con125",
+      "pins": [
+        {
+          "component": "R124",
+          "pin": "p2"
+        },
+        {
+          "component": "R125",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con126",
+      "pins": [
+        {
+          "component": "R125",
+          "pin": "p2"
+        },
+        {
+          "component": "R126",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con127",
+      "pins": [
+        {
+          "component": "R126",
+          "pin": "p2"
+        },
+        {
+          "component": "R127",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con128",
+      "pins": [
+        {
+          "component": "R127",
+          "pin": "p2"
+        },
+        {
+          "component": "R128",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con129",
+      "pins": [
+        {
+          "component": "R128",
+          "pin": "p2"
+        },
+        {
+          "component": "R129",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con130",
+      "pins": [
+        {
+          "component": "R129",
+          "pin": "p2"
+        },
+        {
+          "component": "R130",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con131",
+      "pins": [
+        {
+          "component": "R130",
+          "pin": "p2"
+        },
+        {
+          "component": "R131",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con132",
+      "pins": [
+        {
+          "component": "R131",
+          "pin": "p2"
+        },
+        {
+          "component": "R132",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con133",
+      "pins": [
+        {
+          "component": "R132",
+          "pin": "p2"
+        },
+        {
+          "component": "R133",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con134",
+      "pins": [
+        {
+          "component": "R133",
+          "pin": "p2"
+        },
+        {
+          "component": "R134",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con135",
+      "pins": [
+        {
+          "component": "R134",
+          "pin": "p2"
+        },
+        {
+          "component": "R135",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con136",
+      "pins": [
+        {
+          "component": "R135",
+          "pin": "p2"
+        },
+        {
+          "component": "R136",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con137",
+      "pins": [
+        {
+          "component": "R136",
+          "pin": "p2"
+        },
+        {
+          "component": "R137",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con138",
+      "pins": [
+        {
+          "component": "R137",
+          "pin": "p2"
+        },
+        {
+          "component": "R138",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con139",
+      "pins": [
+        {
+          "component": "R138",
+          "pin": "p2"
+        },
+        {
+          "component": "R139",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con140",
+      "pins": [
+        {
+          "component": "R139",
+          "pin": "p2"
+        },
+        {
+          "component": "R140",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con141",
+      "pins": [
+        {
+          "component": "R140",
+          "pin": "p2"
+        },
+        {
+          "component": "R141",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con142",
+      "pins": [
+        {
+          "component": "R141",
+          "pin": "p2"
+        },
+        {
+          "component": "R142",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con143",
+      "pins": [
+        {
+          "component": "R142",
+          "pin": "p2"
+        },
+        {
+          "component": "R143",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con144",
+      "pins": [
+        {
+          "component": "R143",
+          "pin": "p2"
+        },
+        {
+          "component": "R144",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con145",
+      "pins": [
+        {
+          "component": "R144",
+          "pin": "p2"
+        },
+        {
+          "component": "R145",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con146",
+      "pins": [
+        {
+          "component": "R145",
+          "pin": "p2"
+        },
+        {
+          "component": "R146",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con147",
+      "pins": [
+        {
+          "component": "R146",
+          "pin": "p2"
+        },
+        {
+          "component": "R147",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con148",
+      "pins": [
+        {
+          "component": "R147",
+          "pin": "p2"
+        },
+        {
+          "component": "R148",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con149",
+      "pins": [
+        {
+          "component": "R148",
+          "pin": "p2"
+        },
+        {
+          "component": "R149",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con150",
+      "pins": [
+        {
+          "component": "R149",
+          "pin": "p2"
+        },
+        {
+          "component": "R150",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con151",
+      "pins": [
+        {
+          "component": "R150",
+          "pin": "p2"
+        },
+        {
+          "component": "R151",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con152",
+      "pins": [
+        {
+          "component": "R151",
+          "pin": "p2"
+        },
+        {
+          "component": "R152",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con153",
+      "pins": [
+        {
+          "component": "R152",
+          "pin": "p2"
+        },
+        {
+          "component": "R153",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con154",
+      "pins": [
+        {
+          "component": "R153",
+          "pin": "p2"
+        },
+        {
+          "component": "R154",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con155",
+      "pins": [
+        {
+          "component": "R154",
+          "pin": "p2"
+        },
+        {
+          "component": "R155",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con156",
+      "pins": [
+        {
+          "component": "R155",
+          "pin": "p2"
+        },
+        {
+          "component": "R156",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con157",
+      "pins": [
+        {
+          "component": "R156",
+          "pin": "p2"
+        },
+        {
+          "component": "R157",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con158",
+      "pins": [
+        {
+          "component": "R157",
+          "pin": "p2"
+        },
+        {
+          "component": "R158",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con159",
+      "pins": [
+        {
+          "component": "R158",
+          "pin": "p2"
+        },
+        {
+          "component": "R159",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con160",
+      "pins": [
+        {
+          "component": "R159",
+          "pin": "p2"
+        },
+        {
+          "component": "R160",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con161",
+      "pins": [
+        {
+          "component": "R160",
+          "pin": "p2"
+        },
+        {
+          "component": "R161",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con162",
+      "pins": [
+        {
+          "component": "R161",
+          "pin": "p2"
+        },
+        {
+          "component": "R162",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con163",
+      "pins": [
+        {
+          "component": "R162",
+          "pin": "p2"
+        },
+        {
+          "component": "R163",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con164",
+      "pins": [
+        {
+          "component": "R163",
+          "pin": "p2"
+        },
+        {
+          "component": "R164",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con165",
+      "pins": [
+        {
+          "component": "R164",
+          "pin": "p2"
+        },
+        {
+          "component": "R165",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con166",
+      "pins": [
+        {
+          "component": "R165",
+          "pin": "p2"
+        },
+        {
+          "component": "R166",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con167",
+      "pins": [
+        {
+          "component": "R166",
+          "pin": "p2"
+        },
+        {
+          "component": "R167",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con168",
+      "pins": [
+        {
+          "component": "R167",
+          "pin": "p2"
+        },
+        {
+          "component": "R168",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con169",
+      "pins": [
+        {
+          "component": "R168",
+          "pin": "p2"
+        },
+        {
+          "component": "R169",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con170",
+      "pins": [
+        {
+          "component": "R169",
+          "pin": "p2"
+        },
+        {
+          "component": "R170",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con171",
+      "pins": [
+        {
+          "component": "R170",
+          "pin": "p2"
+        },
+        {
+          "component": "R171",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con172",
+      "pins": [
+        {
+          "component": "R171",
+          "pin": "p2"
+        },
+        {
+          "component": "R172",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con173",
+      "pins": [
+        {
+          "component": "R172",
+          "pin": "p2"
+        },
+        {
+          "component": "R173",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con174",
+      "pins": [
+        {
+          "component": "R173",
+          "pin": "p2"
+        },
+        {
+          "component": "R174",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con175",
+      "pins": [
+        {
+          "component": "R174",
+          "pin": "p2"
+        },
+        {
+          "component": "R175",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con176",
+      "pins": [
+        {
+          "component": "R175",
+          "pin": "p2"
+        },
+        {
+          "component": "R176",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con177",
+      "pins": [
+        {
+          "component": "R176",
+          "pin": "p2"
+        },
+        {
+          "component": "R177",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con178",
+      "pins": [
+        {
+          "component": "R177",
+          "pin": "p2"
+        },
+        {
+          "component": "R178",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con179",
+      "pins": [
+        {
+          "component": "R178",
+          "pin": "p2"
+        },
+        {
+          "component": "R179",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con180",
+      "pins": [
+        {
+          "component": "R179",
+          "pin": "p2"
+        },
+        {
+          "component": "R180",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con181",
+      "pins": [
+        {
+          "component": "R180",
+          "pin": "p2"
+        },
+        {
+          "component": "R181",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con182",
+      "pins": [
+        {
+          "component": "R181",
+          "pin": "p2"
+        },
+        {
+          "component": "R182",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con183",
+      "pins": [
+        {
+          "component": "R182",
+          "pin": "p2"
+        },
+        {
+          "component": "R183",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con184",
+      "pins": [
+        {
+          "component": "R183",
+          "pin": "p2"
+        },
+        {
+          "component": "R184",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con185",
+      "pins": [
+        {
+          "component": "R184",
+          "pin": "p2"
+        },
+        {
+          "component": "R185",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con186",
+      "pins": [
+        {
+          "component": "R185",
+          "pin": "p2"
+        },
+        {
+          "component": "R186",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con187",
+      "pins": [
+        {
+          "component": "R186",
+          "pin": "p2"
+        },
+        {
+          "component": "R187",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con188",
+      "pins": [
+        {
+          "component": "R187",
+          "pin": "p2"
+        },
+        {
+          "component": "R188",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con189",
+      "pins": [
+        {
+          "component": "R188",
+          "pin": "p2"
+        },
+        {
+          "component": "R189",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con190",
+      "pins": [
+        {
+          "component": "R189",
+          "pin": "p2"
+        },
+        {
+          "component": "R190",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con191",
+      "pins": [
+        {
+          "component": "R190",
+          "pin": "p2"
+        },
+        {
+          "component": "R191",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con192",
+      "pins": [
+        {
+          "component": "R191",
+          "pin": "p2"
+        },
+        {
+          "component": "R192",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con193",
+      "pins": [
+        {
+          "component": "R192",
+          "pin": "p2"
+        },
+        {
+          "component": "R193",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con194",
+      "pins": [
+        {
+          "component": "R193",
+          "pin": "p2"
+        },
+        {
+          "component": "R194",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con195",
+      "pins": [
+        {
+          "component": "R194",
+          "pin": "p2"
+        },
+        {
+          "component": "R195",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con196",
+      "pins": [
+        {
+          "component": "R195",
+          "pin": "p2"
+        },
+        {
+          "component": "R196",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con197",
+      "pins": [
+        {
+          "component": "R196",
+          "pin": "p2"
+        },
+        {
+          "component": "R197",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con198",
+      "pins": [
+        {
+          "component": "R197",
+          "pin": "p2"
+        },
+        {
+          "component": "R198",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con199",
+      "pins": [
+        {
+          "component": "R198",
+          "pin": "p2"
+        },
+        {
+          "component": "R199",
+          "pin": "p1"
+        }
+      ]
+    },
+    {
+      "id": "Con200",
+      "pins": [
+        {
+          "component": "R199",
+          "pin": "p2"
+        },
+        {
+          "component": "R0",
+          "pin": "p1"
+        }
+      ]
     }
   ]
 }

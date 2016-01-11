@@ -4,17 +4,17 @@
     using System.Collections.Generic;
     using Drawing;
 
-    public sealed class ComponentPlacement
+    public sealed class Board
     {
         private readonly Dictionary<Component, PlacementInfo> _placement;
         private static readonly PlacementInfo DefaultPlacementInfo;
 
-        static ComponentPlacement()
+        static Board()
         {
             DefaultPlacementInfo = new PlacementInfo(Point.Origin, Orientation.Up);
         }
 
-        public ComponentPlacement(Schematic schema)
+        public Board(Schematic schema)
         {
             if (schema == null)
             {
@@ -48,15 +48,37 @@
             _placement[component] = info;
         }
 
-        public ComponentPlacement Clone()
+        public Board Clone()
         {
-            var cloning = new ComponentPlacement(Schema);
+            var cloning = new Board(Schema);
             foreach (var placementInfo in _placement)
             {
                 cloning._placement.Add(placementInfo.Key, placementInfo.Value);
             }
 
             return cloning;
+        }
+
+        private bool _sizeValid;
+        private Size _size;
+
+        public Size Size
+        {
+            get
+            {
+                if (!_sizeValid)
+                {
+                    CalculateSize();
+                }
+
+                return _size;
+            }
+        }
+
+        private void CalculateSize()
+        {
+
+            _sizeValid = true;
         }
 
         public void Draw(ICanvas canvas)

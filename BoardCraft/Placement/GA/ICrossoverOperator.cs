@@ -4,6 +4,6 @@
 
     public interface ICrossoverOperator
     {
-        void Crossover(ComponentPlacement placement1, ComponentPlacement placement2);
+        void Crossover(Board placement1, Board placement2);
     }
 }

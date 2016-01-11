@@ -4,7 +4,7 @@
     using System.Linq;
     using Models;
     using Drawing;
-
+    using System.Collections.Generic;
     public class FitnessEvaluator : IFitnessEvaluator
     {
         private struct Bounds
@@ -35,7 +35,7 @@
             public double Height;
         }
 
-        private Bounds[] CalculateBounds(ComponentPlacement placement)
+        private Bounds[] CalculateBounds(Board placement)
         {
             var componentList = placement.Schema.Components.ToList();
             var count = componentList.Count;
@@ -68,7 +68,7 @@
             return sum;
         }
 
-        public static double AverageDistance(ComponentPlacement board)
+        public static double AverageDistance(Board board)
         {
             var sum = 0.0;
 
@@ -96,10 +96,13 @@
             new [] {0, 1, -1, 0}
         };
 
-        private double TidynessFitness(ComponentPlacement board, Size size)
+        private double TidynessFitness(Board board, Size size)
         {
             var pinCount = board.Schema.Components.Select(x => x.Package.Pins.Count).Sum();
-            var points = new Point[pinCount];
+            var xx = new int[pinCount];
+            var yy = new int[pinCount];
+                        
+            var ys = new HashSet<int>();
 
             var i = 0;
             foreach (var c in board.Schema.Components)
@@ -113,9 +116,15 @@
                     var x = t[0] * pos.X + t[1] * pos.Y;
                     var y = t[2] * pos.X + t[3] * pos.Y;
 
-                    points[i++] = new Point(x, y);
+                    xx[i] = (int)(100 * x);
+                    yy[i] = (int)(100 * y);
                 }
             }
+
+            var dxc = xx.Distinct().Count();
+            var dyc = yy.Distinct().Count();
+
+            return (size.Width + size.Height)/(dxc + dyc);
         }
 
         private Size GetBoardSize(Bounds[] bounds)
@@ -138,7 +147,7 @@
             return new Size(w, h);
         }
 
-        public double EvaluateFitness(ComponentPlacement board)
+        public double EvaluateFitness(Board board)
         {
             var b = CalculateBounds(board);
             var s = GetBoardSize(b);
@@ -147,7 +156,7 @@
             var f2 = AverageDistance(board);
             var f3 = TidynessFitness(board, s);
 
-            return (1 / (Math.Sqrt(f1) + 1)) + (1 / (f2 + 1));
+            return (1 / (Math.Sqrt(f1) + 1)) + (1 / (f2 + 1)) + f3;
         }
         
         private static Bounds GetRealBound(PlacementInfo metadata, Package p)

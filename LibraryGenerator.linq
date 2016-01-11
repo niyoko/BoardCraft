@@ -9,7 +9,7 @@
 
 void Main()
 {
-	ResGen().ToString().Dump();
+	ExGen1().ToString().Dump();
 }
 
 private JToken ExGen1()
@@ -25,6 +25,24 @@ private JToken ExGen1()
 			{"package", "RES40"}
 		};
 		l.Add(it);
+	}
+
+	for (var i = 0; i < 200; i++)
+	{
+		var f = i;
+		var s = (i+1)%200;
+		
+		var ps = new JArray
+		{
+			new JObject{{"component", $"R{f}"}},
+			new JObject{{"pin", "p1"}}
+		};
+		
+		var i1 = new JObject
+		{
+			{"id", $"Con{i+1}"},
+			{"pins", ps}
+		};
 	}
 
 	var r = new JObject { { "components", l}};

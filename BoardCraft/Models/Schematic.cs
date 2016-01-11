@@ -32,6 +32,9 @@
             return con;
         }
 
-
+        public Component GetComponent(string id)
+        {
+            return ComponentDictionary[id];
+        }
     }
 }

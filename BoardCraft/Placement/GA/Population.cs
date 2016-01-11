@@ -9,17 +9,17 @@
     using System.Threading.Tasks;
     using Models;
 
-    public class Population : IEnumerable<ComponentPlacement>
+    public class Population : IEnumerable<Board>
     {
-        private readonly ConcurrentDictionary<ComponentPlacement, double> _fitness;        
+        private readonly ConcurrentDictionary<Board, double> _fitness;        
         private bool _fitnessCalculated;
-        private ComponentPlacement _bestPlacement;
+        private Board _bestPlacement;
 
-        public Population(int generation, IEnumerable<ComponentPlacement> componentPlacements)
+        public Population(int generation, IEnumerable<Board> componentPlacements)
         {
-            var list = new List<ComponentPlacement>(componentPlacements);
-            ComponentPlacements = new ReadOnlyCollection<ComponentPlacement>(list);
-            _fitness = new ConcurrentDictionary<ComponentPlacement, double>();
+            var list = new List<Board>(componentPlacements);
+            ComponentPlacements = new ReadOnlyCollection<Board>(list);
+            _fitness = new ConcurrentDictionary<Board, double>();
             _fitnessCalculated = false;
 
             Generation = generation;
@@ -54,17 +54,17 @@
             _fitnessCalculated = true;
         }
 
-        public ICollection<ComponentPlacement> ComponentPlacements { get; }
+        public ICollection<Board> ComponentPlacements { get; }
         
         public int Count => ComponentPlacements.Count;
 
-        public double GetFitnessFor(ComponentPlacement placement)
+        public double GetFitnessFor(Board placement)
         {
             EnsureFitnessEvaluated();
             return _fitness[placement];
         }
 
-        public IEnumerator<ComponentPlacement> GetEnumerator()
+        public IEnumerator<Board> GetEnumerator()
         {
             return ComponentPlacements.GetEnumerator();
         }
@@ -74,7 +74,7 @@
             return GetEnumerator();
         }
 
-        public ComponentPlacement BestPlacement
+        public Board BestPlacement
         {
             get
             {

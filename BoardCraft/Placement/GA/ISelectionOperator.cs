@@ -5,6 +5,6 @@
 
     public interface ISelectionOperator
     {
-        ICollection<ComponentPlacement> Select(Population p);
+        ICollection<Board> Select(Population p);
     }
 }

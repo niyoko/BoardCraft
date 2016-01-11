@@ -20,16 +20,16 @@ namespace BoardCraft.Output.Wpf
 
         public ICanvas Canvas { get; }
 
-        public ComponentPlacement ComponentPlacement
+        public Board ComponentPlacement
         {
-            get { return GetValue(ComponentPlacementProperty) as ComponentPlacement; }
+            get { return GetValue(ComponentPlacementProperty) as Board; }
             set { SetValue(ComponentPlacementProperty, value); }
         }
 
         static void Cb(DependencyObject o, DependencyPropertyChangedEventArgs args)
         {
             var that = (BoardCanvas)o;
-            var plc = (Models.ComponentPlacement)args.NewValue;
+            var plc = (Models.Board)args.NewValue;
             if (plc == null)
             {
                 that.Canvas.Clear();
@@ -43,7 +43,7 @@ namespace BoardCraft.Output.Wpf
 
         public static readonly DependencyProperty ComponentPlacementProperty =
             DependencyProperty.Register(nameof(ComponentPlacement), 
-                typeof(ComponentPlacement), 
+                typeof(Board), 
                 typeof(BoardCanvas), 
                 new FrameworkPropertyMetadata(Cb));
     }

@@ -18,7 +18,7 @@
             _pressure = selectionPressure;
         }
 
-        private ComponentPlacement SelectOne(Population p, Random random)
+        private Board SelectOne(Population p, Random random)
         {
             var n = p.ComponentPlacements.PickRandom(random, _tournamentSize);
             var ordered = n.OrderByDescending(p.GetFitnessFor);
@@ -26,7 +26,7 @@
             var factor = 1.0;
             var accumulatedChance = 0.0;
             var pickedNumber = random.NextDouble();
-            ComponentPlacement last = null;
+            Board last = null;
             foreach (var p1 in ordered)
             {
                 last = p1;
@@ -42,11 +42,11 @@
             return last;
         }
 
-        public ICollection<ComponentPlacement> Select(Population p)
+        public ICollection<Board> Select(Population p)
         {
             var n = p.Count;
             var random = new Random(RandomSeed.Robust());
-            var c = new List<ComponentPlacement>(n);
+            var c = new List<Board>(n);
 
             for (var i = 0; i < n; i++)
             {

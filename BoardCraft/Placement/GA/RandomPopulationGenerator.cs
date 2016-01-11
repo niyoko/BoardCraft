@@ -45,7 +45,7 @@
         public Population GeneratePopulation(Schematic schema, int populationSize)
         {
             var subseeds = GetSubseed(populationSize);
-            var shcs = new ComponentPlacement[populationSize];
+            var shcs = new Board[populationSize];
 
             Parallel.For(0, populationSize, i =>
             {
