@@ -27,6 +27,7 @@ private JToken ExGen1()
 		l.Add(it);
 	}
 
+	var c = new JArray();
 	for (var i = 0; i < 200; i++)
 	{
 		var f = i;
@@ -34,8 +35,8 @@ private JToken ExGen1()
 		
 		var ps = new JArray
 		{
-			new JObject{{"component", $"R{f}"}},
-			new JObject{{"pin", "p1"}}
+			new JObject{{"component", $"R{f+1}"},{"pin", "p2"}},
+			new JObject{{"component", $"R{s+1}"},{"pin", "p1"}}
 		};
 		
 		var i1 = new JObject
@@ -43,9 +44,11 @@ private JToken ExGen1()
 			{"id", $"Con{i+1}"},
 			{"pins", ps}
 		};
+		
+		c.Add(i1);
 	}
 
-	var r = new JObject { { "components", l}};
+	var r = new JObject { { "components", l }, {"connections", c}};
 	return r;
 }
 
@@ -126,7 +129,7 @@ private JToken ResGen()
 		var hir = 0.5 * ir;
 		var hil = 0.5 * il;
 
-		var bounds = new JArray(hh, hip, -hh, -hip);
+		var bounds = new JArray(hh + 1, hip + 3, -hh - 1, -hip-3);
 		var bl = new JArray(-hir, -hh);
 		var draws = new JArray(new object[]
 		{

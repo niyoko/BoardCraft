@@ -1,16 +1,20 @@
 ﻿namespace BoardCraft.Example.Wpf.ViewModels
 {
     using System;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Threading;
     using Models;
+    using NLog;
     using Placement.GA;
-
+    using Routing;
     internal class SchematicMetadataViewModel : ViewModelBase
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private Population _currentPopulation;
         private Population _showedPopulation;
 
@@ -110,6 +114,11 @@
                 var fits = c.Select(c.GetFitnessFor).ToList();
 
                 ShowedPlacement = c.BestPlacement;
+
+                var t = new Router(1, 1);
+                t.Route(ShowedPlacement);
+                
+
                 Properties.GenerationCount = c.Generation;
                 Properties.AverageFitness = fits.Average();
                 Properties.MaxFitness = fits.Max();

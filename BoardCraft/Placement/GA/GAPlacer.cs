@@ -57,21 +57,14 @@
         private void GenerateInitialPopulation()
         {
             var pop = _initialPopulationGenerator.GeneratePopulation(_schematic, _populationSize);
-            var sw = Stopwatch.StartNew();
             pop.EvaluateFitness(_fitnessEvaluator);
-            sw.Stop();
-            Debug.WriteLine($"Generation #: {pop.Generation} Fitness Eval Time: {sw.ElapsedMilliseconds}");
-
             CurrentPopulation = pop;
         }
 
         private void NextPopulationInternal()
         {
             var pop = _reproductionOperator.ProduceNextGeneration(CurrentPopulation);
-            var sw = Stopwatch.StartNew();
             pop.EvaluateFitness(_fitnessEvaluator);
-            sw.Stop();
-            Debug.WriteLine($"Generation #: {pop.Generation} Fitness Eval Time: {sw.ElapsedMilliseconds}");
             CurrentPopulation = pop;
         }        
     }

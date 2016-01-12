@@ -30,11 +30,11 @@ namespace BoardCraft.Input.Parsers.Schematic
             var id = otoken.GetValue("id").Value<string>();
 
             var conn = schematic.AddConnection(id);
-            var jpins = otoken.GetValue("connections");
+            var jpins = otoken.GetValue("pins");
             var pins = jpins as JArray;
             if (pins == null)
             {
-                throw new Exception("connections must be array");
+                throw new Exception("pins must be array");
             }
 
             foreach (var pin in pins)

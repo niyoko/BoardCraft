@@ -3,54 +3,10 @@
     using System;
     using System.Linq;
     using Models;
-    using Drawing;
     using System.Collections.Generic;
+
     public class FitnessEvaluator : IFitnessEvaluator
     {
-        private struct Bounds
-        {
-            public Bounds(double top, double right, double bottom, double left)
-            {
-                Top = top;
-                Right = right;
-                Bottom = bottom;
-                Left = left;
-            }
-
-            public double Top;
-            public double Right;
-            public double Bottom;
-            public double Left;
-        }
-
-        private struct Size
-        {
-            public Size(double width, double height)
-            {
-                Width = width;
-                Height = height;
-            }
-
-            public double Width;
-            public double Height;
-        }
-
-        private Bounds[] CalculateBounds(Board placement)
-        {
-            var componentList = placement.Schema.Components.ToList();
-            var count = componentList.Count;
-            var d = new Bounds[count];
-
-            for (var i = 0; i < count; i++)
-            {
-                var c = componentList[i];
-                var p = placement.GetComponentPlacement(c);
-                d[i] = GetRealBound(p, c.Package);
-            }
-
-            return d;
-        }
-
         private double GetOverlappedArea(Bounds[] bounds)
         {
             var count = bounds.Length;
@@ -63,6 +19,8 @@
                 {
                     sum += GetOverlap(d[i], d[j]);
                 }
+
+                sum += GetOutOfRangeArea(d[i]);
             }
 
             return sum;
@@ -101,7 +59,7 @@
             var pinCount = board.Schema.Components.Select(x => x.Package.Pins.Count).Sum();
             var xx = new int[pinCount];
             var yy = new int[pinCount];
-                        
+
             var ys = new HashSet<int>();
 
             var i = 0;
@@ -124,79 +82,36 @@
             var dxc = xx.Distinct().Count();
             var dyc = yy.Distinct().Count();
 
-            return (size.Width + size.Height)/(dxc + dyc);
-        }
-
-        private Size GetBoardSize(Bounds[] bounds)
-        {
-            double w = 0, h = 0;
-            for (var i = 0; i < bounds.Length; i++)
-            {
-                var b = bounds[i];
-                if (b.Right > w)
-                {
-                    w = b.Right;
-                }
-
-                if (b.Top > h)
-                {
-                    h = b.Top;
-                }
-            }
-
-            return new Size(w, h);
+            return (size.Width + size.Height) / (dxc + dyc);
         }
 
         public double EvaluateFitness(Board board)
         {
-            var b = CalculateBounds(board);
-            var s = GetBoardSize(b);
+            var b = board.GetBounds();
+            var s = board.Size;
 
             var f1 = GetOverlappedArea(b);
             var f2 = AverageDistance(board);
             var f3 = TidynessFitness(board, s);
 
-            return (1 / (Math.Sqrt(f1) + 1)) + (1 / (f2 + 1)) + f3;
+            return (1/(Math.Sqrt(f1) + 1)) + (1/(f2 + 1));// + f3;
         }
-        
-        private static Bounds GetRealBound(PlacementInfo metadata, Package p)
+
+        private static double GetOutOfRangeArea(Bounds b)
         {
-            double left = 0, top = 0, right = 0, bottom = 0;
-            var package = p.Boundaries;
-            switch (metadata.Orientation)
+            if (b.Left >= 0 && b.Bottom >= 0)
             {
-                case Orientation.Up:
-                    left = package.Left;
-                    top = package.Top;
-                    right = package.Right;
-                    bottom = package.Bottom;
-                    break;
-                case Orientation.Left:
-                    left = -package.Top;
-                    top = package.Right;
-                    right = -package.Bottom;
-                    bottom = package.Left;
-                    break;
-                case Orientation.Down:
-                    left = -package.Right;
-                    top = -package.Bottom;
-                    right = -package.Left;
-                    bottom = -package.Top;
-                    break;
-                case Orientation.Right:
-                    left = package.Bottom;
-                    top = -package.Left;
-                    right = package.Top;
-                    bottom = -package.Right;
-                    break;
+                return 0;
             }
 
-            left = metadata.Position.X + left;
-            top = metadata.Position.Y + top;
-            right = metadata.Position.X + right;
-            bottom = metadata.Position.Y + bottom;
+            var w = b.Right - b.Left;
+            var h = b.Top - b.Bottom;
+            var wx = b.Right >= 0 ? -b.Left : w;
+            var hx = b.Top >= 0 ? -b.Bottom : h;
+            if (wx < 0) wx = 0;
+            if (hx < 0) hx = 0;
 
-            return new Bounds(top, right, bottom, left);
+            return (wx*h) + (hx*w) - (wx*hx);
         }
 
         private static double GetOverlap(Bounds b1, Bounds b2)
@@ -209,7 +124,7 @@
             if (lef >= rig || bot >= top)
                 return 0.0;
 
-            return (rig - lef)*(top - bot);
+            return (rig - lef) * (top - bot);
         }
     }
 }

@@ -3,9 +3,11 @@
     using System;
     using Models;
     using Newtonsoft.Json.Linq;
+    using NLog;
 
     class PinParser
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public void Parse(JToken token, Schematic schematic, Connection connection)
         {
             if (token == null)
@@ -31,6 +33,7 @@
             }
 
             var c = t2.GetValue("component").Value<string>();
+            _logger.Debug($"Name {c}");
             var c1 = schematic.GetComponent(c);
 
             var pin = t2.GetValue("pin").Value<string>();

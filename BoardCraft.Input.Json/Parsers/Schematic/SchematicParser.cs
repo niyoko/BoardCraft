@@ -1,14 +1,14 @@
 ﻿namespace BoardCraft.Input.Parsers.Schematic
 {
-    using Models;
     using Newtonsoft.Json.Linq;
+    using NLog;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Schematic = Models.Schematic;
 
     class SchematicParser
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         private readonly IComponentRepository _repository;
         public SchematicParser(IComponentRepository repository)
         {
@@ -44,10 +44,19 @@
             }
 
             var jconn = o.GetValue("connections");
+            
+            _logger.Debug(jconn == null ? "(null)" : jconn.GetType().FullName);            
+
             var jconnA = jconn as JArray;
             if (jconnA == null)
             {
                 throw new Exception("Connections should be array");
+            }
+
+            var conParser = new ConnectionParser();
+            foreach (var c in jconnA)
+            {
+                conParser.Parse(c, s);
             }
 
             return s;

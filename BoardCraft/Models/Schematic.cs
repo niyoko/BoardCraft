@@ -17,6 +17,7 @@
         }
 
         public ICollection<Component> Components => ComponentDictionary.Values;
+        public ICollection<Connection> Connections => _connections.Values; 
 
         public Component AddComponent(string id, Package package)
         {

@@ -3,7 +3,8 @@
     using System;
     using System.Collections.Generic;
     using Drawing;
-
+    using Placement.GA;
+    using System.Linq;
     public sealed class Board
     {
         private readonly Dictionary<Component, PlacementInfo> _placement;
@@ -42,10 +43,9 @@
         }
 
         public void SetComponentPlacement(Component component, PlacementInfo info)
-        {
-            
-
+        {            
             _placement[component] = info;
+            _boundsValid = false;
         }
 
         public Board Clone()
@@ -59,26 +59,111 @@
             return cloning;
         }
 
-        private bool _sizeValid;
+        private bool _boundsValid;
         private Size _size;
+        private Bounds[] _bounds;
 
         public Size Size
         {
             get
             {
-                if (!_sizeValid)
+                if (!_boundsValid)
                 {
-                    CalculateSize();
+                    CalculateBounds();
                 }
 
                 return _size;
             }
         }
 
+        private static Bounds GetRealBound(PlacementInfo metadata, Package p)
+        {
+            double left = 0, top = 0, right = 0, bottom = 0;
+            var package = p.Boundaries;
+            switch (metadata.Orientation)
+            {
+                case Orientation.Up:
+                    left = package.Left;
+                    top = package.Top;
+                    right = package.Right;
+                    bottom = package.Bottom;
+                    break;
+                case Orientation.Left:
+                    left = -package.Top;
+                    top = package.Right;
+                    right = -package.Bottom;
+                    bottom = package.Left;
+                    break;
+                case Orientation.Down:
+                    left = -package.Right;
+                    top = -package.Bottom;
+                    right = -package.Left;
+                    bottom = -package.Top;
+                    break;
+                case Orientation.Right:
+                    left = package.Bottom;
+                    top = -package.Left;
+                    right = package.Top;
+                    bottom = -package.Right;
+                    break;
+            }
+
+            left = metadata.Position.X + left;
+            top = metadata.Position.Y + top;
+            right = metadata.Position.X + right;
+            bottom = metadata.Position.Y + bottom;
+
+            return new Bounds(top, right, bottom, left);
+        }
+
+        private void CalculateBounds()
+        {
+            var componentList = Schema.Components.ToList();
+            var count = componentList.Count;
+            var d = new Bounds[count];
+
+            for (var i = 0; i < count; i++)
+            {
+                var c = componentList[i];
+                var p = GetComponentPlacement(c);
+                d[i] = GetRealBound(p, c.Package);
+            }
+
+            _bounds = d;
+
+            CalculateSize();
+
+            _boundsValid = true;
+        }
+
         private void CalculateSize()
         {
+            double w = 0, h = 0;
+            for (var i = 0; i < _bounds.Length; i++)
+            {
+                var b = _bounds[i];
+                if (b.Right > w)
+                {
+                    w = b.Right;
+                }
 
-            _sizeValid = true;
+                if (b.Top > h)
+                {
+                    h = b.Top;
+                }
+            }
+
+            _size = new Size(w, h);
+        }
+
+        public Bounds[] GetBounds()
+        {
+            if (!_boundsValid)
+            {
+                CalculateBounds();
+            }
+
+            return _bounds;
         }
 
         public void Draw(ICanvas canvas)
