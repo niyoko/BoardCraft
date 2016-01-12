@@ -24,13 +24,13 @@
 
         public Line ParseLine(JObject obj)
         {
-            var jp1 = obj.GetValue("p1");
-            var jp2 = obj.GetValue("p2");
+            var jP1 = obj.GetValue("p1");
+            var jP2 = obj.GetValue("p2");
             
-            var p1 = new PointParser().Parse(jp1);
-            var p2 = new PointParser().Parse(jp2);
+            var P1 = new PointParser().Parse(jP1);
+            var P2 = new PointParser().Parse(jP2);
 
-            return new Line(p1, p2);
+            return new Line(P1, P2);
         }
 
         public Rectangle ParseRectangle(JObject obj)

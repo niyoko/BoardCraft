@@ -57,11 +57,11 @@
       "pins": [
         {
           "component": "R10",
-          "pin": "p2"
+          "pin": "P2"
         },
         {
           "component": "R1",
-          "pin": "p1"
+          "pin": "P1"
         }
       ]
     },
@@ -70,11 +70,11 @@
       "pins": [
         {
           "component": "R1",
-          "pin": "p2"
+          "pin": "P2"
         },
         {
           "component": "R2",
-          "pin": "p1"
+          "pin": "P1"
         }
       ]
     },
@@ -83,11 +83,11 @@
       "pins": [
         {
           "component": "R2",
-          "pin": "p2"
+          "pin": "P2"
         },
         {
           "component": "R3",
-          "pin": "p1"
+          "pin": "P1"
         }
       ]
     },
@@ -96,11 +96,11 @@
       "pins": [
         {
           "component": "R3",
-          "pin": "p2"
+          "pin": "P2"
         },
         {
           "component": "R4",
-          "pin": "p1"
+          "pin": "P1"
         }
       ]
     },
@@ -109,11 +109,11 @@
       "pins": [
         {
           "component": "R4",
-          "pin": "p2"
+          "pin": "P2"
         },
         {
           "component": "R5",
-          "pin": "p1"
+          "pin": "P1"
         }
       ]
     },
@@ -122,11 +122,11 @@
       "pins": [
         {
           "component": "R5",
-          "pin": "p2"
+          "pin": "P2"
         },
         {
           "component": "R6",
-          "pin": "p1"
+          "pin": "P1"
         }
       ]
     },
@@ -135,11 +135,11 @@
       "pins": [
         {
           "component": "R6",
-          "pin": "p2"
+          "pin": "P2"
         },
         {
           "component": "R7",
-          "pin": "p1"
+          "pin": "P1"
         }
       ]
     },
@@ -148,11 +148,11 @@
       "pins": [
         {
           "component": "R7",
-          "pin": "p2"
+          "pin": "P2"
         },
         {
           "component": "R8",
-          "pin": "p1"
+          "pin": "P1"
         }
       ]
     },
@@ -161,11 +161,11 @@
       "pins": [
         {
           "component": "R8",
-          "pin": "p2"
+          "pin": "P2"
         },
         {
           "component": "R9",
-          "pin": "p1"
+          "pin": "P1"
         }
       ]
     },
@@ -174,11 +174,11 @@
       "pins": [
         {
           "component": "R9",
-          "pin": "p2"
+          "pin": "P2"
         },
         {
           "component": "R10",
-          "pin": "p1"
+          "pin": "P1"
         }
       ]
     }

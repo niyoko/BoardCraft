@@ -24,12 +24,12 @@
         /// <summary>
         ///     X part of this <see cref="Point" />
         /// </summary>
-        public double X { get; }
+        public readonly double X;
 
         /// <summary>
         ///     Y part of this <see cref="Point" />
         /// </summary>
-        public double Y { get; }
+        public readonly double Y;
 
         /// <summary>
         ///     Override <see cref="System.Object.ToString()" /> method

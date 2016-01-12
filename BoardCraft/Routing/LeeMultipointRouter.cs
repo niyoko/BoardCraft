@@ -6,42 +6,44 @@ namespace BoardCraft.Routing
 {
     internal class LeeMultipointRouter
     {
-        private readonly ISet<IntPoint> _nodes;
-        private ISet<IntPoint> _nodesWrapper;
+        private readonly ISet<IntPoint> _pins;
+        private ISet<IntPoint> _pinsWrapper;
 
         internal RouterWorkspace Workspace { get; }
 
         public ISet<IntPoint> Trace { get; }
+        public ICollection<IList<IntPoint>> TraceNodes { get; } 
 
-        public LeeMultipointRouter(RouterWorkspace workspace, ISet<IntPoint> nodes)
+        public LeeMultipointRouter(RouterWorkspace workspace, ISet<IntPoint> pins)
         {
             Workspace = workspace;
-            _nodes = nodes;
+            _pins = pins;
 
             Trace = new HashSet<IntPoint>();
+            TraceNodes = new List<IList<IntPoint>>();
         }
 
-        public ISet<IntPoint> Nodes
+        public ISet<IntPoint> Pins
         {
             get
             {
-                if (_nodesWrapper == null)
+                if (_pinsWrapper == null)
                 {
-                    _nodesWrapper = new ReadOnlySet<IntPoint>(_nodes);
+                    _pinsWrapper = new ReadOnlySet<IntPoint>(_pins);
                 }
 
-                return _nodesWrapper;
+                return _pinsWrapper;
             }
         }
 
         public bool Route()
         {
-            var rp = Nodes.ToArray()[0];
+            var rp = Pins.ToArray()[0];
             Trace.Add(rp);
 
             while (!IsFinished())
             {
-                var target = new HashSet<IntPoint>(Nodes);
+                var target = new HashSet<IntPoint>(Pins);
                 target.ExceptWith(Trace);
                 var singleRouter = new LeeRouter(Workspace, Trace, target);
                 var rResult = singleRouter.Route();
@@ -51,6 +53,7 @@ namespace BoardCraft.Routing
                 }
 
                 Trace.UnionWith(singleRouter.Track);
+                TraceNodes.Add(singleRouter.TrackNodes);
             }
 
             return true;
@@ -58,7 +61,7 @@ namespace BoardCraft.Routing
 
         private bool IsFinished()
         {
-            return Nodes.All(x => Trace.Contains(x));
+            return Pins.All(x => Trace.Contains(x));
         }
     }
 }

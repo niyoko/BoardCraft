@@ -10,7 +10,7 @@
             Orientation = orientation;
         }
 
-        public Point Position { get; }
-        public Orientation Orientation { get; }
+        public readonly Point Position;
+        public readonly Orientation Orientation;
     }
 }

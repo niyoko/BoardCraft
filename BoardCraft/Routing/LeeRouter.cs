@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace BoardCraft.Routing
 {
+    using System.Collections.ObjectModel;
+
     internal class LeeRouter
     {
         private readonly RouterWorkspace _workspace;
@@ -12,6 +14,7 @@ namespace BoardCraft.Routing
         private readonly IList<IntPoint> _internalNodes;
 
         public ISet<IntPoint> Track { get; }
+        public IList<IntPoint> TrackNodes { get; } 
 
         private static readonly Dictionary<IntPoint, int> neighbors = new Dictionary<IntPoint, int>
         {
@@ -34,6 +37,7 @@ namespace BoardCraft.Routing
             _internalNodes = new List<IntPoint>();
 
             Track = new ReadOnlySet<IntPoint>(_internalTrack);
+            TrackNodes = new ReadOnlyCollection<IntPoint>(_internalNodes);
         }
 
         public bool Route()

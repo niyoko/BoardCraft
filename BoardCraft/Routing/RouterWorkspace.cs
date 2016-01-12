@@ -10,7 +10,7 @@
 
         public RouterWorkspace(Board board, double traceWidth, double minimumSpace)
         {
-            var s = board.Size;
+            var s = board.GetSize();
             //var wx = Math.Ceiling(s.Width/traceWidth/2);
             //var hx = Math.Ceiling(s.Height/traceWidth/2);            
 

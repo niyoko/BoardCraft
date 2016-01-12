@@ -113,12 +113,11 @@
             {
                 var fits = c.Select(c.GetFitnessFor).ToList();
 
-                ShowedPlacement = c.BestPlacement;
-
+                var p = c.BestPlacement;
                 var t = new Router(1, 1);
-                t.Route(ShowedPlacement);
-                
+                t.Route(p);
 
+                ShowedPlacement = p;
                 Properties.GenerationCount = c.Generation;
                 Properties.AverageFitness = fits.Average();
                 Properties.MaxFitness = fits.Max();

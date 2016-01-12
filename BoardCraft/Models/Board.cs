@@ -5,10 +5,14 @@
     using Drawing;
     using Placement.GA;
     using System.Linq;
+    using Routing;
+
     public sealed class Board
     {
         private readonly Dictionary<Component, PlacementInfo> _placement;
         private static readonly PlacementInfo DefaultPlacementInfo;
+
+        internal readonly ICollection<ICollection<IList<IntPoint>>> _traces;
 
         static Board()
         {
@@ -24,7 +28,10 @@
 
             Schema = schema;
 
-            _placement = new Dictionary<Component, PlacementInfo>(schema.Components.Count);            
+            _placement = new Dictionary<Component, PlacementInfo>(schema.Components.Count);
+            _bounds = new Dictionary<Component, Bounds>(schema.Components.Count);
+            _pinLocations = new Dictionary<Component, Dictionary<string, Point>>(schema.Components.Count);
+            _traces = new List<ICollection<IList<IntPoint>>>();
         }
 
         public Schematic Schema { get; }
@@ -45,7 +52,8 @@
         public void SetComponentPlacement(Component component, PlacementInfo info)
         {            
             _placement[component] = info;
-            _boundsValid = false;
+            _bounds.Remove(component);
+            _pinLocations.Remove(component);
         }
 
         public Board Clone()
@@ -54,30 +62,104 @@
             foreach (var placementInfo in _placement)
             {
                 cloning._placement.Add(placementInfo.Key, placementInfo.Value);
-            }
+            }           
 
             return cloning;
         }
 
-        private bool _boundsValid;
-        private Size _size;
-        private Bounds[] _bounds;
+        private readonly Dictionary<Component, Bounds> _bounds;
+        private readonly Dictionary<Component, Dictionary<string, Point>> _pinLocations;
 
-        public Size Size
+        public void CalculateBounds()
         {
-            get
-            {
-                if (!_boundsValid)
-                {
-                    CalculateBounds();
-                }
+            var cl = Schema.Components
+                .Where(x => !_bounds.ContainsKey(x))
+                .ToList();
 
-                return _size;
+            foreach (var c in cl)
+            {
+                var d = GetRealBound(c);
+                _bounds.Add(c, d);
             }
         }
 
-        private static Bounds GetRealBound(PlacementInfo metadata, Package p)
+        public void CalculatePinLocations()
         {
+            var cl = Schema.Components
+                .Where(x => !_pinLocations.ContainsKey(x))
+                .ToList();
+
+            foreach (var c in cl)
+            {
+                var d = GetComponentPinLocation(c);
+                _pinLocations.Add(c, d);
+            }
+        }
+
+        public Bounds GetBounds(Component component)
+        {
+            Bounds b;
+            if (_bounds.TryGetValue(component, out b))
+            {
+                return b;
+            }
+
+            var bx = GetRealBound(component);
+            _bounds.Add(component, bx);
+
+            return bx;
+        }
+
+        public Point GetPinLocation(Component component, string pin)
+        {
+            Dictionary<string, Point> p;
+            if (_pinLocations.TryGetValue(component, out p))
+            {
+                return p[pin];
+            }
+
+            var ppx = GetComponentPinLocation(component);
+            _pinLocations.Add(component, ppx);
+
+            return ppx[pin];
+        }
+
+        public Size GetSize()
+        {
+            CalculateBounds();
+            var cl = Schema.Components;
+            var w = 0.0;
+            var h = 0.0;
+
+            foreach(var c in cl)
+            {
+                var b = GetBounds(c);
+                if (b.Right > w)
+                {
+                    w = b.Right;
+                }
+
+                if (b.Top > h)
+                {
+                    h = b.Top;
+                }
+            }
+            return new Size(w, h);            
+        }
+
+        private static readonly int[][] PointTransformer = new[]
+        {
+            new [] {1, 0, 0, 1},
+            new [] {0, -1, 1, 0},
+            new [] {-1, 0, 0, -1},
+            new [] {0, 1, -1, 0}
+        };
+
+        private Bounds GetRealBound(Component component)
+        {
+            var metadata = GetComponentPlacement(component);
+            var p = component.Package;
+
             double left = 0, top = 0, right = 0, bottom = 0;
             var package = p.Boundaries;
             switch (metadata.Orientation)
@@ -116,54 +198,27 @@
             return new Bounds(top, right, bottom, left);
         }
 
-        private void CalculateBounds()
+        private Dictionary<string, Point> GetComponentPinLocation(Component component)
         {
-            var componentList = Schema.Components.ToList();
-            var count = componentList.Count;
-            var d = new Bounds[count];
+            var pack = component.Package;
+            var plac = GetComponentPlacement(component);
+            var ret = new Dictionary<string, Point>(pack.Pins.Count);
 
-            for (var i = 0; i < count; i++)
+            var t = PointTransformer[(int)plac.Orientation];
+
+            foreach (var pin in pack.Pins)
             {
-                var c = componentList[i];
-                var p = GetComponentPlacement(c);
-                d[i] = GetRealBound(p, c.Package);
+                var pos = pin.Position;
+                var x = t[0] * pos.X + t[1] * pos.Y;
+                var y = t[2] * pos.X + t[3] * pos.Y;
+
+                x += plac.Position.X;
+                y += plac.Position.Y;
+
+                ret.Add(pin.Name, new Point(x, y));
             }
 
-            _bounds = d;
-
-            CalculateSize();
-
-            _boundsValid = true;
-        }
-
-        private void CalculateSize()
-        {
-            double w = 0, h = 0;
-            for (var i = 0; i < _bounds.Length; i++)
-            {
-                var b = _bounds[i];
-                if (b.Right > w)
-                {
-                    w = b.Right;
-                }
-
-                if (b.Top > h)
-                {
-                    h = b.Top;
-                }
-            }
-
-            _size = new Size(w, h);
-        }
-
-        public Bounds[] GetBounds()
-        {
-            if (!_boundsValid)
-            {
-                CalculateBounds();
-            }
-
-            return _bounds;
+            return ret;
         }
 
         public void Draw(ICanvas canvas)
@@ -186,6 +241,31 @@
 
                 point.Key.Package.Draw(canvas);
                 canvas.Transform.PopMatrix();
+            }
+
+            if (_traces.Any())
+            {
+                var tr = _traces.SelectMany(x => x);
+
+                foreach (var t in tr)
+                {
+                    for (var i = 1; i < t.Count; i++)
+                    {
+                        
+
+                        var X1 = (0.5 + t[i - 1].X);
+                        var Y1 = (0.5 + t[i - 1].Y);
+                        var X2 = (0.5 + t[i].X);
+                        var Y2 = (0.5 + t[i].Y);
+
+                        canvas.DrawLine(new Point(X1, Y1), new Point(X2, Y2));
+                    }
+                }
+
+            }
+            else
+            {
+                canvas.DrawEllipse(new Point(), 5, 5);
             }
         }
     }

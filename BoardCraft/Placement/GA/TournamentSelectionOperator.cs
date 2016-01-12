@@ -27,13 +27,13 @@
             var accumulatedChance = 0.0;
             var pickedNumber = random.NextDouble();
             Board last = null;
-            foreach (var p1 in ordered)
+            foreach (var P1 in ordered)
             {
-                last = p1;
+                last = P1;
                 accumulatedChance += _pressure * factor;
                 if (pickedNumber < accumulatedChance)
                 {
-                    return p1;
+                    return P1;
                 }
 
                 factor *= 1 - _pressure;

@@ -1,6 +1,7 @@
 ﻿namespace BoardCraft.Routing
 {
-    using System.Diagnostics;
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Models;
     using NLog;
@@ -20,17 +21,20 @@
 
         public void Route(Board board)
         {
+            board.CalculatePinLocations();
             var workspace = new RouterWorkspace(board, TraceWidth, MinimumSpacing);
-            var c = board.Schema.Connections.Count;
             var z = board.Schema.Connections.First();
-
-
-
-            //_logger.Debug($" -- {c}");
-            /*for (var i = 0; i < c; i++)
+            var pts = new HashSet<IntPoint>();
+            foreach (var z1 in z.Pins)
             {
-                var mpRouter = 
-            }*/
+                var pos = board.GetPinLocation(z1.Component, z1.Pin);
+                pts.Add(new IntPoint((int) Math.Round(pos.X), (int) Math.Round(pos.Y)));                
+            }
+
+            
+            var r = new LeeMultipointRouter(workspace, pts);
+            r.Route();
+            board._traces.Add(r.TraceNodes);
         }
     }
 }

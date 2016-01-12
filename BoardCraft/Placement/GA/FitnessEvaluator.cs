@@ -46,53 +46,22 @@
             return cnt == 0 ? 0 : sum / cnt;
         }
 
-        private static readonly int[][] PointTransformer = new[]
-        {
-            new [] {1, 0, 0, 1}, //up
-            new [] {0, -1, 1, 0}, //left
-            new [] {-1, 0, 0, -1},
-            new [] {0, 1, -1, 0}
-        };
-
-        private double TidynessFitness(Board board, Size size)
-        {
-            var pinCount = board.Schema.Components.Select(x => x.Package.Pins.Count).Sum();
-            var xx = new int[pinCount];
-            var yy = new int[pinCount];
-
-            var ys = new HashSet<int>();
-
-            var i = 0;
-            foreach (var c in board.Schema.Components)
-            {
-                var p = board.GetComponentPlacement(c);
-                var t = PointTransformer[(int)p.Orientation];
-
-                foreach (var pin in c.Package.Pins)
-                {
-                    var pos = pin.Position;
-                    var x = t[0] * pos.X + t[1] * pos.Y;
-                    var y = t[2] * pos.X + t[3] * pos.Y;
-
-                    xx[i] = (int)(100 * x);
-                    yy[i] = (int)(100 * y);
-                }
-            }
-
-            var dxc = xx.Distinct().Count();
-            var dyc = yy.Distinct().Count();
-
-            return (size.Width + size.Height) / (dxc + dyc);
-        }
-
         public double EvaluateFitness(Board board)
         {
-            var b = board.GetBounds();
-            var s = board.Size;
+            //var b = board.GetBounds();
+            //var s = board.GetSize();
+
+            var b = new Bounds[board.Schema.Components.Count];
+            int i = 0;
+            foreach (var component in board.Schema.Components)
+            {
+                var bx = board.GetBounds(component);
+                b[i++] = bx;
+            }
 
             var f1 = GetOverlappedArea(b);
             var f2 = AverageDistance(board);
-            var f3 = TidynessFitness(board, s);
+            //var f3 = TidynessFitness(board, s);
 
             return (1/(Math.Sqrt(f1) + 1)) + (1/(f2 + 1));// + f3;
         }

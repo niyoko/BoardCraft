@@ -45,12 +45,12 @@ namespace BoardCraft.Placement.GA
             var comps = sch.Components.PickRandom(random, cCount);
             foreach (var comp in comps)
             {
-                var p1 = placement1.GetComponentPlacement(comp);
-                var p2 = placement2.GetComponentPlacement(comp);
+                var P1 = placement1.GetComponentPlacement(comp);
+                var P2 = placement2.GetComponentPlacement(comp);
                 
 
-                placement1.SetComponentPlacement(comp, p2);
-                placement2.SetComponentPlacement(comp, p1);
+                placement1.SetComponentPlacement(comp, P2);
+                placement2.SetComponentPlacement(comp, P1);
             }
         }
     }

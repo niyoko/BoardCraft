@@ -1,18 +1,22 @@
 ﻿namespace BoardCraft.Models
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     ///     Represent a connection between component pins
     /// </summary>
     public sealed class Connection
     {
-        private IList<PinConnectionInfo> Pins { get; } 
+        private readonly List<PinConnectionInfo> _pins;
+
+        public ICollection<PinConnectionInfo> Pins { get; } 
 
         public Connection(string id)
         {
             Id = id;
-            Pins = new List<PinConnectionInfo>();
+            _pins = new List<PinConnectionInfo>();
+            Pins = new ReadOnlyCollection<PinConnectionInfo>(_pins);
         }
 
         public string Id { get; }
@@ -20,7 +24,7 @@
         public PinConnectionInfo AddPin(Component component, string pin)
         {
             var info= new PinConnectionInfo(this, component, pin);
-            Pins.Add(info);
+            _pins.Add(info);
             return info;
         }
     }
