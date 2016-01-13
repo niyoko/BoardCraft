@@ -164,6 +164,11 @@ namespace BoardCraft.Routing
                     var ny = c.Y + z.Key.Y;
                     var n = new IntPoint(nx, ny);
 
+                    if (!_workspace.IsPointValid(n))
+                    {
+                        continue;
+                    }
+
                     var val = _workspace[n];
                     if (val <= 0)
                     {

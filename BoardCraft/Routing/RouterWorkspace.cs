@@ -14,10 +14,20 @@
             var s = board.GetSize();
             _cellSize = cellSize;
 
-            var hx = Math.Ceiling(s.Width/cellSize);
-            var wx = Math.Ceiling(s.Height/cellSize);
+            var hx = Math.Ceiling((s.Width+500)/cellSize);
+            var wx = Math.Ceiling((s.Height+500)/cellSize);
 
             _internalData = new int[(int)(hx), (int)(wx)];
+        }
+
+        public bool IsPointValid(IntPoint index)
+        {
+            var valid = true;
+            valid = valid && index.X >= 0;
+            valid = valid && index.X < Width;
+            valid = valid && index.Y >= 0;
+            valid = valid && index.Y < Height;
+            return valid;
         }
 
         internal int this[IntPoint index]

@@ -245,7 +245,7 @@
                 canvas.Transform.PopMatrix();
             }
 
-            /*if (_traces.Any())
+            if (_traces.Any())
             {
                 var tr = _traces.SelectMany(x => x);
 
@@ -256,10 +256,9 @@
                         canvas.DrawLine(t[i-1], t[i]);
                     }
                 }
+            }
 
-            }*/
-
-            
+            //_wValues = null;
             if (_wValues != null)
             {
                 for (var i = 0; i < _wValues.GetLength(0); i++)
