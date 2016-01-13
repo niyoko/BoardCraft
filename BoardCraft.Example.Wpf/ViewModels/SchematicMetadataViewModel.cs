@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
@@ -21,6 +22,7 @@
         private Board _showedPlacement;        
 
         private bool _pauseRequested;
+        private ManualResetEvent _stopRequested;
         private readonly DispatcherTimer _timer;
 
         public SchematicMetadataViewModel(Schematic schematic, string tabTitle)
@@ -28,8 +30,9 @@
             Schematic = schematic;
             TabTitle = tabTitle;
 
-            RunGACommand = new GenericCommand(StartGA);
-            PauseGACommand = new GenericCommand(PauseGA);
+            RunGACommand = new GenericCommand(StartGA, CanExecuteGA);
+            PauseGACommand = new GenericCommand(PauseGA, CanExecuteGA);
+            StopGACommand = new GenericCommand(StopGA, CanExecuteGA);
 
             Placer = ConstructGAPlacer();
 
@@ -40,6 +43,11 @@
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += PeriodicalUpdate;
             _timer.Start();
+        }
+
+        private bool CanExecuteGA()
+        {
+            return _stopRequested == null;
         }
 
         public Schematic Schematic { get; }
@@ -67,11 +75,13 @@
 
         public SchematicProperties Properties { get; }
 
-        public ICommand RunGACommand { get; }
+        public GenericCommand RunGACommand { get; }
 
-        public ICommand PauseGACommand { get; }
+        public GenericCommand PauseGACommand { get; }
 
-        public ICommand WindowClosedCommand { get; }
+        public GenericCommand WindowClosedCommand { get; }
+
+        public GenericCommand StopGACommand { get; }
 
         public async void StartGA()
         {
@@ -85,6 +95,12 @@
                         break;
                     }
 
+                    if (_stopRequested != null)
+                    {
+                        _stopRequested.Set();
+                        break;                        
+                    }
+
                     Placer.NextGeneration();
                     _currentPopulation = Placer.CurrentPopulation;
                 }
@@ -96,10 +112,31 @@
             _pauseRequested = true;
         }
 
+        public void StopGA()
+        {
+            _stopRequested = new ManualResetEvent(false);
+            RunGACommand.RaiseCanExecuteChanged();
+            PauseGACommand.RaiseCanExecuteChanged();
+            StopGACommand.RaiseCanExecuteChanged();
+
+            //wait until GA stopped
+            _stopRequested.WaitOne(3000);
+
+            var p = _currentPopulation.BestPlacement;
+            var t = new Router(1, 1);
+            t.Route(p);
+            UpdatePopulation(true);
+        }
+
         private void PeriodicalUpdate(object sender, EventArgs args)
         {
+            UpdatePopulation(false);
+        }
+
+        private void UpdatePopulation(bool force)
+        {
             var c = _currentPopulation;
-            if(c == _showedPopulation) return;
+            if (c == _showedPopulation) return;
 
             _showedPopulation = c;
             if (c == null)
@@ -112,12 +149,11 @@
             else
             {
                 var fits = c.Select(c.GetFitnessFor).ToList();
-
-                var p = c.BestPlacement;
-                var t = new Router(1, 1);
-                t.Route(p);
-
+                var p = _currentPopulation.BestPlacement;
                 ShowedPlacement = p;
+                if(force)
+                    OnPropertyChanged(nameof(ShowedPlacement));
+
                 Properties.GenerationCount = c.Generation;
                 Properties.AverageFitness = fits.Average();
                 Properties.MaxFitness = fits.Max();

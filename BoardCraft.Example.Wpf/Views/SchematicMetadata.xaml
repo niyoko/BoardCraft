@@ -40,6 +40,12 @@
                         <TextBlock Margin="5 0 0 0">Pause</TextBlock>
                     </StackPanel>
                 </Button>
+                <Button Padding="10 5 10 5" Command="{Binding StopGACommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{StaticResource StopIcon}"></Image>
+                        <TextBlock Margin="5 0 0 0">Stop and Begin Routing</TextBlock>
+                    </StackPanel>
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <xcad:DockingManager>

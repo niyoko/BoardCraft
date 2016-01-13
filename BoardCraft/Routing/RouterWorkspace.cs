@@ -5,21 +5,19 @@
     internal class RouterWorkspace
     {
         internal readonly int[,] _internalData;
-        private readonly double _traceWidth;
-        private readonly double _minimumSpace;
+        private readonly double _cellSize;
 
-        public RouterWorkspace(Board board, double traceWidth, double minimumSpace)
+        public Board Board { get; }
+        public RouterWorkspace(Board board, double cellSize)
         {
+            Board = board;
             var s = board.GetSize();
-            //var wx = Math.Ceiling(s.Width/traceWidth/2);
-            //var hx = Math.Ceiling(s.Height/traceWidth/2);            
+            _cellSize = cellSize;
 
-            var hx = Math.Ceiling(s.Width);
-            var wx = Math.Ceiling(s.Height);
+            var hx = Math.Ceiling(s.Width/cellSize);
+            var wx = Math.Ceiling(s.Height/cellSize);
 
             _internalData = new int[(int)(hx), (int)(wx)];
-            _traceWidth = traceWidth;
-            _minimumSpace = minimumSpace;
         }
 
         internal int this[IntPoint index]

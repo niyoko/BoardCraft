@@ -110,7 +110,7 @@ namespace BoardCraft.Routing
 
                 if (end != null || next.Count == 0)
                 {
-                    break;
+                    break; 
                 }
 
                 currentPoints = next;

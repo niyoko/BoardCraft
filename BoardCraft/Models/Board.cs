@@ -5,14 +5,16 @@
     using Drawing;
     using Placement.GA;
     using System.Linq;
-    using Routing;
 
     public sealed class Board
     {
         private readonly Dictionary<Component, PlacementInfo> _placement;
         private static readonly PlacementInfo DefaultPlacementInfo;
 
-        internal readonly ICollection<ICollection<IList<IntPoint>>> _traces;
+        internal int[,] _wValues;
+        internal double _cellSize;
+
+        internal readonly ICollection<ICollection<IList<Point>>> _traces;
 
         static Board()
         {
@@ -31,7 +33,7 @@
             _placement = new Dictionary<Component, PlacementInfo>(schema.Components.Count);
             _bounds = new Dictionary<Component, Bounds>(schema.Components.Count);
             _pinLocations = new Dictionary<Component, Dictionary<string, Point>>(schema.Components.Count);
-            _traces = new List<ICollection<IList<IntPoint>>>();
+            _traces = new List<ICollection<IList<Point>>>();
         }
 
         public Schematic Schema { get; }
@@ -243,7 +245,7 @@
                 canvas.Transform.PopMatrix();
             }
 
-            if (_traces.Any())
+            /*if (_traces.Any())
             {
                 var tr = _traces.SelectMany(x => x);
 
@@ -251,21 +253,25 @@
                 {
                     for (var i = 1; i < t.Count; i++)
                     {
-                        
-
-                        var X1 = (0.5 + t[i - 1].X);
-                        var Y1 = (0.5 + t[i - 1].Y);
-                        var X2 = (0.5 + t[i].X);
-                        var Y2 = (0.5 + t[i].Y);
-
-                        canvas.DrawLine(new Point(X1, Y1), new Point(X2, Y2));
+                        canvas.DrawLine(t[i-1], t[i]);
                     }
                 }
 
-            }
-            else
+            }*/
+
+            
+            if (_wValues != null)
             {
-                canvas.DrawEllipse(new Point(), 5, 5);
+                for (var i = 0; i < _wValues.GetLength(0); i++)
+                {
+                    for (var j = 0; j < _wValues.GetLength(1); j++)
+                    {
+                        if (_wValues[i, j] == -1)
+                        {
+                            canvas.DrawRectangle(new Point(i*_cellSize, j*_cellSize), _cellSize, _cellSize);
+                        }
+                    }
+                }
             }
         }
     }

@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace BoardCraft.Routing
 {
+    using System.Diagnostics;
+
     internal class LeeMultipointRouter
     {
         private readonly ISet<IntPoint> _pins;
@@ -52,6 +54,7 @@ namespace BoardCraft.Routing
                     return false;
                 }
 
+                Debug.WriteLine($"Track cnt {singleRouter.Track.Count}");
                 Trace.UnionWith(singleRouter.Track);
                 TraceNodes.Add(singleRouter.TrackNodes);
             }

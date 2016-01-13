@@ -33,7 +33,6 @@
             }
 
             var c = t2.GetValue("component").Value<string>();
-            _logger.Debug($"Name {c}");
             var c1 = schematic.GetComponent(c);
 
             var pin = t2.GetValue("pin").Value<string>();
