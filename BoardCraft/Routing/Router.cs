@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using Models;
     using NLog;
@@ -138,8 +139,12 @@
             var workspace = new RouterWorkspace(board, CellSize);
             SetupWorkspace(workspace);
 
-            var zc = board.Schema.Connections.Count;
-            var zl = board.Schema.Connections.ToList();
+            var distances = board.CalculatePinDistances();
+
+            var zl = distances.OrderBy(x => x.Value.Max).Select(x => x.Key).ToList();
+
+            var successRouting = 0;
+            var failedRouting = 0;
 
             for (var i = 0; i < 10; i++)
             {
@@ -160,8 +165,16 @@
 
                 var r = new LeeMultipointRouter(workspace, pts);
                 var res = r.Route();
-                _logger.Debug($"Routing result {res}");
-                
+
+                if (res)
+                {
+                    successRouting++;
+                }
+                else
+                {
+                    failedRouting++;
+                }
+
                 foreach (var z1 in z.Pins)
                 {
                     var rList = _pinObs[new Tuple<Component, string>(z1.Component, z1.Pin)].ToList();                    
@@ -212,9 +225,12 @@
                 }).ToList();
 
                 board._traces.Add(r2);
-                board._cellSize = CellSize;
-                board._wValues = workspace._internalData;
             }
+
+            Debug.WriteLine($"Success : {successRouting} Fail : {failedRouting}");
+
+            //board._cellSize = CellSize;
+            //board._wValues = workspace._internalData;
         }
     }
 }

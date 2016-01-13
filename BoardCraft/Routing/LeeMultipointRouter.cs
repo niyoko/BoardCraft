@@ -1,10 +1,9 @@
-﻿using BoardCraft.Helpers;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace BoardCraft.Routing
+﻿namespace BoardCraft.Routing
 {
     using System.Diagnostics;
+    using BoardCraft.Helpers;
+    using System.Collections.Generic;
+    using System.Linq;
 
     internal class LeeMultipointRouter
     {

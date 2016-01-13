@@ -200,6 +200,73 @@
             return new Bounds(top, right, bottom, left);
         }
 
+        public class PinDistanceStatistic 
+        {
+            internal PinDistanceStatistic()
+            {
+                Count = 0;
+            }
+
+            public int Count { get; private set; }
+            public double Sum { get; private set; }
+            public double Average { get; private set; }
+            public double Min { get; private set; }
+            public double Max { get; private set; }
+
+            internal void AddData(double distance)
+            {
+                if (Count == 0 || distance < Min)
+                {
+                    Min = distance;
+                }
+
+                if (Count == 0 || distance > Max)
+                {
+                    Max = distance;
+                }
+
+                Sum += distance;
+                Average = (Count*Average + distance)/(Count + 1);
+                Count++;
+            }
+        }
+
+        private Dictionary<Connection, PinDistanceStatistic> _stats;
+        public IDictionary<Connection, PinDistanceStatistic> CalculatePinDistances()
+        {
+            if (_stats != null)
+            {
+                return _stats;
+            }
+
+            _stats = new Dictionary<Connection, PinDistanceStatistic>(Schema.Connections.Count);
+            foreach (var c in Schema.Connections)
+            {
+                var stat = new PinDistanceStatistic();
+                var cs = c.Pins.ToList();
+                for (var i = 0; i < cs.Count; i++)
+                {
+                    for (var j = i + 1; j < cs.Count; j++)
+                    {
+                        var p1 = cs[i];
+                        var p2 = cs[j];
+
+                        var pos1 = GetPinLocation(p1.Component, p1.Pin);
+                        var pos2 = GetPinLocation(p2.Component, p2.Pin);
+                        var sx = pos1.X - pos2.X;
+                        var sy = pos1.Y - pos2.Y;
+
+                        var dist = Math.Sqrt(sx*sx + sy*sy);
+                        stat.AddData(dist);
+                    }
+                }
+
+                _stats.Add(c, stat);
+            }
+
+            return _stats;
+        }
+
         private Dictionary<string, Point> GetComponentPinLocation(Component component)
         {
             var pack = component.Package;
