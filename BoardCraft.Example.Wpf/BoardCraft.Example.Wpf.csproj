@@ -139,6 +139,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Library\IC.json" />
     <None Include="Library\library.schema.json" />
     <None Include="Library\resistors.json" />
     <None Include="packages.config" />

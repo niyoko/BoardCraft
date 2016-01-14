@@ -130,7 +130,7 @@
                 return PointType.Vertikal;                
             }
 
-            return PointType.None;            
+            return PointType.None;
         }
 
         public void Route(Board board)
@@ -141,12 +141,15 @@
 
             var distances = board.CalculatePinDistances();
 
-            var zl = distances.OrderBy(x => x.Value.Max).Select(x => x.Key).ToList();
+            var zl = distances.OrderBy(x => x.Value.Max)
+                    .Select(x => x.Key)
+                    .Take(10)
+                    .ToList();
 
             var successRouting = 0;
             var failedRouting = 0;
 
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < zl.Count; i++)
             {
                 var z = zl[i];
 

@@ -1,0 +1,27 @@
+{
+    "name": "connectors",
+    "packages": [
+        {
+          "name":"TBLOCK-2",
+          "boundaries":[ 6, 4.75, -6, -4.75 ],
+          "footprint":[
+              {
+                  "type":"rectangle",
+                  "position":[ -5, -3.75],
+                  "width": 10,
+                  "height": 7.5
+              }
+          ],
+          "pins":[
+              {
+                  "name":"P1",
+                  "position":[-2.5, 0]
+              },
+              {
+                  "name":"P2",
+                  "position":[2.5,0]
+              }
+          ]
+      }
+    ]
+}

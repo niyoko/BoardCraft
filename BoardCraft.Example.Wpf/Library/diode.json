@@ -1,0 +1,42 @@
+{
+  "name": "diodes",
+  "packages": [
+    {
+      "name": "DO201AD",
+      "boundaries": [ 3, 9.25, -3, -9.25 ],
+      "footprint": [
+        {
+          "type": "rectangle",
+          "position": [ -5, -2.54 ],
+          "width": 10,
+          "height": 5.08
+        },
+        {
+          "type": "line",
+          "p1": [ -7, 0 ],
+          "p2": [ -5, 0 ]
+        },
+        {
+          "type": "line",
+          "p1": [ 7, 0 ],
+          "p2": [ 5, 0 ]
+        },
+        {
+          "type": "line",
+          "p1": [ 3, 2.54 ],
+          "p2": [ 3, -2.54 ]
+        }
+      ],
+      "pins": [
+        {
+          "name": "K",
+          "position": [ -8.75, 0 ]
+        },
+        {
+          "name": "A",
+          "position": [ 8.75, 0 ]
+        }
+      ]
+    }
+  ]
+}

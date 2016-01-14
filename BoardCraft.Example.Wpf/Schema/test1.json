@@ -1,0 +1,129 @@
+{
+  "components": [
+      {
+      "id": "IC1",
+      "value": "LM2576",
+      "package": "TO220-5"
+    },
+    {
+        "id":"C1",
+        "value":"100U",
+        "package":"ELEC-RAD20"
+    },
+    {
+        "id":"C2",
+        "value":"1000U",
+        "package":"ELEC-RAD20"
+    },
+    {
+        "id":"D1",
+        "value":"1N5822",
+        "package":"DO201AD"
+    },
+    {
+        "id":"L1",
+        "value":"100UH",
+        "package":"TOR"
+    },
+    {
+        "id":"CON1",
+        "value":"",
+        "package":"TBLOCK-2"
+    },
+    {
+        "id":"CON2",
+        "value":"",
+        "package":"TBLOCK-2"
+    }
+  ],
+  "connections": [
+      {
+      "id": "GND-CON",
+      "pins": [
+        {
+          "component": "CON1",
+          "pin": "P2"
+        },
+        {
+          "component": "C1",
+          "pin": "P-"
+        },
+        {
+          "component": "IC1",
+          "pin": "P3"
+        },
+        {
+          "component": "IC1",
+          "pin": "P5"
+        },
+        {
+          "component": "D1",
+          "pin": "A"
+        },
+        {
+          "component": "C2",
+          "pin": "P-"
+        },
+        {
+          "component": "CON2",
+          "pin": "P2"
+        }        
+      ]
+    },
+    {
+        "id":"VIN",
+        "pins":[
+            {
+                "component": "CON1",
+                "pin": "P1"
+            },
+            {
+                "component": "C1",
+                "pin": "P+"
+            },
+            {
+                "component": "IC1",
+                "pin": "P1"
+            }
+        ]
+    },
+    {
+        "id":"VOUT",
+        "pins":[
+            {
+                "component":"IC1",
+                "pin":"P2"
+            },
+            {
+                "component":"D1",
+                "pin":"K"
+            },
+            {
+                "component":"L1",
+                "pin":"P1"
+            }
+        ]
+    },
+    {
+        "id":"OUT",
+        "pins":[
+            {
+                "component":"IC1",
+                "pin":"P4"
+            },
+            {
+                "component":"L1",
+                "pin":"P2"
+            },
+            {
+                "component":"CON2",
+                "pin":"P1"
+            },
+            {
+                "component":"C2",
+                "pin":"P+"
+            }
+        ]
+    }
+  ]
+}
