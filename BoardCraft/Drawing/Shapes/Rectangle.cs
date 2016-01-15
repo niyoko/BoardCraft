@@ -24,7 +24,7 @@
                 throw new ArgumentNullException(nameof(canvas));
             }
 
-            canvas.DrawRectangle(BottomLeft, Width, Height);
+            canvas.DrawRectangle(DrawingMode.Component, BottomLeft, Width, Height);
         }
     }
 }

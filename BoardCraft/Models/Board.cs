@@ -320,22 +320,7 @@
                 {
                     for (var i = 1; i < t.Count; i++)
                     {
-                        canvas.DrawLine(t[i-1], t[i]);
-                    }
-                }
-            }
-
-            //_wValues = null;
-            if (_wValues != null)
-            {
-                for (var i = 0; i < _wValues.GetLength(0); i++)
-                {
-                    for (var j = 0; j < _wValues.GetLength(1); j++)
-                    {
-                        if (_wValues[i, j] == -1)
-                        {
-                            canvas.DrawRectangle(new Point(i*_cellSize, j*_cellSize), _cellSize, _cellSize);
-                        }
+                        canvas.DrawLine(DrawingMode.BottomCopper, t[i-1], t[i]);
                     }
                 }
             }

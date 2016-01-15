@@ -6,10 +6,16 @@
 
         void Clear();
 
-        void DrawRectangle(Point bottomLeft, double width, double height);
+        void DrawRectangle(DrawingMode mode, Point bottomLeft, double width, double height);
 
-        void DrawEllipse(Point center, double xRadius, double yRadius);
+        void DrawFilledRectangle(DrawingMode mode, Point bottomLeft, double width, double height);
 
-        void DrawLine(Point a, Point b);
+        void DrawEllipse(DrawingMode mode, Point center, double xRadius, double yRadius);
+
+        void DrawFilledEllipse(DrawingMode mode, Point center, double xRadius, double yRadius);
+
+        void DrawFilledDonut(DrawingMode mode, Point center, double xRadius, double yRadius);
+
+        void DrawLine(DrawingMode mode, Point a, Point b);
     }
 }

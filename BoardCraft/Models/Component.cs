@@ -21,10 +21,5 @@
         public string Id { get; }
 
         public Package Package { get; }
-
-        public void Draw(ICanvas canvas)
-        {
-            canvas.DrawRectangle(new Point(-25, -50), 50, 100);
-        }
     }
 }

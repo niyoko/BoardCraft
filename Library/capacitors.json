@@ -1,0 +1,73 @@
+{
+  "name": "capacitors",
+  "packages": [
+    {
+      "name": "ELEC-RAD10",
+      "boundaries": [ 125, 125, -125, -125 ],
+      "footprint": [
+        {
+          "type": "circle",
+          "center": [ 0, 0 ],
+          "radius": 100
+        }
+      ],
+      "pins": [
+        {
+          "name": "P+",
+          "position": [ -50, 0 ],
+          "style": "C-80-30"
+        },
+        {
+          "name": "P-",
+          "position": [ 50, 0 ],
+          "style": "C-80-30"
+        }
+      ]
+    },
+    {
+      "name": "ELEC-RAD20",
+      "boundaries": [ 225, 225, -225, -225 ],
+      "footprint": [
+        {
+          "type": "circle",
+          "center": [ 0, 0 ],
+          "radius": 200
+        }
+      ],
+      "pins": [
+        {
+          "name": "P+",
+          "position": [ -100, 0 ],
+          "style": "C-100-45"
+        },
+        {
+          "name": "P-",
+          "position": [ 100, 0 ],
+          "style": "C-100-45"
+        }
+      ]
+    },
+    {
+      "name": "CAP10",
+      "boundaries": [ 75, 125, -75, -125 ],
+      "footprint": [
+        {
+          "type": "ellipse",
+          "center": [ 0, 0 ],
+          "xRadius": 100,
+          "yRadius": 50
+        }
+      ],
+      "pins": [
+        {
+          "name": "P1",
+          "position": [ -50, 0 ]
+        },
+        {
+          "name": "P2",
+          "position": [ 50, 0 ]
+        }
+      ]
+    }
+  ]
+}

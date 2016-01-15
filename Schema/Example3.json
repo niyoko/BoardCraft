@@ -9,6 +9,16 @@
       "id": "R3",
       "value": "300K",
       "package": "ELEC-RAD10"
+    },
+    {
+      "id": "R5",
+      "value": "300K",
+      "package": "ELEC-RAD20"
+    },
+    {
+      "id": "R4",
+      "value": "300K",
+      "package": "CAP10"
     }
   ],
   "connections": [

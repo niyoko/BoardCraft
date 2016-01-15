@@ -53,7 +53,7 @@
 
             foreach (var pin in Pins)
             {
-                canvas.DrawEllipse(pin.Position, 0.5, 0.5);
+                pin.DrawTo(canvas);
             }
         }
     }

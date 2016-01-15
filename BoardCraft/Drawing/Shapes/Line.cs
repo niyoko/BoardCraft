@@ -14,7 +14,7 @@
 
         public override void DrawTo(ICanvas canvas)
         {
-            canvas.DrawLine(P1, P2);
+            canvas.DrawLine(DrawingMode.Component, P1, P2);
         }
     }
 }

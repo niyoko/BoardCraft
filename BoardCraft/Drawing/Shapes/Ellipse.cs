@@ -24,7 +24,7 @@
                 throw new ArgumentNullException(nameof(canvas));
             }
 
-            canvas.DrawEllipse(Center, XRadius, YRadius);
+            canvas.DrawEllipse(DrawingMode.Component, Center, XRadius, YRadius);
         }
     }
 }
