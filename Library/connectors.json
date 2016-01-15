@@ -3,44 +3,47 @@
     "packages": [
         {
           "name":"TBLOCK-2",
-          "boundaries":[ 6, 4.75, -6, -4.75 ],
+          "boundaries":[ 225, 225, -225, -225 ],
           "footprint":[
               {
-                  "type":"rectangle",
-                  "position":[ -5, -3.75],
-                  "width": 10,
-                  "height": 7.5
+                  "type":"square",
+                  "position":[ -200, -200],
+                  "side":400
               }
           ],
           "pins":[
               {
                   "name":"P1",
-                  "position":[-2.5, 0]
+                  "position":[ -100, 0 ],
+                  "style":"C-120-60"
               },
               {
                   "name":"P2",
-                  "position":[2.5,0]
+                  "position":[ 100, 0 ],
+                  "style":"C-120-60"
               }
           ]
       },
       {
           "name":"CON-SIL2",
-          "boundaries":[1.77,3.04,-1.77,-3.04],
+          "boundaries":[75, 125, -75, -125],
           "footprint":[
               {
                 "type":"rectangle",
-                "position":[ -2.54, -1.27 ],
-                "width":5.08,
-                "height":2.54
+                "position":[ -100, -50 ],
+                "width":200,
+                "height":100
               }],
           "pins":[
             {
               "name":"P1",
-              "position":[-1.27,0]
+              "position":[ -50, 0 ],
+              "style":"S-80-40"
             },
             {
               "name":"P2",
-              "position":[1.27,0]
+              "position":[ 50, 0 ],
+              "style":"S-80-40"
             }
           ]
       }

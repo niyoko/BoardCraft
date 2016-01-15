@@ -48,7 +48,9 @@
     <Compile Include="Drawing\ICanvas.cs" />
     <Compile Include="Drawing\Matrix.cs" />
     <Compile Include="Drawing\PinStyles\CirclePinStyle.cs" />
+    <Compile Include="Drawing\PinStyles\DILPinStyle.cs" />
     <Compile Include="Drawing\PinStyles\PinStyle.cs" />
+    <Compile Include="Drawing\PinStyles\SquarePinStyle.cs" />
     <Compile Include="Drawing\Point.cs" />
     <Compile Include="Drawing\Shapes\Circle.cs" />
     <Compile Include="Drawing\Shapes\Ellipse.cs" />

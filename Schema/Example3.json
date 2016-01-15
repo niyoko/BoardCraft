@@ -19,7 +19,38 @@
       "id": "R4",
       "value": "300K",
       "package": "CAP10"
+    },
+    {
+      "id": "R6",
+      "value": "300K",
+      "package": "TBLOCK-2"
+    },
+    {
+      "id": "R7",
+      "value": "300K",
+      "package": "CON-SIL2"
+    },    
+    {
+      "id": "R8",
+      "value": "300K",
+      "package": "TO220-5"
+    },    
+    {
+      "id": "R9",
+      "value": "300K",
+      "package": "DIL08"
+    },    
+    {
+      "id": "R10",
+      "value": "300K",
+      "package": "DO201AD"
+    },
+    {
+      "id": "R11",
+      "value": "300K",
+      "package": "TOR"
     }
+    
   ],
   "connections": [
     

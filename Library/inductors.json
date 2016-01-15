@@ -3,23 +3,23 @@
     "packages": [
       {
           "name":"TOR",
-          "boundaries":[ 8.5, 13.5, -8.5, -13.5 ],
+          "boundaries":[ 275, 475, -275, -475 ],
           "footprint":[
               {
                   "type":"rectangle",
-                  "position":[ -12.5, -7.5],
-                  "width": 25,
-                  "height": 15
+                  "position":[ -450, -250],
+                  "width": 900,
+                  "height": 500
               }
           ],
           "pins":[
               {
                   "name":"P1",
-                  "position":[0, 5]
+                  "position":[0, 200]
               },
               {
                   "name":"P2",
-                  "position":[0,-5]
+                  "position":[0,-200]
               }
           ]
       }

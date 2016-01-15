@@ -3,38 +3,40 @@
   "packages": [
     {
       "name": "DO201AD",
-      "boundaries": [ 3, 9.25, -3, -9.25 ],
+      "boundaries": [ 125, 450, -125, -450 ],
       "footprint": [
         {
           "type": "rectangle",
-          "position": [ -5, -2.54 ],
-          "width": 10,
-          "height": 5.08
+          "position": [ -200, -100 ],
+          "width": 400,
+          "height": 200
         },
         {
           "type": "line",
-          "p1": [ -7, 0 ],
-          "p2": [ -5, 0 ]
+          "p1": [ -200, 0 ],
+          "p2": [ -250, 0 ]
         },
         {
           "type": "line",
-          "p1": [ 7, 0 ],
-          "p2": [ 5, 0 ]
+          "p1": [ 200, 0 ],
+          "p2": [ 250, 0 ]
         },
         {
           "type": "line",
-          "p1": [ 3, 2.54 ],
-          "p2": [ 3, -2.54 ]
+          "p1": [ -120, 100 ],
+          "p2": [ -120, -100 ]
         }
       ],
       "pins": [
         {
           "name": "K",
-          "position": [ -8.75, 0 ]
+          "position": [ -350, 0 ],
+          "style":"C-150-50"
         },
         {
           "name": "A",
-          "position": [ 8.75, 0 ]
+          "position": [ 350, 0 ],
+          "style":"C-150-50"
         }
       ]
     }

@@ -41,6 +41,22 @@
 
                     st = new CirclePinStyle(padDiameter, drillDiameter);
                 }
+
+                if (sk[0] == "S")
+                {
+                    var sqSide = int.Parse(sk[1]);
+                    var drillDiameter = int.Parse(sk[2]);
+
+                    st = new SquarePinStyle(sqSide, drillDiameter);
+                }
+
+                if (sk[0] == "DIL")
+                {
+                    var w = int.Parse(sk[1]);
+                    var d = int.Parse(sk[2]);
+
+                    st = new DILPinStyle(w, d);
+                }
             }
 
             if (st == null)

@@ -3,84 +3,94 @@
   "packages": [
     {
       "name": "TO220-5",
-      "boundaries": [3, 6, -2, -6],
+      "boundaries": [150, 368, -100, -100],
       "footprint":[
           {
               "type":"rectangle",
-              "position":[-5.75,-2],
-              "width" : 11.5,
-              "height": 4
+              "position":[-75, -75],
+              "width" : 418,
+              "height": 150
           },
           {
               "type":"rectangle",
-              "position":[-5.75, 2],
-              "width":11.5,
-              "height":1.25
+              "position":[ -75, 75 ],
+              "width":418,
+              "height":50
           },
           {
               "type":"line",
-              "p1":[0.625,3.25],
-              "p2":[-0.625,2]
+              "p1":[-21,125],
+              "p2":[-71,75]
           },
           {
               "type":"line",
-              "p1":[1.895,3.25],
-              "p2":[0.645,2]
+              "p1":[24,125],
+              "p2":[-26,75]
           },
           {
               "type":"line",
-              "p1":[3.165,3.25],
-              "p2":[1.915,2]
+              "p1":[69,125],
+              "p2":[19,75]
           },
           {
               "type":"line",
-              "p1":[4.435,3.25],
-              "p2":[3.185,2]
+              "p1":[114,125],
+              "p2":[64,75]
           },
           {
               "type":"line",
-              "p1":[-0.645,3.25],
-              "p2":[-1.895,2]
+              "p1":[159,125],
+              "p2":[109,75]
           },
           {
               "type":"line",
-              "p1":[-1.915,3.25],
-              "p2":[-3.165,2]
+              "p1":[204,125],
+              "p2":[154,75]
           },
           {
               "type":"line",
-              "p1":[-3.185,3.25],
-              "p2":[-4.435,2]
+              "p1":[249,125],
+              "p2":[199,75]
+          },
+          {
+              "type":"line",
+              "p1":[294,125],
+              "p2":[244,75]
+          },
+          {
+              "type":"line",
+              "p1":[339,125],
+              "p2":[289,75]
           }
       ],
       "pins": [
-        { "name": "P1", "position": [ -4, 0 ] },
-        { "name": "P2", "position": [ -2, 0 ] },
-        { "name": "P3", "position": [ 0, 0 ] },
-        { "name": "P4", "position": [ 2, 0 ] },
-        { "name": "P5", "position": [ 4, 0 ] }
+        { "name": "P1", "position": [   0, 0 ], "style": "DIL-100-40" },
+        { "name": "P2", "position": [  67, 0 ], "style": "DIL-100-40" },
+        { "name": "P3", "position": [ 134, 0 ], "style": "DIL-100-40" },
+        { "name": "P4", "position": [ 201, 0 ], "style": "DIL-100-40" },
+        { "name": "P5", "position": [ 268, 0 ], "style": "DIL-100-40" }
       ]
     },
     {
         "name": "DIL08",
-        "boundaries": [3, 6, -2, -6],
+        "boundaries": [350, 375, -50, -75],
         "footprint":[
             {
                 "type":"rectangle",
-                "position": [-1.27, 1.27],
-                "width":10.16,
-                "height":5.08
+                "position": [ -50, 50 ],
+                "width":400,
+                "height":200
             }
         ],
         "pins": [
-            { "name": "P1", "position": [ 0, 0 ] },
-            { "name": "P2", "position": [ 2.54, 0 ] },
-            { "name": "P3", "position": [ 5.08, 0 ] },
-            { "name": "P4", "position": [ 7.62, 0 ] },
-            { "name": "P5", "position": [ 0, 7.62 ] },
-            { "name": "P6", "position": [ 2.54, 7.62 ] },
-            { "name": "P7", "position": [ 5.08, 7.62 ] },
-            { "name": "P8", "position": [ 7.62, 7.62 ] }
+            { "name": "P1", "position": [   0,   0 ], "style": "S-50-30" },
+            { "name": "P2", "position": [ 100,   0 ], "style": "C-50-30" },
+            { "name": "P3", "position": [ 200,   0 ], "style": "C-50-30" },
+            { "name": "P4", "position": [ 300,   0 ], "style": "C-50-30" },
+            { "name": "P5", "position": [   0, 300 ], "style": "C-50-30" },
+            { "name": "P6", "position": [ 100, 300 ], "style": "C-50-30" },
+            { "name": "P7", "position": [ 200, 300 ], "style": "C-50-30" },
+            { "name": "P8", "position": [ 300, 300 ], "style": "C-50-30" }
         ]
     }
   ]

@@ -37,7 +37,7 @@
             var trans = new TransformGroup();
             trans.Children.Add(new ScaleTransform(1, -1, 0.5, 0.5));
             
-            trans.Children.Add(new ScaleTransform(0.2, 0.2));
+            trans.Children.Add(new ScaleTransform(0.5, 0.5));
             CurrentCanvas.LayoutTransform = trans;
 
             Clear();
@@ -65,8 +65,14 @@
 
         public override void DrawRectangle(DrawingMode mode, Point bottomLeft, double width, double height)
         {
-            var originX = -bottomLeft.X / width;
-            var originY = -bottomLeft.Y / height;
+            width += 8;
+            height += 8;
+
+            var blx = bottomLeft.X - 4;
+            var bly = bottomLeft.Y - 4;
+
+            var originX = -blx / width;
+            var originY = -bly / height;
 
             var rect = new Rectangle
             {
@@ -74,7 +80,7 @@
                 Height = height,                
                 Stroke = Brushes[mode],
                 StrokeThickness = 8,
-                RenderTransform = ApplyTransform(bottomLeft.X, bottomLeft.Y),
+                RenderTransform = ApplyTransform(blx, bly),
                 RenderTransformOrigin = new System.Windows.Point(originX, originY)
             };
             CurrentCanvas.Children.Add(rect);
@@ -99,13 +105,16 @@
 
         public override void DrawEllipse(DrawingMode mode, Point center, double xRadius, double yRadius)
         {
+            xRadius += 4;
+            yRadius += 4;
+
             var originX = (-center.X / (2 * xRadius)) + 0.5;
             var originY = (-center.Y / (2 * yRadius)) + 0.5;
 
             var rect = new Ellipse
-            {
-                Width = 2 * xRadius,
-                Height = 2 * yRadius,
+            {                
+                Width = (2 * xRadius),
+                Height = (2 * yRadius),
                 Stroke = Brushes[mode],
                 StrokeThickness = 8,
                 RenderTransform = ApplyTransform(center.X-xRadius, center.Y-yRadius),

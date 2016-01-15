@@ -60,7 +60,7 @@
             JsonFileLibrary repo = null;
             await Task.Run(() =>
             {
-                repo = new JsonFileLibrary(@"..\..\Library");
+                repo = new JsonFileLibrary(@"..\..\..\Library");
                 repo.Load();
             });
 

@@ -61,11 +61,13 @@
       "pins": [
         {
           "name": "P1",
-          "position": [ -50, 0 ]
+          "position": [ -50, 0 ],
+          "style":"C-70-30"
         },
         {
           "name": "P2",
-          "position": [ 50, 0 ]
+          "position": [ 50, 0 ],
+          "style":"C-70-30"
         }
       ]
     }
