@@ -1,215 +1,69 @@
 {
-  "name": "electrolitic_capacitors",
+  "name": "capacitors",
   "packages": [
     {
       "name": "ELEC-RAD10",
-      "boundaries": [
-        2.54,
-        2.54,
-        -2.54,
-        -2.54
-      ],
+      "boundaries": [ 125, 125, -125, -125 ],
       "footprint": [
         {
           "type": "circle",
-          "center": [
-            0,
-            0
-          ],
-          "radius": 2.54
+          "center": [ 0, 0 ],
+          "radius": 100
         }
       ],
       "pins": [
         {
           "name": "P+",
-          "position": [
-            -1.27,
-            0
-          ]
+          "position": [ -50, 0 ]
         },
         {
           "name": "P-",
-          "position": [
-            1.27,
-            0
-          ]
-        }
-      ]
-    },
-    {
-      "name": "ELEC-RAD13",
-      "boundaries": [
-        3.302,
-        3.302,
-        -3.302,
-        -3.302
-      ],
-      "footprint": [
-        {
-          "type": "circle",
-          "center": [
-            0,
-            0
-          ],
-          "radius": 3.302
-        }
-      ],
-      "pins": [
-        {
-          "name": "P+",
-          "position": [
-            -1.651,
-            0
-          ]
-        },
-        {
-          "name": "P-",
-          "position": [
-            1.651,
-            0
-          ]
+          "position": [ 50, 0 ]
         }
       ]
     },
     {
       "name": "ELEC-RAD20",
-      "boundaries": [
-        5.08,
-        5.08,
-        -5.08,
-        -5.08
-      ],
+      "boundaries": [ 5.08, 5.08, -5.08, -5.08 ],
       "footprint": [
         {
           "type": "circle",
-          "center": [
-            0,
-            0
-          ],
+          "center": [ 0, 0 ],
           "radius": 5.08
         }
       ],
       "pins": [
         {
           "name": "P+",
-          "position": [
-            -2.54,
-            0
-          ]
+          "position": [ -2.54, 0 ]
         },
         {
           "name": "P-",
-          "position": [
-            2.54,
-            0
-          ]
+          "position": [ 2.54, 0 ]
         }
       ]
     },
     {
-      "name": "ELEC-RAD25",
-      "boundaries": [
-        6.35,
-        6.35,
-        -6.35,
-        -6.35
-      ],
-      "footprint": [
-        {
-          "type": "circle",
-          "center": [
-            0,
-            0
-          ],
-          "radius": 6.35
-        }
-      ],
-      "pins": [
-        {
-          "name": "P+",
-          "position": [
-            -3.175,
-            0
-          ]
-        },
-        {
-          "name": "P-",
-          "position": [
-            3.175,
-            0
-          ]
-        }
-      ]
-    },
-    {
-      "name": "ELEC-RAD30",
-      "boundaries": [
-        7.62,
-        7.62,
-        -7.62,
-        -7.62
-      ],
-      "footprint": [
-        {
-          "type": "circle",
-          "center": [
-            0,
-            0
-          ],
-          "radius": 7.62
-        }
-      ],
-      "pins": [
-        {
-          "name": "P+",
-          "position": [
-            -3.81,
-            0
-          ]
-        },
-        {
-          "name": "P-",
-          "position": [
-            3.81,
-            0
-          ]
-        }
-      ]
-    },
-    {
-      "name": "ELEC-RAD40",
-      "boundaries": [
-        12.7,
-        12.7,
-        -12.7,
-        -12.7
-      ],
-      "footprint": [
-        {
-          "type": "circle",
-          "center": [
-            0,
-            0
-          ],
-          "radius": 12.7
-        }
-      ],
-      "pins": [
-        {
-          "name": "P+",
-          "position": [
-            -5.08,
-            0
-          ]
-        },
-        {
-          "name": "P-",
-          "position": [
-            5.08,
-            0
-          ]
-        }
-      ]
+        "name":"CAP10",
+        "boundaries":[ 1.5, 3, -1.5, -3 ],
+        "footprint":[
+            {
+                "type":"ellipse",
+                "center":[ 0, 0 ],
+                "xRadius":2.54,
+                "yRadius":1.27
+            }
+        ],
+        "pins":[
+            {
+                "name":"P1",
+                "position":[ -1.27, 0 ]
+            },
+            {
+                "name":"P2",
+                "position":[ 1.27, 0 ]
+            }
+        ]      
     }
   ]
 }

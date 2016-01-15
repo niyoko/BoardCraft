@@ -24,7 +24,7 @@
             var trans = new TransformGroup();
             trans.Children.Add(new ScaleTransform(1, -1, 0.5, 0.5));
             
-            trans.Children.Add(new ScaleTransform(7,7));
+            trans.Children.Add(new ScaleTransform(0.2, 0.2));
             CurrentCanvas.LayoutTransform = trans;
 
             Clear();
@@ -64,7 +64,7 @@
                 {
                     Color = Colors.Black                    
                 },
-                StrokeThickness = 0.2,
+                StrokeThickness = 8,
                 RenderTransform = ApplyTransform(bottomLeft.X, bottomLeft.Y),
                 RenderTransformOrigin = new System.Windows.Point(originX, originY)
             };
@@ -83,7 +83,7 @@
                 {
                     Color = Colors.Black
                 },
-                StrokeThickness = 0.2,
+                StrokeThickness = 8,
                 RenderTransform = ApplyTransform()
 
             };
@@ -104,7 +104,7 @@
                 {
                     Color = Colors.Black
                 },
-                StrokeThickness = 0.2,
+                StrokeThickness = 8,
                 RenderTransform = ApplyTransform(center.X-xRadius, center.Y-yRadius),
                 RenderTransformOrigin = new System.Windows.Point(originX, originY)
             };

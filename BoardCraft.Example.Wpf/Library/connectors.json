@@ -22,6 +22,27 @@
                   "position":[2.5,0]
               }
           ]
+      },
+      {
+          "name":"CON-SIL2",
+          "boundaries":[1.77,3.04,-1.77,-3.04],
+          "footprint":[
+              {
+                "type":"rectangle",
+                "position":[ -2.54, -1.27 ],
+                "width":5.08,
+                "height":2.54
+              }],
+          "pins":[
+            {
+              "name":"P1",
+              "position":[-1.27,0]
+            },
+            {
+              "name":"P2",
+              "position":[1.27,0]
+            }
+          ]
       }
     ]
 }

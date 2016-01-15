@@ -1,0 +1,85 @@
+{
+    "components": [
+        {
+            "id": "IC1",
+            "value": "LM555",
+            "package": "DIL08"
+        },
+        {
+            "id":"CON1",
+            "value":"-",
+            "package":"TBLOCK-2"
+        },
+        {
+            "id":"CON2",
+            "value":"-",
+            "package":"CON-SIL2"
+        },
+        {
+            "id":"R1",
+            "value":"1K",
+            "package":"RES40"            
+        },
+        {
+            "id":"R2",
+            "value":"47K",
+            "package":"RES40"
+        },
+        {
+            "id":"C1",
+            "value":"10N",
+            "package":"CAP10"
+        },
+        {
+            "id":"C2",
+            "value":"10U",
+            "package":"ELEC-RAD10"
+        }
+    ],
+    "connections":
+    [
+        {
+            "id":"VCC",
+            "pins":[
+                { "component":"CON1", "pin":"P1"  },
+                { "component":"R1", "pin":"P1" },
+                { "component":"IC1", "pin":"P4" },
+                { "component":"IC1", "pin":"P8" }
+            ]
+        },
+        {
+            "id":"GND",
+            "pins":[
+                { "component":"CON1", "pin":"P2" },
+                { "component":"CON2", "pin":"P2" },
+                { "component":"C1", "pin":"P2" },
+                { "component":"IC1", "pin":"P1" },
+                { "component":"C2", "pin":"P-" }                
+            ]
+        },
+        {
+            "id":"CONN1",
+            "pins":[
+                { "component":"R1", "pin":"P2" },
+                { "component":"R2", "pin":"P1" },
+                { "component":"IC1", "pin":"P7" }
+            ]
+        },
+         {
+            "id":"CONN2",
+            "pins":[
+                { "component":"R2", "pin":"P2" },
+                { "component":"IC1", "pin":"P2" },
+                { "component":"IC1", "pin":"P6" },
+                { "component":"C2", "pin":"P+"}
+            ]
+        },
+        {
+            "id":"COUT",
+            "pins":[
+                { "component":"CON2", "pin":"P1" },
+                { "component":"IC1", "pin":"P3" }
+            ]
+        }
+    ]
+}

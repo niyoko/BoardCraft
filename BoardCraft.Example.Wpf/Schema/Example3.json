@@ -1,11 +1,6 @@
 ﻿{
   "components": [
     {
-      "id": "IC1",
-      "value": "LM2",
-      "package": "TO220-5"
-    },
-    {
       "id": "R2",
       "value": "430R",
       "package": "RES40"
@@ -13,175 +8,11 @@
     {
       "id": "R3",
       "value": "300K",
-      "package": "RES40"
-    },
-    {
-      "id": "R4",
-      "value": "5M6",
-      "package": "RES40"
-    },
-    {
-      "id": "R5",
-      "value": "1M5",
-      "package": "RES40"
-    },
-    {
-      "id": "R6",
-      "value": "43R",
-      "package": "RES40"
-    },
-    {
-      "id": "R7",
-      "value": "430K",
-      "package": "RES40"
-    },
-    {
-      "id": "R8",
-      "value": "300K",
-      "package": "RES40"
-    },
-    {
-      "id": "R9",
-      "value": "1K5",
-      "package": "RES40"
-    },
-    {
-      "id": "R10",
-      "value": "750R",
-      "package": "RES40"
+      "package": "ELEC-RAD10"
     }
   ],
   "connections": [
-    {
-      "id": "Con1",
-      "pins": [
-        {
-          "component": "R10",
-          "pin": "P2"
-        },
-        {
-          "component": "IC1",
-          "pin": "P1"
-        }
-      ]
-    },
-    {
-      "id": "Con2",
-      "pins": [
-        {
-          "component": "IC1",
-          "pin": "P2"
-        },
-        {
-          "component": "R2",
-          "pin": "P1"
-        }
-      ]
-    },
-    {
-      "id": "Con3",
-      "pins": [
-        {
-          "component": "R2",
-          "pin": "P2"
-        },
-        {
-          "component": "R3",
-          "pin": "P1"
-        }
-      ]
-    },
-    {
-      "id": "Con4",
-      "pins": [
-        {
-          "component": "R3",
-          "pin": "P2"
-        },
-        {
-          "component": "R4",
-          "pin": "P1"
-        }
-      ]
-    },
-    {
-      "id": "Con5",
-      "pins": [
-        {
-          "component": "R4",
-          "pin": "P2"
-        },
-        {
-          "component": "R5",
-          "pin": "P1"
-        }
-      ]
-    },
-    {
-      "id": "Con6",
-      "pins": [
-        {
-          "component": "R5",
-          "pin": "P2"
-        },
-        {
-          "component": "R6",
-          "pin": "P1"
-        }
-      ]
-    },
-    {
-      "id": "Con7",
-      "pins": [
-        {
-          "component": "R6",
-          "pin": "P2"
-        },
-        {
-          "component": "R7",
-          "pin": "P1"
-        }
-      ]
-    },
-    {
-      "id": "Con8",
-      "pins": [
-        {
-          "component": "R7",
-          "pin": "P2"
-        },
-        {
-          "component": "R8",
-          "pin": "P1"
-        }
-      ]
-    },
-    {
-      "id": "Con9",
-      "pins": [
-        {
-          "component": "R8",
-          "pin": "P2"
-        },
-        {
-          "component": "R9",
-          "pin": "P1"
-        }
-      ]
-    },
-    {
-      "id": "Con10",
-      "pins": [
-        {
-          "component": "R9",
-          "pin": "P2"
-        },
-        {
-          "component": "R10",
-          "pin": "P1"
-        }
-      ]
-    }
+    
   ]
 }
 
