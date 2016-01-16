@@ -52,6 +52,7 @@
     <Compile Include="Drawing\PinStyles\PinStyle.cs" />
     <Compile Include="Drawing\PinStyles\SquarePinStyle.cs" />
     <Compile Include="Drawing\Point.cs" />
+    <Compile Include="Drawing\Shapes\ArcSegment.cs" />
     <Compile Include="Drawing\Shapes\Circle.cs" />
     <Compile Include="Drawing\Shapes\Ellipse.cs" />
     <Compile Include="Drawing\Shapes\Line.cs" />

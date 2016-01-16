@@ -18,8 +18,25 @@
                 ["circle"] = ParseCircle,
                 ["ellipse"] = ParseEllipse,
                 ["square"] = ParseSquare,
-                ["line"] = ParseLine
+                ["line"] = ParseLine,
+                ["arcsegment"] = ParseArc
             };
+        }
+
+        public ArcSegment ParseArc(JObject obj)
+        {
+            var cp = obj.GetValue("center");
+            var center = new PointParser().Parse(cp);
+
+            var xrad = obj.GetValue("xRadius").Value<double>();
+            var yrad = obj.GetValue("yRadius").Value<double>();
+
+            var sAngle = obj.GetValue("startAngle").Value<double>();
+            var eAngle = obj.GetValue("endAngle").Value<double>();
+
+            const double convFactor = Math.PI / 180;
+
+            return new ArcSegment(center, xrad, yrad, convFactor*sAngle, convFactor*eAngle);
         }
 
         public Line ParseLine(JObject obj)

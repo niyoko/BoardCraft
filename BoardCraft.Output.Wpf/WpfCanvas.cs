@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
     using System.Windows.Shapes;
@@ -10,11 +11,12 @@
     using Canvas1 = System.Windows.Controls.Canvas;
     using Mat = System.Windows.Media.Matrix;
     using Matrix = Drawing.Matrix;
+    using Point = Drawing.Point;
     using Transform = System.Windows.Media.Transform;
 
     public sealed class WpfCanvas : Canvas
     {
-        private IDictionary<DrawingMode, Brush> Brushes { get; } 
+        private IDictionary<DrawingMode, Brush> Brushes { get; }
 
         public WpfCanvas(Canvas1 canvas)
         {
@@ -36,8 +38,8 @@
             CurrentCanvas = canvas;
             var trans = new TransformGroup();
             trans.Children.Add(new ScaleTransform(1, -1, 0.5, 0.5));
-            
-            trans.Children.Add(new ScaleTransform(0.5, 0.5));
+
+            trans.Children.Add(new ScaleTransform(0.2, 0.2));
             CurrentCanvas.LayoutTransform = trans;
 
             Clear();
@@ -77,7 +79,7 @@
             var rect = new Rectangle
             {
                 Width = width,
-                Height = height,                
+                Height = height,
                 Stroke = Brushes[mode],
                 StrokeThickness = 8,
                 RenderTransform = ApplyTransform(blx, bly),
@@ -97,7 +99,6 @@
                 Stroke = Brushes[mode],
                 StrokeThickness = 8,
                 RenderTransform = ApplyTransform()
-
             };
 
             CurrentCanvas.Children.Add(rect);
@@ -112,12 +113,12 @@
             var originY = (-center.Y / (2 * yRadius)) + 0.5;
 
             var rect = new Ellipse
-            {                
+            {
                 Width = (2 * xRadius),
                 Height = (2 * yRadius),
                 Stroke = Brushes[mode],
                 StrokeThickness = 8,
-                RenderTransform = ApplyTransform(center.X-xRadius, center.Y-yRadius),
+                RenderTransform = ApplyTransform(center.X - xRadius, center.Y - yRadius),
                 RenderTransformOrigin = new System.Windows.Point(originX, originY)
             };
 
@@ -183,9 +184,61 @@
             CurrentCanvas.Children.Add(rect);
         }
 
-        public override void DrawFilledDonut(DrawingMode mode, Point center, double xRadius, double yRadius)
+        static double NormalizeAngle(double angle)
         {
-            throw new NotImplementedException();
+            const double m = 2 * Math.PI;
+            return (angle % m + m) % m;
+        }
+
+        static System.Windows.Point AngleAt(Point center, double xRadius, double yRadius, double angle)
+        {
+            var sin = Math.Sin(angle);
+            var cos = Math.Cos(angle);
+
+            var xsin = xRadius * sin;
+            var ycos = yRadius * cos;
+
+            var r = (xRadius * yRadius) / Math.Sqrt(xsin * xsin + ycos * ycos);
+            var xx = r * cos;
+            var yy = r * sin;
+
+            return new System.Windows.Point(xx + center.X, yy + center.Y);
+        }
+
+        public override void DrawArcSegment(DrawingMode mode, Point center, double xRadius, double yRadius, double startAngle, double endAngle)
+        {
+            var sp = AngleAt(center, xRadius, yRadius, startAngle);
+            var ep = AngleAt(center, xRadius, yRadius, endAngle);
+            var sweepAngle = NormalizeAngle(endAngle - startAngle);
+
+            var p = new Path
+            {
+                StrokeThickness = 8,
+                Stroke = Brushes[mode],
+                Data = new PathGeometry
+                {
+                    Figures =
+                    {
+                        new PathFigure
+                        {
+                            StartPoint = sp,
+                            Segments =
+                            {
+                                new ArcSegment
+                                {
+                                    Point = ep,
+                                    Size = new Size(xRadius, yRadius),
+                                    IsLargeArc = sweepAngle > Math.PI,
+                                    SweepDirection = SweepDirection.Clockwise
+                                }
+                            }
+                        }
+                    }
+                },
+                RenderTransform = ApplyTransform()
+            };
+
+            CurrentCanvas.Children.Add(p);
         }
     }
 }

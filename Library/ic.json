@@ -76,10 +76,37 @@
         "boundaries": [350, 375, -50, -75],
         "footprint":[
             {
-                "type":"rectangle",
-                "position": [ -50, 50 ],
-                "width":400,
-                "height":200
+                "type":"line",
+                "p1":[-50,50],
+                "p2":[350,50]
+            },
+            {
+                "type":"line",
+                "p1":[350,50],
+                "p2":[350,250]
+            },
+            {
+                "type":"line",
+                "p1":[350,250],
+                "p2":[-50,250]
+            },
+            {
+                "type":"line",
+                "p1":[-50,250],
+                "p2":[-50,200]
+            },
+            {
+                "type":"line",
+                "p1":[-50,100],
+                "p2":[-50,50]
+            },
+            {
+                "type":"arcsegment",
+                "center":[-50,150],
+                "xRadius":50,
+                "yRadius":50,
+                "startAngle":270,
+                "endAngle":90
             }
         ],
         "pins": [
