@@ -28,7 +28,7 @@
             Brushes = new Dictionary<DrawingMode, Brush>
             {
                 [DrawingMode.Component] = new SolidColorBrush(Color.FromRgb(255, 0, 0)),
-                [DrawingMode.BottomCopper] = new SolidColorBrush(Color.FromRgb(255, 255, 63)),
+                [DrawingMode.BottomCopper] = new SolidColorBrush(Color.FromRgb(63, 63, 255)),
                 [DrawingMode.TopCopper] = new SolidColorBrush(Color.FromRgb(63, 255, 255)),
                 [DrawingMode.DrillHole] = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
                 [DrawingMode.Pad] = new SolidColorBrush(Color.FromRgb(63, 255, 63)),

@@ -60,7 +60,7 @@ namespace BoardCraft.Routing
         {
             foreach (var s in _starts)
             {
-                _workspace[s] = 1;
+                _workspace[WorkspaceLayer.BottomLayer, s] = 1;
             }
         }
 
@@ -86,11 +86,11 @@ namespace BoardCraft.Routing
                             continue;
                         }
 
-                        var cpv = _workspace[c];
+                        var cpv = _workspace[WorkspaceLayer.BottomLayer, c];
                         var sv = cpv + z.Value;
-                        var cv = _workspace[n];
+                        var cv = _workspace[WorkspaceLayer.BottomLayer, n];
 
-                        if (_workspace[n] == 0)
+                        if (_workspace[WorkspaceLayer.BottomLayer, n] == 0)
                         {
                             if (_targets.Contains(n))
                             {
@@ -100,9 +100,9 @@ namespace BoardCraft.Routing
                             }
                         }
 
-                        if (_workspace[n] == 0 || sv < cv)
+                        if (_workspace[WorkspaceLayer.BottomLayer, n] == 0 || sv < cv)
                         {
-                            _workspace[n] = sv;
+                            _workspace[WorkspaceLayer.BottomLayer, n] = sv;
                             next.Add(n);
                         }
                     }
@@ -129,9 +129,9 @@ namespace BoardCraft.Routing
                 for (var j = 0; j < d1; j++)
                 {
                     var p = new IntPoint(i, j);
-                    if (_workspace[p] > 0)
+                    if (_workspace[WorkspaceLayer.BottomLayer, p] > 0)
                     {
-                        _workspace[p] = 0;
+                        _workspace[WorkspaceLayer.BottomLayer, p] = 0;
                     }
                 }
             }
@@ -148,9 +148,8 @@ namespace BoardCraft.Routing
             _internalTrack.Add(c);
             while (true)
             {
-                if (_workspace[c] == 1)
+                if (_workspace[WorkspaceLayer.BottomLayer, c] == 1)
                 {
-
                     _internalNodes.Add(c);
                     return c;
                 }
@@ -169,7 +168,7 @@ namespace BoardCraft.Routing
                         continue;
                     }
 
-                    var val = _workspace[n];
+                    var val = _workspace[WorkspaceLayer.BottomLayer, n];
                     if (val <= 0)
                     {
                         continue;

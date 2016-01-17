@@ -2,8 +2,8 @@
 {
     using System;
     using System.Linq;
+    using MathNet.Numerics.Statistics;
     using Models;
-    using System.Collections.Generic;
 
     public class FitnessEvaluator : IFitnessEvaluator
     {
@@ -24,32 +24,56 @@
             }
 
             return sum;
-        }
+        }       
 
-        public static double AverageDistance(Board board)
+        public static double AverageDistance(Bounds[] bounds)
         {
             var sum = 0.0;
 
-            foreach (var c in board.Schema.Components)
+            foreach (var c in bounds)
             {
-                var p = board.GetComponentPlacement(c);
-                var pos = p.Position;
+                var xp = c.Right * c.Right;
+                var yp = c.Top * c.Top;
 
-                var xsq = pos.X * pos.X;
-                var ysq = pos.Y * pos.Y;
-
-                var dist = Math.Sqrt(xsq + ysq);
+                var dist = Math.Sqrt(xp + yp);
                 sum += dist;
             }
 
-            var cnt = board.Schema.Components.Count;
+            var cnt = bounds.Length;
             return cnt == 0 ? 0 : sum / cnt;
+        }
+
+        public double GetDistributionFactor(Bounds[] bounds)
+        {
+            var w = bounds.Select(x => x.Right).Max();
+            var h = bounds.Select(x => x.Top).Max();
+
+            var hx = w / 2;
+            var hy = h / 2;
+
+            var bnds = new Bounds[]
+            {
+                new Bounds(hy, hx, 0, 0),
+                new Bounds(hy, w,0,hx),
+                new Bounds(h,hx,hy,0),
+                new Bounds(h,w,hx,hy),    
+            };
+            var area = new double[4];
+            foreach (var b in bounds)
+            {
+                for (var i = 0; i < bnds.Length; i++)
+                {
+                    var ov = GetOverlap(b, bnds[i]);
+                    area[i] += ov;
+                }
+            }
+
+            return area.StandardDeviation();
         }
 
         public double EvaluateFitness(Board board)
         {
-            //var b = board.GetBounds();
-            //var s = board.GetSize();
+            board.CalculateBounds();
 
             var b = new Bounds[board.Schema.Components.Count];
             int i = 0;
@@ -60,10 +84,12 @@
             }
 
             var f1 = GetOverlappedArea(b);
-            var f2 = AverageDistance(board);
-            //var f3 = TidynessFitness(board, s);
+            var sqEqOl = Math.Sqrt(f1);
 
-            return (1/(Math.Sqrt(f1) + 1)) + (1/(f2 + 1));// + f3;
+            var d = 100*AverageDistance(b);
+            //var d2 = GetDistributionFactor(b);
+
+            return (1 / (sqEqOl + 1)) + (1 / (d + 1));
         }
 
         private static double GetOutOfRangeArea(Bounds b)

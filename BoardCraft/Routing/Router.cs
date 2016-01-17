@@ -14,7 +14,23 @@
     
         private double TraceWidth { get; }
         private double MinimumSpacing { get; }
-        private static double CellSize = 0.2;
+        private static double CellSize = 10;
+
+        private static List<int> z1; 
+
+        static Router()
+        {
+            const double pinRad = 50;
+            var span = (int)Math.Round(pinRad / CellSize + 1);
+
+            z1 = new List<int>(span);
+            for (var i = 0; i < span; i++)
+            {
+                var th = Math.Acos((double)i / span);
+                var leftSpan = (int)(Math.Round(Math.Sin(th) * span));
+                z1.Add(leftSpan);
+            }
+        }
 
         public Router(double traceWidth, double minimumSpacing)
         {
@@ -41,24 +57,28 @@
             return new Point(px, py);
         }
 
-        private Dictionary<Tuple<Component, string>, ICollection<IntPoint>> _pinObs;
+        private IEnumerable<IntPoint> GetObstacleForPin(Board board, Component component, string pinName)
+        {
+            var pos = board.GetPinLocation(component, pinName);
+            var pp = PointToIntPoint(pos);
+
+            var z = z1.Count - 1;
+            for (var i = -z; i <= z; i++)
+            {
+                var si = i < 0 ? -i : i;
+                var hSpan = z1[si];
+                var hz = hSpan - 1;
+                for (var j = -hz; j <= hz; j++)
+                {
+                    var p = new IntPoint(pp.X + i, pp.Y + j);
+                    yield return p;
+                }
+            }
+        } 
 
         private void SetupWorkspace(RouterWorkspace workspace)
         {
-            var board = workspace.Board;
-            const double pinRad = 1.5;
-            var span = (int)Math.Round(pinRad/CellSize + 1);
-
-            _pinObs = new Dictionary<Tuple<Component, string>, ICollection<IntPoint>>();
-
-            var z1 = new List<int>();
-            for (var i = 0; i < span; i++)
-            {
-                var th = Math.Acos((double)i/span);
-                var leftSpan = (int)(Math.Round(Math.Sin(th)*span));
-                z1.Add(leftSpan);
-            }
-            
+            var board = workspace.Board;                       
             board.CalculatePinLocations();
 
             //setup setiap pin sebagai obstacle
@@ -66,30 +86,9 @@
             {
                 foreach (var pin in c.Package.Pins)
                 {
-                    var key = new Tuple<Component, string>(c, pin.Name);
-                    var value = new List<IntPoint>(85);
-
-                    var pos = board.GetPinLocation(c, pin.Name);
-                    var pp = PointToIntPoint(pos);
-
-                    var z = span - 1;
-                    for (var i = -z; i <= z; i++)
-                    {
-                        var si = i < 0 ? -i : i;
-                        var hSpan = z1[si];
-                        var hz = hSpan - 1;
-                        for (var j = -hz; j <= hz; j++)
-                        {
-                            var p = new IntPoint(pp.X+i, pp.Y+j);
-                            if (p.X >= 0 && p.X < workspace.Width && p.Y >= 0 && p.Y < workspace.Height)
-                            {
-                                workspace[p] = -1;
-                                value.Add(p);
-                            }
-                        }
-                    }
-
-                    _pinObs.Add(key, value);
+                    var obs = GetObstacleForPin(board, c, pin.Name);
+                    obs = obs.Where(workspace.IsPointValid);                    
+                    workspace.SetPinObstacle(c, pin.Name, obs);
                 }
             }
         }
@@ -133,6 +132,36 @@
             return PointType.None;
         }
 
+        private ISet<IntPoint> SquareBuffer(ISet<IntPoint> tracks)
+        {
+            var r = new HashSet<IntPoint>();
+            foreach (var t in tracks)
+            {
+                var tWidth = 40;
+                var xxx = (int)Math.Round(tWidth / CellSize);
+
+                var hmin = -xxx;
+                var hmax = xxx;
+
+                var vmin = -xxx;
+                var vmax = xxx;
+
+                for (var xh = hmin; xh <= hmax; xh++)
+                {
+                    for (var xv = vmin; xv <= vmax; xv++)
+                    {
+                        var xx = t.X + xh;
+                        var yy = t.Y + xv;
+
+                        var p = new IntPoint(xx, yy);
+                        r.Add(p);
+                    }
+                }
+            }
+
+            return r;
+        } 
+
         public void Route(Board board)
         {
             board.CalculatePinLocations();
@@ -153,19 +182,13 @@
             {
                 var z = zl[i];
 
-                var pts = new HashSet<IntPoint>();
-                foreach (var z1 in z.Pins)
-                {
-                    var pos = board.GetPinLocation(z1.Component, z1.Pin);
-                    var rList = _pinObs[new Tuple<Component, string>(z1.Component, z1.Pin)];
-                    foreach (var x in rList)
-                    {
-                        workspace[x] = 0;
-                    }
+                var pinLoc = z.Pins
+                    .Select(x => board.GetPinLocation(x.Component, x.Pin))
+                    .Select(PointToIntPoint);
 
-                    pts.Add(PointToIntPoint(pos));
-                }
+                var pts = new HashSet<IntPoint>(pinLoc);
 
+                workspace.SetupWorkspaceForRouting(z);
                 var r = new LeeMultipointRouter(workspace, pts);
                 var res = r.Route();
 
@@ -178,47 +201,15 @@
                     failedRouting++;
                 }
 
-                foreach (var z1 in z.Pins)
-                {
-                    var rList = _pinObs[new Tuple<Component, string>(z1.Component, z1.Pin)].ToList();                    
-                    for(var x = 0; x < rList.Count; x++)
-                    {
-                        workspace[rList[x]] = -1;
-                    }
-                }
+                //if (res)
+                //{
+                    var l = SquareBuffer(r.Trace);
+                    
+                    var lx = l.Where(workspace.IsPointValid).ToList();
+                    Debug.WriteLine($"From {r.Trace.Count} become {l.Count} and then {lx.Count}");
 
-                if (res)
-                {
-                    var l = r.Trace.ToList();
-                    for(var ixx = 0; ixx < l.Count; ixx++)
-                    {
-                        var tWidth = 1;
-                        var xxx = (int)Math.Round(tWidth / CellSize);
-
-                        var hmin = -xxx;
-                        var hmax = xxx;
-
-                        var vmin = -xxx;
-                        var vmax = xxx;
-                     
-                        for (var xh = hmin; xh <= hmax; xh++)
-                        {
-                            for (var xv = vmin; xv <= vmax; xv++)
-                            {
-                                var xx = l[ixx].X + xh;
-                                var yy = l[ixx].Y + xv;
-
-                                if (xx < 0 || yy < 0 || xx >= workspace.Width || yy >= workspace.Height)
-                                {
-                                    continue;
-                                }
-
-                                var p = new IntPoint(xx, yy);
-                                workspace[p] = -1;
-                            }
-                        }
-                    }
-                }
+                    workspace.SetTrackObstacle(z, WorkspaceLayer.BottomLayer, lx);
+                //}
 
                 var r2 = r.TraceNodes
                 .Select(

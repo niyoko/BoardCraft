@@ -46,18 +46,18 @@
 
                 var P1 = random.NextDouble();
 
-                var amount = 1.0;
+                var amount = 10;
                 if (P1 < 0.05)
                 {
-                    amount = 20;
+                    amount = 200;
                 }
                 else if (P1 < 0.1)
                 {
-                    amount = 10;
+                    amount = 100;
                 }
                 else if (P1 < 0.2)
                 {
-                    amount = 5;
+                    amount = 50;
                 }
 
                 if (res == 1 || res == 2 || res == 3)
