@@ -53,9 +53,7 @@
                 {
                     try
                     {
-                        Debug.WriteLine($"Begin parsing {f}");
                         var result = ParseFile(f);
-                        Debug.WriteLine($"{f} parsed");
                         if (InternalLibraries.ContainsKey(result.Name))
                         {
                             throw new LibraryParseException($"Name {result.Name} already exist in library");

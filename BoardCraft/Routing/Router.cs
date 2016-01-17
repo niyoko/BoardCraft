@@ -57,7 +57,7 @@
             return new Point(px, py);
         }
 
-        private IEnumerable<IntPoint> GetObstacleForPin(Board board, Component component, string pinName)
+        private IEnumerable<LPoint> GetObstacleForPin(Board board, Component component, string pinName)
         {
             var pos = board.GetPinLocation(component, pinName);
             var pp = PointToIntPoint(pos);
@@ -71,7 +71,8 @@
                 for (var j = -hz; j <= hz; j++)
                 {
                     var p = new IntPoint(pp.X + i, pp.Y + j);
-                    yield return p;
+                    yield return new LPoint(WorkspaceLayer.TopLayer, p);
+                    yield return new LPoint(WorkspaceLayer.BottomLayer, p);
                 }
             }
         } 
@@ -87,54 +88,15 @@
                 foreach (var pin in c.Package.Pins)
                 {
                     var obs = GetObstacleForPin(board, c, pin.Name);
-                    obs = obs.Where(workspace.IsPointValid);                    
+                    obs = obs.Where(x => workspace.IsPointValid(x.Point));
                     workspace.SetPinObstacle(c, pin.Name, obs);
                 }
             }
-        }
+        }       
 
-        enum PointType
+        private IList<LPoint> SquareBuffer(ISet<LPoint> tracks)
         {
-            None,
-            First,
-            Last,
-            Horizontal,
-            Vertikal,
-            Corner
-        }
-
-        private PointType GetNodeType(IList<IntPoint> pts, int index)
-        {
-            if(index == 0)
-                return PointType.First;
-
-            if(index == pts.Count-1)
-                return PointType.Last;
-
-            var cPoint = pts[index];
-            var nPoint = pts[index + 1];
-
-            if (cPoint.X != nPoint.X && cPoint.Y != nPoint.Y)
-            {
-                return PointType.Corner;
-            }
-
-            if (cPoint.X == nPoint.X)
-            {
-                return PointType.Horizontal;
-            }
-
-            if (cPoint.Y == nPoint.Y)
-            {
-                return PointType.Vertikal;                
-            }
-
-            return PointType.None;
-        }
-
-        private ISet<IntPoint> SquareBuffer(ISet<IntPoint> tracks)
-        {
-            var r = new HashSet<IntPoint>();
+            var r = new List<LPoint>();
             foreach (var t in tracks)
             {
                 var tWidth = 40;
@@ -150,17 +112,26 @@
                 {
                     for (var xv = vmin; xv <= vmax; xv++)
                     {
-                        var xx = t.X + xh;
-                        var yy = t.Y + xv;
+                        var xx = t.Point.X + xh;
+                        var yy = t.Point.Y + xv;
 
-                        var p = new IntPoint(xx, yy);
+                        var p = new LPoint(t.Layer, new IntPoint(xx, yy));
                         r.Add(p);
                     }
                 }
             }
 
             return r;
-        } 
+        }
+
+        TraceNode LNodeToTraceNode(LPoint lp)
+        {
+            var p = IntPointToPoint(lp.Point);
+            var l = lp.Layer == WorkspaceLayer.BottomLayer 
+                    ? TraceLayer.BottomLayer 
+                    : TraceLayer.TopLayer;
+            return new TraceNode(p, l);
+        }
 
         public void Route(Board board)
         {
@@ -190,7 +161,13 @@
 
                 workspace.SetupWorkspaceForRouting(z);
                 var r = new LeeMultipointRouter(workspace, pts);
+
+                Debug.WriteLine($"Routing {z.Id}");
+                var sw = Stopwatch.StartNew();
                 var res = r.Route();
+                sw.Stop();
+                var _z = sw.ElapsedMilliseconds;
+                Debug.WriteLine($"Routed {z.Id} - {_z}");
 
                 if (res)
                 {
@@ -198,33 +175,30 @@
                 }
                 else
                 {
+                    Debug.WriteLine($"Fail to route {z.Id}");
                     failedRouting++;
                 }
 
-                //if (res)
-                //{
-                    var l = SquareBuffer(r.Trace);
-                    
-                    var lx = l.Where(workspace.IsPointValid).ToList();
-                    Debug.WriteLine($"From {r.Trace.Count} become {l.Count} and then {lx.Count}");
+                Debug.WriteLine($"Building buffer {z.Id}");
+                sw.Restart();
+                var l = SquareBuffer(r.Trace);                    
+                sw.Stop();
+                _z = sw.ElapsedMilliseconds;
+                Debug.WriteLine($"Buffer builded at {_z}");
+                sw.Restart();
+                var lx = l.Where(x=>workspace.IsPointValid(x.Point)).ToList();
+                sw.Stop();
+                _z = sw.ElapsedMilliseconds;
+                Debug.WriteLine($"Checked for invalid {_z}");
 
-                    workspace.SetTrackObstacle(z, WorkspaceLayer.BottomLayer, lx);
-                //}
+                workspace.SetTrackObstacle(z, lx);
 
                 var r2 = r.TraceNodes
-                .Select(
-                x =>
-                {
-                    return (IList<Point>)x.Select(IntPointToPoint).ToList();
-                }).ToList();
+                    .Select(x => (IList<TraceNode>)x.Select(LNodeToTraceNode).ToList())
+                    .ToList();
 
                 board._traces.Add(r2);
             }
-
-            Debug.WriteLine($"Success : {successRouting} Fail : {failedRouting}");
-
-            //board._cellSize = CellSize;
-            //board._wValues = workspace._internalData;
         }
     }
 }

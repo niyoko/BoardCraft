@@ -6,6 +6,24 @@
     using Placement.GA;
     using System.Linq;
 
+    public enum TraceLayer
+    {
+        BottomLayer,
+        TopLayer
+    }
+
+    public struct TraceNode
+    {
+        public TraceNode(Point point, TraceLayer layer)
+        {
+            Point = point;
+            Layer = layer;
+        }
+
+        public readonly Point Point;
+        public readonly TraceLayer Layer;
+    }
+
     public sealed class Board
     {
         private readonly Dictionary<Component, PlacementInfo> _placement;
@@ -14,7 +32,7 @@
         internal int[,] _wValues;
         internal double _cellSize;
 
-        internal readonly ICollection<ICollection<IList<Point>>> _traces;
+        internal readonly ICollection<ICollection<IList<TraceNode>>> _traces;
 
         static Board()
         {
@@ -33,7 +51,7 @@
             _placement = new Dictionary<Component, PlacementInfo>(schema.Components.Count);
             _bounds = new Dictionary<Component, Bounds>(schema.Components.Count);
             _pinLocations = new Dictionary<Component, Dictionary<string, Point>>(schema.Components.Count);
-            _traces = new List<ICollection<IList<Point>>>();
+            _traces = new List<ICollection<IList<TraceNode>>>();
         }
 
         public Schematic Schema { get; }
@@ -320,7 +338,15 @@
                 {
                     for (var i = 1; i < t.Count; i++)
                     {
-                        canvas.DrawLine(DrawingMode.BottomCopper, t[i-1], t[i]);
+                        var l1 = t[i - 1].Layer;
+                        var l2 = t[i].Layer;
+                        if (l1 == l2)
+                        {
+                            var md = l1 == TraceLayer.BottomLayer 
+                                ? DrawingMode.BottomCopper 
+                                : DrawingMode.TopCopper;
+                            canvas.DrawLine(md, t[i - 1].Point, t[i].Point);
+                        }
                     }
                 }
             }

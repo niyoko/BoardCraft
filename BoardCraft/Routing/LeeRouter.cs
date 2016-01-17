@@ -3,22 +3,23 @@ using System.Collections.Generic;
 
 namespace BoardCraft.Routing
 {
+    using System;
     using System.Collections.ObjectModel;
 
     internal class LeeRouter
     {
         private readonly RouterWorkspace _workspace;
-        private readonly ISet<IntPoint> _starts;
-        private readonly ISet<IntPoint> _targets;
-        private readonly ISet<IntPoint> _internalTrack;
-        private readonly IList<IntPoint> _internalNodes;
+        private readonly ISet<LPoint> _starts;
+        private readonly ISet<LPoint> _targets;
+        private readonly ISet<LPoint> _internalTrack;
+        private readonly IList<LPoint> _internalNodes;
 
-        public ISet<IntPoint> Track { get; }
-        public IList<IntPoint> TrackNodes { get; } 
+        public ISet<LPoint> Track { get; }
+        public IList<LPoint> TrackNodes { get; }
 
         private static readonly Dictionary<IntPoint, int> neighbors = new Dictionary<IntPoint, int>
         {
-            { new IntPoint(-1, 0), 10 },
+            { new IntPoint(-1, 0), 10 },    
             { new IntPoint(0, -1), 10 },
             { new IntPoint(1, 0), 10 },
             { new IntPoint(0, 1), 10 },
@@ -28,16 +29,18 @@ namespace BoardCraft.Routing
             { new IntPoint(-1, -1), 15 }
         };
 
-        public LeeRouter(RouterWorkspace workspace, ISet<IntPoint> starts, ISet<IntPoint> targets)
+        private static readonly int ViaCost = 2;
+
+        public LeeRouter(RouterWorkspace workspace, ISet<LPoint> starts, ISet<LPoint> targets)
         {
             _workspace = workspace;
             _starts = starts;
             _targets = targets;
-            _internalTrack = new HashSet<IntPoint>();
-            _internalNodes = new List<IntPoint>();
+            _internalTrack = new HashSet<LPoint>();
+            _internalNodes = new List<LPoint>();
 
-            Track = new ReadOnlySet<IntPoint>(_internalTrack);
-            TrackNodes = new ReadOnlyCollection<IntPoint>(_internalNodes);
+            Track = new ReadOnlySet<LPoint>(_internalTrack);
+            TrackNodes = new ReadOnlyCollection<LPoint>(_internalNodes);
         }
 
         public bool Route()
@@ -46,13 +49,10 @@ namespace BoardCraft.Routing
             var end = ExpandWave();
             if (end == null)
             {
-                Clear();
                 return false;
             }
 
             Backtrace(end.Value);
-            Clear();
-
             return true;
         }
 
@@ -60,51 +60,71 @@ namespace BoardCraft.Routing
         {
             foreach (var s in _starts)
             {
-                _workspace[WorkspaceLayer.BottomLayer, s] = 1;
+                _workspace[s] = 1;
             }
         }
 
         private IntPoint? ExpandWave()
         {
-            var currentPoints = new List<IntPoint>(_starts);
-            var end = (IntPoint?)null;
+            var currentPoints = new List<LPoint>(_starts.Count);
+            currentPoints.AddRange(_starts);
 
+            var end = (IntPoint?)null;
             while (true)
             {
-                var next = new List<IntPoint>(100);
+                var next = new List<LPoint>(100);
                 foreach (var c in currentPoints)
                 {
                     foreach (var z in neighbors)
                     {
-                        var nx = c.X + z.Key.X;
-                        var ny = c.Y + z.Key.Y;
-                        var n = new IntPoint(nx, ny);
-
-                        if (nx < 0 || nx >= _workspace.Width ||
-                            ny < 0 || ny >= _workspace.Height)
+                        var nx = c.Point.X + z.Key.X;
+                        var ny = c.Point.Y + z.Key.Y;
+                        var np = new IntPoint(nx, ny);
+                        if (!_workspace.IsPointValid(np))
                         {
                             continue;
                         }
 
-                        var cpv = _workspace[WorkspaceLayer.BottomLayer, c];
-                        var sv = cpv + z.Value;
-                        var cv = _workspace[WorkspaceLayer.BottomLayer, n];
+                        var n = new LPoint(c.Layer, np);
 
-                        if (_workspace[WorkspaceLayer.BottomLayer, n] == 0)
+                        var cpv = _workspace[c];
+                        var sv = cpv + z.Value;
+                        var cv = _workspace[n];
+
+                        if (c.Layer == WorkspaceLayer.BottomLayer)
                         {
-                            if (_targets.Contains(n))
+                            if (_workspace[n] == 0)
                             {
-                                //found
-                                end = n;
-                                break;
+                                if (_targets.Contains(n))
+                                {
+                                    //
+                                    _workspace[n] = sv;
+                                    end = n.Point;
+                                    break;
+                                }
                             }
                         }
 
-                        if (_workspace[WorkspaceLayer.BottomLayer, n] == 0 || sv < cv)
+                        if (cv == 0 || sv < cv)
                         {
-                            _workspace[WorkspaceLayer.BottomLayer, n] = sv;
+                            _workspace[n] = sv;
                             next.Add(n);
                         }
+                    }
+
+                    //layer move
+                    var nlayer = c.Layer == WorkspaceLayer.TopLayer
+                        ? WorkspaceLayer.BottomLayer
+                        : WorkspaceLayer.TopLayer;
+                    var nl = new LPoint(nlayer, c.Point);
+                    var cpvl = _workspace[c];
+                    var spvl = cpvl + ViaCost;
+                    var cvl = _workspace[nl];
+
+                    if (cvl == 0 || spvl < cvl)
+                    {
+                        _workspace[nl] = spvl;
+                        next.Add(nl);
                     }
                 }
 
@@ -119,76 +139,75 @@ namespace BoardCraft.Routing
             return end;
         }
 
-        private void Clear()
-        {
-            var d0 = _workspace.Width;
-            var d1 = _workspace.Height;
-
-            for (var i = 0; i < d0; i++)
-            {
-                for (var j = 0; j < d1; j++)
-                {
-                    var p = new IntPoint(i, j);
-                    if (_workspace[WorkspaceLayer.BottomLayer, p] > 0)
-                    {
-                        _workspace[WorkspaceLayer.BottomLayer, p] = 0;
-                    }
-                }
-            }
-        }
-
         private IntPoint Backtrace(IntPoint start)
         {
-            var c = start;
+            var c = new LPoint(WorkspaceLayer.BottomLayer, start);
             var dx = 0;
             var dy = 0;
+            var dl = 0;
             var pdx = 0;
             var pdy = 0;
+            var pdl = 0;
 
             _internalTrack.Add(c);
             while (true)
             {
-                if (_workspace[WorkspaceLayer.BottomLayer, c] == 1)
+                var cval = _workspace[c];
+                if (cval == 1)
                 {
                     _internalNodes.Add(c);
-                    return c;
+                    return c.Point;
                 }
 
                 var mn = c;
-                var mVal = int.MaxValue;
+                var mVal = cval;
 
                 foreach (var z in neighbors)
                 {
-                    var nx = c.X + z.Key.X;
-                    var ny = c.Y + z.Key.Y;
-                    var n = new IntPoint(nx, ny);
+                    var nx = c.Point.X + z.Key.X;
+                    var ny = c.Point.Y + z.Key.Y;
+                    var np = new IntPoint(nx, ny);
 
-                    if (!_workspace.IsPointValid(n))
+                    if (_workspace.IsPointValid(np))
                     {
-                        continue;
-                    }
-
-                    var val = _workspace[WorkspaceLayer.BottomLayer, n];
-                    if (val <= 0)
-                    {
-                        continue;
-                    }
-
-                    if (val < mVal)
-                    {
-                        mn = new IntPoint(nx, ny);
-                        mVal = val;
+                        var n = new LPoint(c.Layer, np);
+                        var val = _workspace[n];
+                        if (val > 0 && val < mVal)
+                        {
+                            mn = n;
+                            mVal = val;
+                        }
                     }
                 }
 
-                dx = mn.X - c.X;
-                dy = mn.Y - c.Y;
+                //layer move
+                var nlayer = c.Layer == WorkspaceLayer.TopLayer
+                    ? WorkspaceLayer.BottomLayer
+                    : WorkspaceLayer.TopLayer;
+                var nl = new LPoint(nlayer, c.Point);
 
-                if (!(dx == pdx && dy == pdy))
+                var val2 = _workspace[nl];
+
+                if (val2 > 0 && val2 < mVal)
+                {
+                    mn = nl;
+                    mVal = val2;
+                }
+
+                if (mVal >= cval)
+                {
+                    throw new Exception("Backtrace stuck. Something wrong");
+                }
+                
+                dx = mn.Point.X - c.Point.X;
+                dy = mn.Point.Y - c.Point.Y;
+                dl = (int)mn.Layer - (int)c.Layer;
+
+                if (dx != pdx || dy != pdy || dl != pdl)
                 {
                     _internalNodes.Add(c);
                 }
-
+                
                 _internalTrack.Add(mn);
 
                 pdx = dx;

@@ -12,16 +12,16 @@
 
         internal RouterWorkspace Workspace { get; }
 
-        public ISet<IntPoint> Trace { get; }
-        public ICollection<IList<IntPoint>> TraceNodes { get; } 
+        public ISet<LPoint> Trace { get; }
+        public ICollection<IList<LPoint>> TraceNodes { get; } 
 
         public LeeMultipointRouter(RouterWorkspace workspace, ISet<IntPoint> pins)
         {
             Workspace = workspace;
             _pins = pins;
 
-            Trace = new HashSet<IntPoint>();
-            TraceNodes = new List<IList<IntPoint>>();
+            Trace = new HashSet<LPoint>();
+            TraceNodes = new List<IList<LPoint>>();
         }
 
         public ISet<IntPoint> Pins
@@ -40,11 +40,12 @@
         public bool Route()
         {
             var rp = Pins.ToArray()[0];
-            Trace.Add(rp);
+            Trace.Add(new LPoint(WorkspaceLayer.BottomLayer, rp));
 
             while (!IsFinished())
             {
-                var target = new HashSet<IntPoint>(Pins);
+                var pins = Pins.Select(x => new LPoint(WorkspaceLayer.BottomLayer, x));
+                var target = new HashSet<LPoint>(pins);
                 target.ExceptWith(Trace);
                 var singleRouter = new LeeRouter(Workspace, Trace, target);
                 var rResult = singleRouter.Route();
@@ -53,7 +54,6 @@
                     return false;
                 }
 
-                Debug.WriteLine($"Track cnt {singleRouter.Track.Count}");
                 Trace.UnionWith(singleRouter.Track);
                 TraceNodes.Add(singleRouter.TrackNodes);
             }
@@ -63,7 +63,11 @@
 
         private bool IsFinished()
         {
-            return Pins.All(x => Trace.Contains(x));
+            var t = Trace.Where(x => x.Layer == WorkspaceLayer.BottomLayer)
+                .Select(x => x.Point)
+                .ToList();
+
+            return Pins.All(x => t.Contains(x));
         }
     }
 }

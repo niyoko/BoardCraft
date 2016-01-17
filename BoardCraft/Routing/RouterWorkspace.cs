@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    internal enum WorkspaceLayer
+    public enum WorkspaceLayer
     {
         BottomLayer,
         TopLayer
@@ -15,8 +15,8 @@
     internal class RouterWorkspace
     {
         internal readonly int[,,] _data;
-        internal readonly IDictionary<Tuple<Component, string>, ISet<IntPoint>> _pinObstacle;
-        internal readonly IDictionary<Tuple<Connection, WorkspaceLayer>, ISet<IntPoint>> _trackObstacle;
+        internal readonly IDictionary<Tuple<Component, string>, ISet<LPoint>> _pinObstacle;
+        internal readonly IDictionary<Connection, ISet<LPoint>> _trackObstacle;
 
         private readonly double _cellSize;
 
@@ -35,22 +35,21 @@
             Height = (int)Math.Ceiling((s.Height+500)/cellSize);
 
             _data = new int[2, Width, Height];
-            _pinObstacle = new Dictionary<Tuple<Component, string>, ISet<IntPoint>>(Board.Schema.Connections.Count);
-            _trackObstacle = new Dictionary<Tuple<Connection, WorkspaceLayer>, ISet<IntPoint>>();
+            _pinObstacle = new Dictionary<Tuple<Component, string>, ISet<LPoint>>(Board.Schema.Connections.Count);
+            _trackObstacle = new Dictionary<Connection, ISet<LPoint>>();
         }
 
-        public void SetPinObstacle(Component component, string pinName, IEnumerable<IntPoint> obstacle)
+        public void SetPinObstacle(Component component, string pinName, IEnumerable<LPoint> obstacle)
         {
             var key = Tuple.Create(component, pinName);
-            var el = new HashSet<IntPoint>(obstacle);
+            var el = new HashSet<LPoint>(obstacle);
             _pinObstacle.Add(key, el);
         }
 
-        public void SetTrackObstacle(Connection connection, WorkspaceLayer layer, IEnumerable<IntPoint> obstacle)
+        public void SetTrackObstacle(Connection connection, IEnumerable<LPoint> obstacle)
         {
-            var key = Tuple.Create(connection, layer);
-            var el = new HashSet<IntPoint>(obstacle);
-            _trackObstacle.Add(key, el);
+            var el = new HashSet<LPoint>(obstacle);
+            _trackObstacle.Add(connection, el);
         }
 
         public void SetupWorkspaceForRouting(Connection connection)
@@ -65,15 +64,19 @@
                 var isInsideCurrentConection = hashTupled.Contains(o.Key);
                 foreach (var ic in o.Value)
                 {
-                    this[WorkspaceLayer.TopLayer, ic] = -1;
-                    if (!isInsideCurrentConection)
-                        this[WorkspaceLayer.BottomLayer, ic] = -1;
+                    if (!isInsideCurrentConection || ic.Layer == WorkspaceLayer.TopLayer)
+                    {
+                        this[ic] = -1;
+                    }
                 }
             }
 
-            foreach (var o in _trackObstacle.SelectMany(x=>x.Value))
+            foreach (var o in _trackObstacle)
             {
-                this[WorkspaceLayer.BottomLayer, o] = -1;
+                foreach (var v in o.Value)
+                {
+                    this[v] = -1;
+                }
             }
         }
 
@@ -87,10 +90,10 @@
             return valid;
         }
 
-        public int this[WorkspaceLayer layer, IntPoint index]
+        public int this[LPoint index]
         {
-            get { return _data[(int)layer, index.X, index.Y]; }
-            set { _data[(int)layer, index.X, index.Y] = value; }
+            get { return _data[(int)index.Layer, index.Point.X, index.Point.Y]; }
+            set { _data[(int)index.Layer, index.Point.X, index.Point.Y] = value; }
         }
     }
 }
