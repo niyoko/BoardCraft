@@ -1,9 +1,20 @@
 ﻿namespace BoardCraft.Routing
 {
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
 
     public static class RoutingHelper
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static LPoint OffsetPoint(LPoint point, IntPoint offset)
+        {
+            var xx = point.Point.X + offset.X;
+            var yy = point.Point.Y + offset.Y;
+
+            var p = new LPoint(point.Layer, new IntPoint(xx, yy));
+            return p;
+        }
+
         public static ICollection<IntPoint> GetPointsInCircle(IntPoint center, int radius)
         {
             var l = GetHorizontalRads(radius);
@@ -27,10 +38,10 @@
 
         private static int[] GetHorizontalRads(int radius)
         {
-            int x = radius;
-            int y = 0;
+            var x = radius;
+            var y = 0;
 
-            int decisionOver2 = 1 - x;   // Decision criterion divided by 2 evaluated at x=r, y=0
+            var decisionOver2 = 1 - x;   // Decision criterion divided by 2 evaluated at x=r, y=0
             var l = new int[radius + 1];
 
             while (y <= x)

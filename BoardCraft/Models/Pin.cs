@@ -17,9 +17,14 @@
         public Point Position { get; set; }
         public PinStyle Style { get; set; }
 
-        public void DrawTo(ICanvas canvas)
+        public void DrawPad(ICanvas canvas)
         {
             Style.DrawTo(canvas, Position);
+        }
+
+        public void DrawDrillHole(ICanvas canvas)
+        {
+            Style.DrawDrillHole(canvas, Position);
         }
     }
 }

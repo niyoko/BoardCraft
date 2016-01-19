@@ -9,6 +9,8 @@
     using System.Text;
     using NLog;
     using System.IO;
+    using System.Runtime.CompilerServices;
+
     public enum WorkspaceLayer
     {
         BottomLayer,
@@ -31,13 +33,22 @@
         public int Right { get; }
     }
 
+    internal enum CellMetadata : byte
+    {
+        Freelane = 0,
+        Obstacle = 1,
+        SuspendedObstacle = 2
+    }
+
     internal class RouterWorkspace
     {
         private Logger _logger = LogManager.GetCurrentClassLogger();
 
-        internal readonly int[,,] _data;
-        internal readonly IDictionary<Tuple<Component, string>, ISet<LPoint>> _pinObstacle;
-        internal readonly IDictionary<Connection, ISet<LPoint>> _trackObstacle;
+        internal readonly int[,,] Data;
+        internal readonly CellMetadata[,,] Metadata;
+
+        internal readonly IDictionary<Tuple<Component, string>, ISet<LPoint>> PinObstacle;
+        internal readonly IDictionary<Connection, ISet<LPoint>> TrackObstacle;
 
         private readonly double _cellSize;
 
@@ -67,9 +78,11 @@
             Width = OffsetX + bWidth + extrax;
             Height = OffsetY + bHeight + extray;
 
-            _data = new int[2, Width, Height];
-            _pinObstacle = new Dictionary<Tuple<Component, string>, ISet<LPoint>>(Board.Schema.Connections.Count);
-            _trackObstacle = new Dictionary<Connection, ISet<LPoint>>();
+            Data = new int[2, Width, Height];
+            Metadata = new CellMetadata[2, Width, Height];
+
+            PinObstacle = new Dictionary<Tuple<Component, string>, ISet<LPoint>>(Board.Schema.Connections.Count);
+            TrackObstacle = new Dictionary<Connection, ISet<LPoint>>();
         }
 
         internal IntPoint PointToIntPoint(Point p)
@@ -95,48 +108,49 @@
         {
             var key = Tuple.Create(component, pinName);
             var el = new HashSet<LPoint>(obstacle);
-            _pinObstacle.Add(key, el);
+            PinObstacle.Add(key, el);
         }
 
-        public void SetTrackObstacle(Connection connection, IEnumerable<LPoint> obstacle)
+        public void SetTrackObstacle(Connection connection, ISet<LPoint> obstacle)
         {
-            var el = new HashSet<LPoint>(obstacle);
-            _trackObstacle.Add(connection, el);
+            var el = obstacle;
+            TrackObstacle.Add(connection, el);
         }
 
         public void SetupWorkspaceForRouting(Connection connection)
         {
-            Array.Clear(_data, 0, _data.Length);
+            Array.Clear(Data, 0, Data.Length);
+            Array.Clear(Metadata, 0, Metadata.Length);
 
             var tupled = connection.Pins.Select(x => Tuple.Create(x.Component, x.Pin));
             var hashTupled = new HashSet<Tuple<Component, string>>(tupled);
-
-
-            foreach (var o in _pinObstacle)
+            
+            foreach (var o in PinObstacle)
             {
                 var isInsideCurrentConection = hashTupled.Contains(o.Key);
                 foreach (var ic in o.Value)
                 {
-                    if (!isInsideCurrentConection || ic.Layer == WorkspaceLayer.TopLayer)
-                    {
-                        this[ic] = -1;
-                    }
+                    var isSuspended = isInsideCurrentConection 
+                        && ic.Layer == WorkspaceLayer.BottomLayer;
+
+                    SetMetadata(ic, isSuspended ? 
+                        CellMetadata.SuspendedObstacle 
+                        : CellMetadata.Obstacle);
                 }
             }
 
-            foreach (var o in _trackObstacle)
+            foreach (var o in TrackObstacle)
             {
                 foreach (var v in o.Value)
                 {
-                    this[v] = -1;
+                    SetMetadata(v, CellMetadata.Obstacle);
                 }
             }
         }
 
         public bool IsPointValid(IntPoint index)
         {
-            var valid = true;
-            valid = valid && index.X >= 0;
+            var valid = index.X >= 0;
             valid = valid && index.X < Width;
             valid = valid && index.Y >= 0;
             valid = valid && index.Y < Height;
@@ -173,6 +187,7 @@
 
         internal void Render(ICanvas canvas)
         {
+            Debug.WriteLine("Workspace rendered");
             for (var k = 0; k < 2; k++)
             {
                 for (var j = Height - 1; j >= 0; j--)
@@ -180,9 +195,9 @@
                     for (var i = 0; i < Width; i++)
                     {
                         var idx = new LPoint((WorkspaceLayer)k, new IntPoint(i, j));
-                        if (idx.Layer == WorkspaceLayer.BottomLayer && this[idx] > 1)
+                        if (idx.Layer == WorkspaceLayer.BottomLayer && this[idx] == -1)
                         {
-                            canvas.DrawRectangle((DrawingMode)(1000 + this[idx]), IntPointToPoint(idx.Point), _cellSize, _cellSize);
+                            canvas.DrawRectangle(DrawingMode.DrillHole, IntPointToPoint(idx.Point), _cellSize, _cellSize);
                         }
                     }
                 }
@@ -191,8 +206,20 @@
 #endif
         public int this[LPoint index]
         {
-            get { return _data[(int)index.Layer, index.Point.X, index.Point.Y]; }
-            set { _data[(int)index.Layer, index.Point.X, index.Point.Y] = value; }
+            get { return Data[(int)index.Layer, index.Point.X, index.Point.Y]; }
+            set { Data[(int)index.Layer, index.Point.X, index.Point.Y] = value; }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public CellMetadata GetMetadata(LPoint index)
+        {
+            return Metadata[(int) index.Layer, index.Point.X, index.Point.Y];
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetMetadata(LPoint index, CellMetadata value)
+        {
+            Metadata[(int) index.Layer, index.Point.X, index.Point.Y] = value;
         }
     }
 }

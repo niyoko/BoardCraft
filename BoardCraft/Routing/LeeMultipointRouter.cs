@@ -15,6 +15,7 @@
 
         public ISet<LPoint> Trace { get; }
         public ICollection<IList<LPoint>> TraceNodes { get; } 
+        public ISet<IntPoint> Vias { get; } 
 
         public LeeMultipointRouter(RouterWorkspace workspace, ISet<IntPoint> pins)
         {
@@ -23,6 +24,7 @@
 
             Trace = new HashSet<LPoint>();
             TraceNodes = new List<IList<LPoint>>();
+            Vias = new HashSet<IntPoint>();
         }
 
         public ISet<LPoint> Pins
@@ -38,8 +40,6 @@
             }
         }
 
-
-        internal ISet<LPoint> _target; 
         public bool Route()
         {
             var target = new HashSet<LPoint>(Pins);
@@ -53,11 +53,11 @@
                 var rResult = singleRouter.Route();
                 if (!rResult)
                 {
-                    _target = target;
                     return false;
                 }
 
                 Trace.UnionWith(singleRouter.Track);
+                Vias.UnionWith(singleRouter.Vias);
                 TraceNodes.Add(singleRouter.TrackNodes);
                 target.ExceptWith(Trace);
             }

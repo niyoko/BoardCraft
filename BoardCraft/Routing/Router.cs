@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Net.Sockets;
+    using Drawing;
     using Models;
     using Drawing.PinStyles;
 
@@ -11,14 +13,21 @@
     {    
         private double TraceWidth { get; }
         private double Clearance { get; }
-        private readonly double CellSize;
-        private const int Divider = 4;
+        private int Divider { get; }
+        private readonly double _cellSize;
 
-        public Router(double traceWidth, double clearance)
+        private readonly ISet<IntPoint> _trackBufferOffset;
+
+        public Router(double traceWidth, double clearance, int cellDivider)
         {
             TraceWidth = traceWidth;
             Clearance = clearance;
-            CellSize = (traceWidth + clearance) / Divider;
+            Divider = cellDivider;
+
+            _cellSize = (traceWidth + clearance) / Divider;
+            
+            var t = RoutingHelper.GetPointsInCircle(new IntPoint(0, 0),  Divider - 1);
+            _trackBufferOffset = new HashSet<IntPoint>(t);
         }
         
         private IEnumerable<LPoint> GetObstacleForPin(Board board, Component component, string pinName, RouterWorkspace workspace)
@@ -34,8 +43,8 @@
             if(c != null)
             {
                 //bottom
-                var rad = (c.PadDiameter / 2) + Clearance + ((TraceWidth - CellSize) / 2);
-                var rad2 = (int)(Math.Ceiling(rad / CellSize));
+                var rad = (c.PadDiameter / 2) + Clearance + ((TraceWidth - _cellSize) / 2);
+                var rad2 = (int)(Math.Ceiling(rad / _cellSize));
                 var pts = RoutingHelper.GetPointsInCircle(pp, rad2);
                 foreach (var p in pts)
                 {
@@ -44,7 +53,7 @@
 
                 //top
                 var rad3 = c.DrillDiameter / 2;
-                var rad4 = (int)(Math.Ceiling(rad3 / CellSize));
+                var rad4 = (int)(Math.Ceiling(rad3 / _cellSize));
                 var pts2 = RoutingHelper.GetPointsInCircle(pp, rad4);
                 foreach (var p2 in pts2)
                 {
@@ -56,7 +65,8 @@
             if (csq != null)
             {
                 //bottom
-                var o = (int)(csq.SquareSide/2);
+                var o1 = (csq.SquareSide/2);
+                var o = (int) (Math.Ceiling(o1/_cellSize));
                 for (var i = -o; i <= o; i++)
                 {
                     for (var j = -o; j <= o; j++)
@@ -67,7 +77,7 @@
 
                 //top
                 var rad3 = csq.DrillDiameter / 2;
-                var rad4 = (int)(Math.Ceiling(rad3 / CellSize));
+                var rad4 = (int)(Math.Ceiling(rad3 / _cellSize));
                 var pts2 = RoutingHelper.GetPointsInCircle(pp, rad4);
                 foreach (var p2 in pts2)
                 {
@@ -91,39 +101,35 @@
                     workspace.SetPinObstacle(c, pin.Name, obs);
                 }
             }
-        }       
-
-        private IList<LPoint> SquareBuffer(ISet<LPoint> tracks)
-        {
-            var r = new List<LPoint>();
-            foreach (var t in tracks)
-            {
-                //var tWidth = 40;
-                var xxx = Divider-1;
-
-                var hmin = -xxx;
-                var hmax = xxx;
-
-                var vmin = -xxx;
-                var vmax = xxx;
-
-                for (var xh = hmin; xh <= hmax; xh++)
-                {
-                    for (var xv = vmin; xv <= vmax; xv++)
-                    {
-                        var xx = t.Point.X + xh;
-                        var yy = t.Point.Y + xv;
-
-                        var p = new LPoint(t.Layer, new IntPoint(xx, yy));
-                        r.Add(p);
-                    }
-                }
-            }
-
-            return r;
         }
 
-        TraceNode LNodeToTraceNode(LPoint lp, RouterWorkspace workspace)
+        private ISet<LPoint> Buffer(ISet<LPoint> tracks, RouterWorkspace workspace)
+        {
+            var clist = (List<LPoint>) null;
+            var set = new HashSet<LPoint>();
+            foreach (var t in tracks)
+            {
+                var nl = new List<LPoint>();
+                foreach (var o in _trackBufferOffset)
+                {
+                    var cl = RoutingHelper.OffsetPoint(t, o);
+                    if (!workspace.IsPointValid(cl.Point))
+                        continue;
+                
+                    if (clist == null || !clist.Contains(cl))
+                    {
+                        set.Add(cl);
+                    }
+
+                    nl.Add(cl);
+                }
+                clist = nl;
+            }
+
+            return set;
+        }
+
+        private static TraceNode LNodeToTraceNode(LPoint lp, RouterWorkspace workspace)
         {
             var p = workspace.IntPointToPoint(lp.Point);
             var l = lp.Layer == WorkspaceLayer.BottomLayer 
@@ -135,7 +141,7 @@
         public void Route(Board board)
         {
             board.CalculatePinLocations();
-            var workspace = new RouterWorkspace(board, CellSize);
+            var workspace = new RouterWorkspace(board, _cellSize);
             SetupWorkspace(workspace);
 
             var distances = board.CalculatePinDistances();
@@ -145,10 +151,8 @@
                     .Take(10)
                     .ToList();
 
-            for (var i = 0; i < zl.Count; i++)
+            foreach (var z in zl)
             {
-                var z = zl[i];
-
                 var pinLoc = z.Pins
                     .Select(x => board.GetPinLocation(x.Component, x.Pin))
                     .Select(workspace.PointToIntPoint);
@@ -166,21 +170,35 @@
                 else
                 {
 #if DEBUG
+                    /*
                     Debug.WriteLine("Fail to route " + z.Id);
                     workspace.DumpState();
-                    return;
+                    board.Workspace = workspace;
+                    return;*/
 #endif
                 }
+#if DEBUG
+                var sw = Stopwatch.StartNew();
+#endif
+                var l = Buffer(r.Trace, workspace);
+#if DEBUG
+                sw.Stop();
+                Debug.WriteLine("Method1 : " + sw.ElapsedMilliseconds);
+#endif
 
-                var l = SquareBuffer(r.Trace);
-                var lx = l.Where(x=>workspace.IsPointValid(x.Point)).ToList();
-                workspace.SetTrackObstacle(z, lx);
+                workspace.SetTrackObstacle(z, l);
 
                 var r2 = r.TraceNodes
                     .Select(x => (IList<TraceNode>)x.Select(y => LNodeToTraceNode(y, workspace)).ToList())
                     .ToList();
 
-                board._traces.Add(r2);
+                board.Traces.Add(r2);
+
+                var v2 = r.Vias
+                    .Select(x => workspace.IntPointToPoint(x))
+                    .ToList();
+
+                board.Vias.UnionWith(v2);
             }
         }
     }

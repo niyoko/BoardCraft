@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
@@ -70,7 +71,7 @@
             CurrentCanvas.Children.Clear();
         }
 
-        Brush GetBrush(DrawingMode mode)
+        private Brush GetBrush(DrawingMode mode)
         {
             var i = (int)mode;
             if (i < 1000)
@@ -78,6 +79,7 @@
                 return Brushes[mode];
             }
 
+            
             return new SolidColorBrush(ColorHelper.ColorFromHSV((i-1000), 1, 1));
         }
 
@@ -113,7 +115,7 @@
                 X2 = point2.X,
                 Y2 = point2.Y,
                 Stroke = Brushes[mode],
-                StrokeThickness = mode == DrawingMode.BottomCopper || mode == DrawingMode.TopCopper ? 8 : 8,
+                StrokeThickness = 8,
                 RenderTransform = ApplyTransform()
             };
 

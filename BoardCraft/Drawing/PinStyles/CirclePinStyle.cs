@@ -13,8 +13,12 @@
 
         public override void DrawTo(ICanvas canvas, Point position)
         {
-            canvas.DrawFilledEllipse(DrawingMode.Pad, position, 0.5*PadDiameter, 0.5*PadDiameter);
-            canvas.DrawFilledEllipse(DrawingMode.DrillHole, position, 0.5*DrillDiameter, 0.5*DrillDiameter);
+            canvas.DrawFilledEllipse(DrawingMode.Pad, position, 0.5*PadDiameter, 0.5*PadDiameter);            
+        }
+
+        public override void DrawDrillHole(ICanvas canvas, Point position)
+        {
+            canvas.DrawFilledEllipse(DrawingMode.DrillHole, position, 0.5 * DrillDiameter, 0.5 * DrillDiameter);
         }
     }
 }

@@ -30,12 +30,13 @@
         private readonly Dictionary<Component, PlacementInfo> _placement;
         private static readonly PlacementInfo DefaultPlacementInfo;
 
-        internal readonly ICollection<ICollection<IList<TraceNode>>> _traces;
+        internal readonly ICollection<ICollection<IList<TraceNode>>> Traces;
+        internal readonly ISet<Point> Vias; 
 
         public BoardMargin Margin { get; }
 
 #if DEBUG
-        internal RouterWorkspace _workspace;
+        internal RouterWorkspace Workspace;
 #endif
 
         static Board()
@@ -55,7 +56,10 @@
             _placement = new Dictionary<Component, PlacementInfo>(schema.Components.Count);
             _bounds = new Dictionary<Component, Bounds>(schema.Components.Count);
             _pinLocations = new Dictionary<Component, Dictionary<string, Point>>(schema.Components.Count);
-            _traces = new List<ICollection<IList<TraceNode>>>();
+
+
+            Traces = new List<ICollection<IList<TraceNode>>>();
+            Vias = new HashSet<Point>();
 
             Margin = new BoardMargin();
         }
@@ -337,13 +341,13 @@
                 canvas.Transform.Translate(pos.X, pos.Y);
                 canvas.Transform.Rotate(ang);
 
-                point.Key.Package.Draw(canvas);
+                point.Key.Package.DrawComponent(canvas);
                 canvas.Transform.PopMatrix();
             }
 
-            if (_traces.Any())
+            if (Traces.Any())
             {
-                var tr = _traces.SelectMany(x => x);
+                var tr = Traces.SelectMany(x => x);
 
                 foreach (var t in tr)
                 {
@@ -361,11 +365,29 @@
                     }
                 }
             }
-#if DEBUG
-            if (_workspace != null)
+
+            foreach (var via in Vias)
             {
-                _workspace.Render(canvas);
+                canvas.DrawFilledEllipse(DrawingMode.Via, via, 15, 15);
+                canvas.DrawFilledEllipse(DrawingMode.DrillHole, via, 10, 10);
             }
+
+            foreach (var point in _placement)
+            {
+                var pos = point.Value.Position;
+                var or = point.Value.Orientation;
+
+                var ang = (Math.PI / 2.0) * ((int)or);
+                canvas.Transform.PushMatrix();
+                canvas.Transform.Translate(pos.X, pos.Y);
+                canvas.Transform.Rotate(ang);
+
+                point.Key.Package.DrawPad(canvas);                
+                point.Key.Package.DrawDrillHole(canvas);
+                canvas.Transform.PopMatrix();
+            }
+#if DEBUG
+            Workspace?.Render(canvas);
 #endif
             canvas.Transform.PopMatrix();
         }

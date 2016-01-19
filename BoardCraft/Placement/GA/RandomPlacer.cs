@@ -52,23 +52,15 @@
             var h = Math.Sqrt(boardArea / AspectRatio);
             var w = Math.Sqrt(boardArea * AspectRatio);
 
+            var hi = (int) (h/10) + 1;
+            var wi = (int) (w/10) + 1;
+
             var p = new Board(schema);
 
             foreach (var component in schema.Components)
             {
-                var bound = component.Package.Boundaries;
-
-                var xMin = -bound.Left;
-                var xMax = w - bound.Right;
-
-                var yMin = -bound.Bottom;
-                var yMax = h - bound.Top;
-
-                var spanX = xMax - xMin;
-                var spanY = yMax - yMin;
-
-                var x = Math.Floor(random.NextDouble() * spanX) + xMin;
-                var y = Math.Floor(random.NextDouble() * spanY) + yMin;
+                var x = 10*random.Next(wi);
+                var y = 10*random.Next(hi);
                 var or = random.Next(4);
 
                 var pos = new Point(x, y);

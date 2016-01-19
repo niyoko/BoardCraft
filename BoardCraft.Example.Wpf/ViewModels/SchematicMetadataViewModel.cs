@@ -92,13 +92,14 @@
             {
                 var p = _currentPopulation.BestPlacement;
                 b = p;
-                var t = new Router(30, 10);
+                var t = new Router(40, 10, 5);
                 t.Route(p);                
             });
 
             _state = State.RoutingFinished;
             UpdateButtonState();
             UpdatePopulation(true);
+            MessageBox.Show("Routing selesai");
         }
 
         public async void StartGA()

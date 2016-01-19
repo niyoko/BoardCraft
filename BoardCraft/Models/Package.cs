@@ -38,7 +38,7 @@
 
         public Boundaries Boundaries { get; }
 
-        public void Draw(ICanvas canvas)
+        public void DrawComponent(ICanvas canvas)
         {
             if (canvas == null)
             {
@@ -48,12 +48,22 @@
             foreach (var shape in Shapes)
             {
                 shape.DrawTo(canvas);
-            }
-            
+            }                       
+        }
 
+        public void DrawPad(ICanvas canvas)
+        {
             foreach (var pin in Pins)
             {
-                pin.DrawTo(canvas);
+                pin.DrawPad(canvas);
+            }
+        }
+
+        public void DrawDrillHole(ICanvas canvas)
+        {
+            foreach (var pin in Pins)
+            {
+                pin.DrawDrillHole(canvas);
             }
         }
     }

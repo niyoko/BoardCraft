@@ -28,17 +28,14 @@
 
         public static double AverageDistance(Bounds[] bounds)
         {
-            var sum = 0.0;
+            var sumC =
+                from c
+                    in bounds
+                let xp = c.Right*c.Right
+                let yp = c.Top*c.Top
+                select Math.Sqrt(xp + yp);
 
-            foreach (var c in bounds)
-            {
-                var xp = c.Right * c.Right;
-                var yp = c.Top * c.Top;
-
-                var dist = Math.Sqrt(xp + yp);
-                sum += dist;
-            }
-
+            var sum = sumC.Sum();
             var cnt = bounds.Length;
             return cnt == 0 ? 0 : sum / cnt;
         }
@@ -51,7 +48,7 @@
             var hx = w / 2;
             var hy = h / 2;
 
-            var bnds = new Bounds[]
+            var bnds = new[]
             {
                 new Bounds(hy, hx, 0, 0),
                 new Bounds(hy, w,0,hx),
