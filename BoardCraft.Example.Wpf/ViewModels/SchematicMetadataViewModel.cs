@@ -6,7 +6,6 @@
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
-    using System.Windows.Input;
     using System.Windows.Threading;
     using Models;
     using NLog;
@@ -21,8 +20,19 @@
 
         private Board _showedPlacement;        
 
-        private bool _pauseRequested;
         private ManualResetEvent _stopRequested;
+
+        enum State
+        {
+            Initial,            
+            GARunning,
+            GAPaused,
+            Routing,
+            RoutingFinished
+        }
+
+        private State _state;
+
         private readonly DispatcherTimer _timer;
 
         public SchematicMetadataViewModel(Schematic schematic, string tabTitle)
@@ -30,9 +40,9 @@
             Schematic = schematic;
             TabTitle = tabTitle;
 
-            RunGACommand = new GenericCommand(StartGA, CanExecuteGA);
-            PauseGACommand = new GenericCommand(PauseGA, CanExecuteGA);
-            StopGACommand = new GenericCommand(StopGA, CanExecuteGA);
+            RunGACommand = new GenericCommand(StartGA, () => _state == State.Initial || _state == State.GAPaused);
+            StopGACommand = new GenericCommand(StopGA, () => _state == State.GARunning && _stopRequested == null);
+            BeginRouteCommand = new GenericCommand(BeginRouting, () => _state == State.GAPaused);
 
             Placer = ConstructGAPlacer();
 
@@ -45,13 +55,7 @@
             _timer.Start();
         }
 
-        private bool CanExecuteGA()
-        {
-            return _stopRequested == null;
-        }
-
         public Schematic Schematic { get; }
-
         public GAPlacer Placer { get; }
 
         public string TabTitle { get; }
@@ -76,25 +80,38 @@
         public SchematicProperties Properties { get; }
 
         public GenericCommand RunGACommand { get; }
-
-        public GenericCommand PauseGACommand { get; }
-
         public GenericCommand WindowClosedCommand { get; }
-
         public GenericCommand StopGACommand { get; }
+        public GenericCommand BeginRouteCommand { get; }
+
+        public async void BeginRouting()
+        {
+            _state = State.Routing;
+            UpdateButtonState();
+
+            Board b = null;
+            await Task.Run(() =>
+            {
+                var p = _currentPopulation.BestPlacement;
+                b = p;
+                var t = new Router(30, 10);
+                t.Route(p);                
+            });
+            Debug.WriteLine($"Routing finished {b == _currentPopulation.BestPlacement}");
+            _state = State.RoutingFinished;
+            UpdateButtonState();
+
+            UpdatePopulation(true);
+        }
 
         public async void StartGA()
         {
-            _pauseRequested = false;
+            _state = State.GARunning;
+            UpdateButtonState();
             await Task.Run(() =>
             {
                 while (true)
                 {
-                    if (_pauseRequested)
-                    {
-                        break;
-                    }
-
                     if (_stopRequested != null)
                     {
                         _stopRequested.Set();
@@ -107,25 +124,28 @@
             });
         }
 
-        public void PauseGA()
-        {
-            _pauseRequested = true;
-        }
-
         public void StopGA()
         {
             _stopRequested = new ManualResetEvent(false);
-            RunGACommand.RaiseCanExecuteChanged();
-            PauseGACommand.RaiseCanExecuteChanged();
-            StopGACommand.RaiseCanExecuteChanged();
+            UpdateButtonState();
 
             //wait until GA stopped
-            _stopRequested.WaitOne(3000);
+            if (_stopRequested.WaitOne(30000))
+            {
+                _stopRequested = null;
+                _state = State.GAPaused;
+                UpdateButtonState();
+                return;
+            }
 
-            var p = _currentPopulation.BestPlacement;
-            var t = new Router(1, 1);
-            t.Route(p);
-            UpdatePopulation(true);
+            throw new Exception("GA stuck");
+        }
+
+        void UpdateButtonState()
+        {
+            RunGACommand.RaiseCanExecuteChanged();            
+            StopGACommand.RaiseCanExecuteChanged();
+            BeginRouteCommand.RaiseCanExecuteChanged();
         }
 
         private void PeriodicalUpdate(object sender, EventArgs args)
@@ -136,7 +156,19 @@
         private void UpdatePopulation(bool force)
         {
             var c = _currentPopulation;
-            if (c == _showedPopulation) return;
+
+            var f2 = false;
+            if (c == _showedPopulation)
+            {
+                if (!force)
+                {
+                    return;
+                }
+                else
+                {
+                    ShowedPlacement = null;
+                }
+            }
 
             _showedPopulation = c;
             if (c == null)
@@ -151,8 +183,6 @@
                 var fits = c.Select(c.GetFitnessFor).ToList();
                 var p = _currentPopulation.BestPlacement;
                 ShowedPlacement = p;
-                if(force)
-                    OnPropertyChanged(nameof(ShowedPlacement));
 
                 Properties.GenerationCount = c.Generation;
                 Properties.AverageFitness = fits.Average();

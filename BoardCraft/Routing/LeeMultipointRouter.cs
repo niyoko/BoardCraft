@@ -4,11 +4,12 @@
     using BoardCraft.Helpers;
     using System.Collections.Generic;
     using System.Linq;
+    using NLog.Targets;
 
     internal class LeeMultipointRouter
     {
-        private readonly ISet<IntPoint> _pins;
-        private ISet<IntPoint> _pinsWrapper;
+        private readonly ISet<LPoint> _pins;
+        private ISet<LPoint> _pinsWrapper;
 
         internal RouterWorkspace Workspace { get; }
 
@@ -18,56 +19,51 @@
         public LeeMultipointRouter(RouterWorkspace workspace, ISet<IntPoint> pins)
         {
             Workspace = workspace;
-            _pins = pins;
+            _pins = new HashSet<LPoint>(pins.Select(x=> new LPoint(WorkspaceLayer.BottomLayer, x)));
 
             Trace = new HashSet<LPoint>();
             TraceNodes = new List<IList<LPoint>>();
         }
 
-        public ISet<IntPoint> Pins
+        public ISet<LPoint> Pins
         {
             get
             {
                 if (_pinsWrapper == null)
                 {
-                    _pinsWrapper = new ReadOnlySet<IntPoint>(_pins);
+                    _pinsWrapper = new ReadOnlySet<LPoint>(_pins);
                 }
 
                 return _pinsWrapper;
             }
         }
 
+
+        internal ISet<LPoint> _target; 
         public bool Route()
         {
+            var target = new HashSet<LPoint>(Pins);
             var rp = Pins.ToArray()[0];
-            Trace.Add(new LPoint(WorkspaceLayer.BottomLayer, rp));
+            Trace.Add(rp);
+            target.ExceptWith(Trace);
 
-            while (!IsFinished())
+            while (target.Count > 0)
             {
-                var pins = Pins.Select(x => new LPoint(WorkspaceLayer.BottomLayer, x));
-                var target = new HashSet<LPoint>(pins);
-                target.ExceptWith(Trace);
+                Debug.WriteLine("Target count : " + target.Count);
                 var singleRouter = new LeeRouter(Workspace, Trace, target);
                 var rResult = singleRouter.Route();
                 if (!rResult)
                 {
+                    _target = target;
                     return false;
                 }
 
                 Trace.UnionWith(singleRouter.Track);
                 TraceNodes.Add(singleRouter.TrackNodes);
+                target.ExceptWith(Trace);
             }
 
             return true;
-        }
-
-        private bool IsFinished()
-        {
-            var t = Trace.Where(x => x.Layer == WorkspaceLayer.BottomLayer)
-                .Select(x => x.Point)
-                .ToList();
-
-            return Pins.All(x => t.Contains(x));
         }
     }
 }

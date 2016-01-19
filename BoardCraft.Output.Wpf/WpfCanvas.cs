@@ -33,6 +33,10 @@
                 [DrawingMode.DrillHole] = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
                 [DrawingMode.Pad] = new SolidColorBrush(Color.FromRgb(63, 255, 63)),
                 [DrawingMode.Via] = new SolidColorBrush(Color.FromRgb(127, 127, 255))
+#if DEBUG
+                ,[DrawingMode.TopWave] = new SolidColorBrush(Color.FromRgb(255, 255, 63))
+                ,[DrawingMode.BottomWave] = new SolidColorBrush(Color.FromRgb(255, 63, 63))
+#endif
             };
 
             CurrentCanvas = canvas;
@@ -97,7 +101,7 @@
                 X2 = point2.X,
                 Y2 = point2.Y,
                 Stroke = Brushes[mode],
-                StrokeThickness = 8,
+                StrokeThickness = mode == DrawingMode.BottomCopper || mode == DrawingMode.TopCopper ? 8 : 8,
                 RenderTransform = ApplyTransform()
             };
 

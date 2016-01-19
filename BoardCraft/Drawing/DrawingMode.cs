@@ -8,5 +8,11 @@
         Pad,
         DrillHole,
         Via
+#if DEBUG
+        ,
+        TopWave,
+        BottomWave,
+        BothWave
+#endif
     }
 }

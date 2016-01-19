@@ -3,7 +3,10 @@
     using Models;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
     using System.Linq;
+    using System.Text;
 
     public enum WorkspaceLayer
     {
@@ -59,6 +62,7 @@
             var tupled = connection.Pins.Select(x => Tuple.Create(x.Component, x.Pin));
             var hashTupled = new HashSet<Tuple<Component, string>>(tupled);
 
+
             foreach (var o in _pinObstacle)
             {
                 var isInsideCurrentConection = hashTupled.Contains(o.Key);
@@ -88,6 +92,36 @@
             valid = valid && index.Y >= 0;
             valid = valid && index.Y < Height;
             return valid;
+        }
+
+        internal void RenderToFile(string fn)
+        {
+            using (var f = File.Open(@"D:\"+fn+".txt", FileMode.Create, FileAccess.ReadWrite))
+            {
+                using (var sw = new StreamWriter(f))
+                {
+                    for (var k = 0; k < 2; k++)
+                    {
+                        for (var j = Height - 1; j >= 0; j--)
+                        {
+                            for (var i = 0; i < Width; i++)
+                            {
+                            
+                                var v = new LPoint((WorkspaceLayer)k, new IntPoint(i, j));
+                                var s = this[v].ToString();
+                                s = s.PadLeft(5, ' ');
+                                sw.Write(s);
+                                sw.Write(",");
+                            }
+
+                            sw.WriteLine();
+                        }
+
+                        sw.WriteLine();
+                        sw.WriteLine();
+                    }
+                }
+            }
         }
 
         public int this[LPoint index]

@@ -103,6 +103,7 @@
     <Compile Include="Routing\LeeRouter.cs" />
     <Compile Include="Routing\Router.cs" />
     <Compile Include="Routing\RouterWorkspace.cs" />
+    <Compile Include="Routing\RoutingHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Core.cd" />

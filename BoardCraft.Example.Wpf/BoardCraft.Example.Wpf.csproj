@@ -139,17 +139,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Library\IC.json" />
-    <None Include="Library\library.schema.json" />
-    <None Include="Library\resistors.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Schema\Example1.json" />
-    <None Include="Schema\Example2.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -195,6 +190,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\breeze_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\chart_line_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\chart_line_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />

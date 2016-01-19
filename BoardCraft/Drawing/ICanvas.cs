@@ -1,6 +1,4 @@
-﻿using BoardCraft.Drawing.Shapes;
-
-namespace BoardCraft.Drawing
+﻿namespace BoardCraft.Drawing
 {
     public interface ICanvas
     {

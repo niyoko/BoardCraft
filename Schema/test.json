@@ -1,0 +1,30 @@
+ {
+    "components": [       
+		{
+			"id":"R1",
+			"value":"1K",
+			"package":"RES40"            
+		},
+		{
+			"id":"R2",
+			"value":"47K",
+			"package":"RES40"
+		}],
+		"connections":
+    [
+		{
+            "id":"Cc1",
+            "pins":[
+                { "component":"R2", "pin":"P1"  },
+                { "component":"R1", "pin":"P2" }
+            ]
+        },
+		{
+            "id":"cC2",
+            "pins":[
+                { "component":"R1", "pin":"P1"  },
+                { "component":"R2", "pin":"P2" }
+            ]
+        }
+	]
+ }

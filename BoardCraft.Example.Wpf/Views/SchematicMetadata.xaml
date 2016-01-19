@@ -20,6 +20,7 @@
             <BitmapImage x:Key="PlayIcon" UriSource="pack://application:,,,/Resources/control_play_16.png"></BitmapImage>
             <BitmapImage x:Key="PauseIcon" UriSource="pack://application:,,,/Resources/control_pause_16.png"></BitmapImage>
             <BitmapImage x:Key="StopIcon" UriSource="pack://application:,,,/Resources/control_stop_16.png"></BitmapImage>
+            <BitmapImage x:Key="RouteIcon" UriSource="pack://application:,,,/Resources/chart_line_16.png"></BitmapImage>
         </ResourceDictionary>
     </UserControl.Resources>
     <i:Interaction.Triggers>
@@ -34,16 +35,16 @@
                         <TextBlock Margin="5 0 0 0">Start</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button Padding="10 5 10 5" Command="{Binding PauseGACommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="{StaticResource PauseIcon}"></Image>
-                        <TextBlock Margin="5 0 0 0">Pause</TextBlock>
-                    </StackPanel>
-                </Button>
                 <Button Padding="10 5 10 5" Command="{Binding StopGACommand}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{StaticResource StopIcon}"></Image>
-                        <TextBlock Margin="5 0 0 0">Stop and Begin Routing</TextBlock>
+                        <TextBlock Margin="5 0 0 0">Stop</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Padding="10 5 10 5" Command="{Binding BeginRouteCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{StaticResource RouteIcon}"></Image>
+                        <TextBlock Margin="5 0 0 0">Begin Routing</TextBlock>
                     </StackPanel>
                 </Button>
             </ToolBar>

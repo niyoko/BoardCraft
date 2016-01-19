@@ -7,35 +7,22 @@
     using Models;
     using NLog;
     using Drawing;
+    using Drawing.PinStyles;
 
     public class Router
     {
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
     
         private double TraceWidth { get; }
-        private double MinimumSpacing { get; }
-        private static double CellSize = 10;
+        private double Clearance { get; }
+        private readonly double CellSize;
+        private const int Divider = 4;
 
-        private static List<int> z1; 
-
-        static Router()
-        {
-            const double pinRad = 50;
-            var span = (int)Math.Round(pinRad / CellSize + 1);
-
-            z1 = new List<int>(span);
-            for (var i = 0; i < span; i++)
-            {
-                var th = Math.Acos((double)i / span);
-                var leftSpan = (int)(Math.Round(Math.Sin(th) * span));
-                z1.Add(leftSpan);
-            }
-        }
-
-        public Router(double traceWidth, double minimumSpacing)
+        public Router(double traceWidth, double clearance)
         {
             TraceWidth = traceWidth;
-            MinimumSpacing = minimumSpacing;
+            Clearance = clearance;
+            CellSize = (traceWidth + clearance) / Divider;
         }
 
         private IntPoint PointToIntPoint(Point p)
@@ -59,20 +46,32 @@
 
         private IEnumerable<LPoint> GetObstacleForPin(Board board, Component component, string pinName)
         {
+            var pin = component.Package.Pins.SingleOrDefault(x => x.Name == pinName);
+            if (pin == null)
+                yield break;
+
             var pos = board.GetPinLocation(component, pinName);
             var pp = PointToIntPoint(pos);
 
-            var z = z1.Count - 1;
-            for (var i = -z; i <= z; i++)
+            var c = pin.Style as CirclePinStyle;
+            if(c != null)
             {
-                var si = i < 0 ? -i : i;
-                var hSpan = z1[si];
-                var hz = hSpan - 1;
-                for (var j = -hz; j <= hz; j++)
+                //bottom
+                var rad = (c.PadDiameter / 2) + Clearance + ((TraceWidth - CellSize) / 2);
+                var rad2 = (int)(Math.Ceiling(rad / CellSize));
+                var pts = RoutingHelper.GetPointsInCircle(pp, rad2);
+                foreach (var p in pts)
                 {
-                    var p = new IntPoint(pp.X + i, pp.Y + j);
-                    yield return new LPoint(WorkspaceLayer.TopLayer, p);
                     yield return new LPoint(WorkspaceLayer.BottomLayer, p);
+                }
+
+                //top
+                var rad3 = c.DrillDiameter / 2;
+                var rad4 = (int)(Math.Ceiling(rad3 / CellSize));
+                var pts2 = RoutingHelper.GetPointsInCircle(pp, rad4);
+                foreach (var p2 in pts2)
+                {
+                    yield return new LPoint(WorkspaceLayer.TopLayer, p2);
                 }
             }
         } 
@@ -99,8 +98,8 @@
             var r = new List<LPoint>();
             foreach (var t in tracks)
             {
-                var tWidth = 40;
-                var xxx = (int)Math.Round(tWidth / CellSize);
+                //var tWidth = 40;
+                var xxx = Divider-1;
 
                 var hmin = -xxx;
                 var hmax = xxx;
@@ -160,37 +159,26 @@
                 var pts = new HashSet<IntPoint>(pinLoc);
 
                 workspace.SetupWorkspaceForRouting(z);
+                Debug.WriteLine("Id is " + z.Id);
+
                 var r = new LeeMultipointRouter(workspace, pts);
-
-                Debug.WriteLine($"Routing {z.Id}");
-                var sw = Stopwatch.StartNew();
                 var res = r.Route();
-                sw.Stop();
-                var _z = sw.ElapsedMilliseconds;
-                Debug.WriteLine($"Routed {z.Id} - {_z}");
-
                 if (res)
                 {
-                    successRouting++;
+                    //return;
                 }
                 else
                 {
-                    Debug.WriteLine($"Fail to route {z.Id}");
-                    failedRouting++;
+#if DEBUG
+                    board._wValues = workspace._data;
+                    board._cellSize = CellSize;
+                    board._targets = r._target;
+                    Debug.WriteLine("Routing failed");
+                    return;
+#endif
                 }
-
-                Debug.WriteLine($"Building buffer {z.Id}");
-                sw.Restart();
-                var l = SquareBuffer(r.Trace);                    
-                sw.Stop();
-                _z = sw.ElapsedMilliseconds;
-                Debug.WriteLine($"Buffer builded at {_z}");
-                sw.Restart();
+                var l = SquareBuffer(r.Trace);
                 var lx = l.Where(x=>workspace.IsPointValid(x.Point)).ToList();
-                sw.Stop();
-                _z = sw.ElapsedMilliseconds;
-                Debug.WriteLine($"Checked for invalid {_z}");
-
                 workspace.SetTrackObstacle(z, lx);
 
                 var r2 = r.TraceNodes
@@ -199,6 +187,8 @@
 
                 board._traces.Add(r2);
             }
+
+            Debug.WriteLine("Routing success");
         }
     }
 }

@@ -5,6 +5,7 @@ namespace BoardCraft.Routing
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.Diagnostics;
 
     internal class LeeRouter
     {
@@ -29,7 +30,7 @@ namespace BoardCraft.Routing
             { new IntPoint(-1, -1), 15 }
         };
 
-        private static readonly int ViaCost = 2;
+        private static readonly int ViaCost = 30;
 
         public LeeRouter(RouterWorkspace workspace, ISet<LPoint> starts, ISet<LPoint> targets)
         {
@@ -49,10 +50,33 @@ namespace BoardCraft.Routing
             var end = ExpandWave();
             if (end == null)
             {
+                Debug.WriteLine("Expand Wave failed");
                 return false;
             }
 
             Backtrace(end.Value);
+            return true;
+        }
+
+        private bool CanCreateVia(IntPoint point)
+        {
+            var viaClearance = 25;
+            var pts = RoutingHelper.GetPointsInCircle(point, viaClearance);
+
+            foreach (var p in pts)
+            {
+                if (!_workspace.IsPointValid(p))
+                {
+                    return false;
+                }
+
+                if (_workspace[new LPoint(WorkspaceLayer.BottomLayer, p)] < 0)
+                    return false;
+
+                if (_workspace[new LPoint(WorkspaceLayer.BottomLayer, p)] < 0)
+                    return false;
+            }
+
             return true;
         }
 
@@ -91,17 +115,13 @@ namespace BoardCraft.Routing
                         var sv = cpv + z.Value;
                         var cv = _workspace[n];
 
-                        if (c.Layer == WorkspaceLayer.BottomLayer)
+                        if (_workspace[n] == 0)
                         {
-                            if (_workspace[n] == 0)
+                            if (_targets.Contains(n))
                             {
-                                if (_targets.Contains(n))
-                                {
-                                    //
-                                    _workspace[n] = sv;
-                                    end = n.Point;
-                                    break;
-                                }
+                                _workspace[n] = sv;
+                                end = n.Point;
+                                break;
                             }
                         }
 
@@ -123,13 +143,17 @@ namespace BoardCraft.Routing
 
                     if (cvl == 0 || spvl < cvl)
                     {
-                        _workspace[nl] = spvl;
-                        next.Add(nl);
+                        if (CanCreateVia(c.Point))
+                        {
+                            _workspace[nl] = spvl;
+                            next.Add(nl);
+                        }
                     }
                 }
 
                 if (end != null || next.Count == 0)
                 {
+                    Debug.WriteLine("Condition before break. NextCount : " + next.Count);
                     break; 
                 }
 

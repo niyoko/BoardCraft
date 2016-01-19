@@ -30,6 +30,7 @@ namespace BoardCraft.Output.Wpf
         {
             var that = (BoardCanvas)o;
             var plc = (Models.Board)args.NewValue;
+
             if (plc == null)
             {
                 that.Canvas.Clear();
