@@ -50,7 +50,6 @@ namespace BoardCraft.Routing
             var end = ExpandWave();
             if (end == null)
             {
-                Debug.WriteLine("Expand Wave failed");
                 return false;
             }
 
@@ -154,7 +153,6 @@ namespace BoardCraft.Routing
 
                 if (end != null || next.Count == 0)
                 {
-                    Debug.WriteLine("Condition before break. NextCount : " + next.Count);
                     break; 
                 }
 

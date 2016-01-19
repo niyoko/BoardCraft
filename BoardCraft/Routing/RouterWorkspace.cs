@@ -4,9 +4,11 @@
     using Models;
     using System;
     using System.Collections.Generic;
-    using System.IO;
+    using System.Diagnostics;
     using System.Linq;
-
+    using System.Text;
+    using NLog;
+    using System.IO;
     public enum WorkspaceLayer
     {
         BottomLayer,
@@ -17,10 +19,10 @@
     {
         internal BoardMargin()
         {
-            Top = 500;
-            Left = 500;
-            Bottom = 500;
-            Right = 500;
+            Top = 200;
+            Left = 200;
+            Bottom = 200;
+            Right = 200;
         }
 
         public int Top { get; }
@@ -31,6 +33,8 @@
 
     internal class RouterWorkspace
     {
+        private Logger _logger = LogManager.GetCurrentClassLogger();
+
         internal readonly int[,,] _data;
         internal readonly IDictionary<Tuple<Component, string>, ISet<LPoint>> _pinObstacle;
         internal readonly IDictionary<Connection, ISet<LPoint>> _trackObstacle;
@@ -139,36 +143,52 @@
             return valid;
         }
 
-        internal void RenderToFile(string fn)
+#if DEBUG
+        internal void DumpState()
         {
-            using (var f = File.Open(@"D:\"+fn+".txt", FileMode.Create, FileAccess.ReadWrite))
+            var s2 = new StringBuilder();
+            for (var k = 0; k < 2; k++)
             {
-                using (var sw = new StreamWriter(f))
+                for (var j = Height - 1; j >= 0; j--)
                 {
-                    for (var k = 0; k < 2; k++)
+                    for (var i = 0; i < Width; i++)
                     {
-                        for (var j = Height - 1; j >= 0; j--)
-                        {
-                            for (var i = 0; i < Width; i++)
-                            {
                             
-                                var v = new LPoint((WorkspaceLayer)k, new IntPoint(i, j));
-                                var s = this[v].ToString();
-                                s = s.PadLeft(5, ' ');
-                                sw.Write(s);
-                                sw.Write(",");
-                            }
-
-                            sw.WriteLine();
-                        }
-
-                        sw.WriteLine();
-                        sw.WriteLine();
+                        var v = new LPoint((WorkspaceLayer)k, new IntPoint(i, j));
+                        var s = this[v].ToString();
+                        s = s.PadLeft(5, ' ');
+                        s2.Append(s);
+                        s2.Append(",");
                     }
+
+                    s2.AppendLine();
                 }
+
+                s2.Append("----------------------------");
+                s2.AppendLine();
             }
+
+            File.WriteAllText(@"D:\debug.txt", s2.ToString());
         }
 
+        internal void Render(ICanvas canvas)
+        {
+            for (var k = 0; k < 2; k++)
+            {
+                for (var j = Height - 1; j >= 0; j--)
+                {
+                    for (var i = 0; i < Width; i++)
+                    {
+                        var idx = new LPoint((WorkspaceLayer)k, new IntPoint(i, j));
+                        if (idx.Layer == WorkspaceLayer.BottomLayer && this[idx] > 1)
+                        {
+                            canvas.DrawRectangle((DrawingMode)(1000 + this[idx]), IntPointToPoint(idx.Point), _cellSize, _cellSize);
+                        }
+                    }
+                }
+            }            
+        }
+#endif
         public int this[LPoint index]
         {
             get { return _data[(int)index.Layer, index.Point.X, index.Point.Y]; }

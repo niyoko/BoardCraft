@@ -48,7 +48,6 @@
     <Compile Include="Drawing\ICanvas.cs" />
     <Compile Include="Drawing\Matrix.cs" />
     <Compile Include="Drawing\PinStyles\CirclePinStyle.cs" />
-    <Compile Include="Drawing\PinStyles\DILPinStyle.cs" />
     <Compile Include="Drawing\PinStyles\PinStyle.cs" />
     <Compile Include="Drawing\PinStyles\SquarePinStyle.cs" />
     <Compile Include="Drawing\Point.cs" />
@@ -62,12 +61,12 @@
     <Compile Include="Drawing\Transform.cs" />
     <Compile Include="Helpers\CollectionHelper.cs" />
     <Compile Include="Helpers\ReadOnlySet.cs" />
-    <Compile Include="Input\ComponentRepositoryBase.cs" />
-    <Compile Include="Input\IComponentRepository.cs" />
-    <Compile Include="Input\IInputParser.cs" />
-    <Compile Include="Input\InvalidNameException.cs" />
-    <Compile Include="Input\LibraryParseException.cs" />
-    <Compile Include="Input\ParseException.cs" />
+    <Compile Include="Models\Input\ComponentRepositoryBase.cs" />
+    <Compile Include="Models\Input\IComponentRepository.cs" />
+    <Compile Include="Models\Input\IInputParser.cs" />
+    <Compile Include="Models\Input\InvalidNameException.cs" />
+    <Compile Include="Models\Input\LibraryParseException.cs" />
+    <Compile Include="Models\Input\ParseException.cs" />
     <Compile Include="Models\Board.cs" />
     <Compile Include="Models\Boundaries.cs" />
     <Compile Include="Models\Component.cs" />

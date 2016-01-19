@@ -34,6 +34,10 @@
 
         public BoardMargin Margin { get; }
 
+#if DEBUG
+        internal RouterWorkspace _workspace;
+#endif
+
         static Board()
         {
             DefaultPlacementInfo = new PlacementInfo(Point.Origin, Orientation.Up);
@@ -317,14 +321,19 @@
                 throw new ArgumentNullException(nameof(canvas));
             }
 
+            canvas.Transform.PushMatrix();
             canvas.Clear();
+            canvas.Transform.Translate(Margin.Left + 50, Margin.Bottom + 50);
+            var s = GetSize();
+            canvas.DrawRectangle(DrawingMode.BoardBoundary, new Point(-Margin.Left, -Margin.Bottom), s.Width+Margin.Left+Margin.Right, s.Height + Margin.Bottom+Margin.Top);
+            
             foreach (var point in _placement)
             {
                 var pos = point.Value.Position;
                 var or = point.Value.Orientation;
 
                 var ang = (Math.PI / 2.0) * ((int)or);
-                canvas.Transform.PushMatrix();                
+                canvas.Transform.PushMatrix();
                 canvas.Transform.Translate(pos.X, pos.Y);
                 canvas.Transform.Rotate(ang);
 
@@ -352,6 +361,13 @@
                     }
                 }
             }
+#if DEBUG
+            if (_workspace != null)
+            {
+                _workspace.Render(canvas);
+            }
+#endif
+            canvas.Transform.PopMatrix();
         }
     }
 }

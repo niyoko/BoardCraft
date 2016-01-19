@@ -41,6 +41,7 @@
     <Compile Include="BoardCanvas.xaml.cs">
       <DependentUpon>BoardCanvas.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ColorHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WpfCanvas.cs" />
   </ItemGroup>

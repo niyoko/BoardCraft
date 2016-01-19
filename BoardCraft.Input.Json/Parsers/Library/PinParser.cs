@@ -50,6 +50,7 @@
                     st = new SquarePinStyle(sqSide, drillDiameter);
                 }
 
+                /*
                 if (sk[0] == "DIL")
                 {
                     var w = int.Parse(sk[1]);
@@ -57,6 +58,7 @@
 
                     st = new DILPinStyle(w, d);
                 }
+                */
             }
 
             if (st == null)

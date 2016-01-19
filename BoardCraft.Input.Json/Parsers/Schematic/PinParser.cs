@@ -7,7 +7,6 @@
 
     class PinParser
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         public void Parse(JToken token, Schematic schematic, Connection connection)
         {
             if (token == null)

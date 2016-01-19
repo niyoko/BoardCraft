@@ -64,11 +64,11 @@
           }
       ],
       "pins": [
-        { "name": "P1", "position": [   0, 0 ], "style": "DIL-100-40" },
-        { "name": "P2", "position": [  67, 0 ], "style": "DIL-100-40" },
-        { "name": "P3", "position": [ 134, 0 ], "style": "DIL-100-40" },
-        { "name": "P4", "position": [ 201, 0 ], "style": "DIL-100-40" },
-        { "name": "P5", "position": [ 268, 0 ], "style": "DIL-100-40" }
+        { "name": "P1", "position": [   0, 0 ], "style": "S-50-30" },
+        { "name": "P2", "position": [  67, 0 ], "style": "C-50-30" },
+        { "name": "P3", "position": [ 134, 0 ], "style": "C-50-30" },
+        { "name": "P4", "position": [ 201, 0 ], "style": "C-50-30" },
+        { "name": "P5", "position": [ 268, 0 ], "style": "C-50-30" }
       ]
     },
     {

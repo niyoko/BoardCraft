@@ -5,14 +5,10 @@
     using System.Diagnostics;
     using System.Linq;
     using Models;
-    using NLog;
-    using Drawing;
     using Drawing.PinStyles;
 
     public class Router
-    {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-    
+    {    
         private double TraceWidth { get; }
         private double Clearance { get; }
         private readonly double CellSize;
@@ -24,9 +20,7 @@
             Clearance = clearance;
             CellSize = (traceWidth + clearance) / Divider;
         }
-
         
-
         private IEnumerable<LPoint> GetObstacleForPin(Board board, Component component, string pinName, RouterWorkspace workspace)
         {
             var pin = component.Package.Pins.SingleOrDefault(x => x.Name == pinName);
@@ -72,7 +66,7 @@
                 }
 
                 //top
-                var rad3 = c.DrillDiameter / 2;
+                var rad3 = csq.DrillDiameter / 2;
                 var rad4 = (int)(Math.Ceiling(rad3 / CellSize));
                 var pts2 = RoutingHelper.GetPointsInCircle(pp, rad4);
                 foreach (var p2 in pts2)
@@ -151,9 +145,6 @@
                     .Take(10)
                     .ToList();
 
-            var successRouting = 0;
-            var failedRouting = 0;
-
             for (var i = 0; i < zl.Count; i++)
             {
                 var z = zl[i];
@@ -165,7 +156,6 @@
                 var pts = new HashSet<IntPoint>(pinLoc);
 
                 workspace.SetupWorkspaceForRouting(z);
-                Debug.WriteLine("Id is " + z.Id);
 
                 var r = new LeeMultipointRouter(workspace, pts);
                 var res = r.Route();
@@ -175,8 +165,13 @@
                 }
                 else
                 {
+#if DEBUG
                     Debug.WriteLine("Fail to route " + z.Id);
+                    workspace.DumpState();
+                    return;
+#endif
                 }
+
                 var l = SquareBuffer(r.Trace);
                 var lx = l.Where(x=>workspace.IsPointValid(x.Point)).ToList();
                 workspace.SetTrackObstacle(z, lx);
@@ -187,8 +182,6 @@
 
                 board._traces.Add(r2);
             }
-
-            Debug.WriteLine("Routing success");
         }
     }
 }

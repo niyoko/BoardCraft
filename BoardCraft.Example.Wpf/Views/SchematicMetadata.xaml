@@ -76,7 +76,7 @@
                     </xcad:LayoutAnchorablePane>
                     <xcad:LayoutAnchorablePane DockWidth="4*">
                         <xcad:LayoutAnchorable Title="Log Entries">
-                            <o:BoardCanvas ComponentPlacement="{Binding ShowedPlacement}" />
+                            <o:BoardCanvas ComponentPlacement="{Binding ShowedPlacement}"  />
                         </xcad:LayoutAnchorable>
                     </xcad:LayoutAnchorablePane>
                 </xcad:LayoutPanel>

@@ -6,5 +6,5 @@
              xmlns:local="clr-namespace:BoardCraft.Output.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Canvas Name="NativeCanvas"></Canvas>
+    <Canvas Name="NativeCanvas" Background="White"></Canvas>
 </UserControl>

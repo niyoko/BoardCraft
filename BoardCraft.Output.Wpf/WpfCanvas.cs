@@ -32,7 +32,8 @@
                 [DrawingMode.TopCopper] = new SolidColorBrush(Color.FromRgb(255, 255, 63)),
                 [DrawingMode.DrillHole] = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
                 [DrawingMode.Pad] = new SolidColorBrush(Color.FromRgb(63, 255, 63)),
-                [DrawingMode.Via] = new SolidColorBrush(Color.FromRgb(127, 127, 255))
+                [DrawingMode.Via] = new SolidColorBrush(Color.FromRgb(127, 127, 255)),
+                [DrawingMode.BoardBoundary] = new SolidColorBrush(Color.FromRgb(63, 200, 200))
 #if DEBUG
                 ,[DrawingMode.TopWave] = new SolidColorBrush(Color.FromRgb(255, 255, 63))
                 ,[DrawingMode.BottomWave] = new SolidColorBrush(Color.FromRgb(255, 63, 63))
@@ -45,8 +46,7 @@
             trans.Children.Add(new ScaleTransform(1, -1, 0.5, 0.5));
             trans.Children.Add(new ScaleTransform(0.2, 0.2));            
 
-            CurrentCanvas.LayoutTransform = trans;
-            CurrentCanvas.RenderTransform = new TranslateTransform(200, -200);
+            CurrentCanvas.LayoutTransform = trans;            
             Clear();
         }
 
@@ -70,6 +70,17 @@
             CurrentCanvas.Children.Clear();
         }
 
+        Brush GetBrush(DrawingMode mode)
+        {
+            var i = (int)mode;
+            if (i < 1000)
+            {
+                return Brushes[mode];
+            }
+
+            return new SolidColorBrush(ColorHelper.ColorFromHSV((i-1000), 1, 1));
+        }
+
         public override void DrawRectangle(DrawingMode mode, Point bottomLeft, double width, double height)
         {
             width += 8;
@@ -79,13 +90,13 @@
             var bly = bottomLeft.Y - 4;
 
             var originX = -blx / width;
-            var originY = -bly / height;
+            var originY = -bly / height;            
 
             var rect = new Rectangle
             {
                 Width = width,
                 Height = height,
-                Stroke = Brushes[mode],
+                Stroke = GetBrush(mode),
                 StrokeThickness = 8,
                 RenderTransform = ApplyTransform(blx, bly),
                 RenderTransformOrigin = new System.Windows.Point(originX, originY)

@@ -49,7 +49,6 @@
 
             while (target.Count > 0)
             {
-                Debug.WriteLine("Target count : " + target.Count);
                 var singleRouter = new LeeRouter(Workspace, Trace, target);
                 var rResult = singleRouter.Route();
                 if (!rResult)

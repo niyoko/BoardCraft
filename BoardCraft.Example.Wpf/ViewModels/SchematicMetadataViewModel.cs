@@ -13,8 +13,6 @@
     using Routing;
     internal class SchematicMetadataViewModel : ViewModelBase
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         private Population _currentPopulation;
         private Population _showedPopulation;
 
@@ -97,10 +95,9 @@
                 var t = new Router(30, 10);
                 t.Route(p);                
             });
-            Debug.WriteLine($"Routing finished {b == _currentPopulation.BestPlacement}");
+
             _state = State.RoutingFinished;
             UpdateButtonState();
-
             UpdatePopulation(true);
         }
 

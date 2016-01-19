@@ -7,7 +7,8 @@
         TopCopper,
         Pad,
         DrillHole,
-        Via
+        Via,
+        BoardBoundary
 #if DEBUG
         ,
         TopWave,

@@ -7,8 +7,6 @@
 
     class SchematicParser
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         private readonly IComponentRepository _repository;
         public SchematicParser(IComponentRepository repository)
         {
@@ -45,8 +43,6 @@
 
             var jconn = o.GetValue("connections");
             
-            _logger.Debug(jconn == null ? "(null)" : jconn.GetType().FullName);            
-
             var jconnA = jconn as JArray;
             if (jconnA == null)
             {
