@@ -60,6 +60,7 @@ namespace BoardCraft.Routing
 
         private bool CanCreateVia(IntPoint point)
         {
+            return true;
             var viaClearance = 25;
             var pts = RoutingHelper.GetPointsInCircle(point, viaClearance);
 

@@ -5,8 +5,6 @@
     using Drawing;
     using Placement.GA;
     using System.Linq;
-    using System.IO;
-    using System.Security.Cryptography.X509Certificates;
     using Routing;
 
     public enum TraceLayer
@@ -32,12 +30,9 @@
         private readonly Dictionary<Component, PlacementInfo> _placement;
         private static readonly PlacementInfo DefaultPlacementInfo;
 
-#if DEBUG
-        internal int[,,] _wValues;
-        internal double _cellSize;
-        internal ISet<LPoint> _targets; 
-#endif
         internal readonly ICollection<ICollection<IList<TraceNode>>> _traces;
+
+        public BoardMargin Margin { get; }
 
         static Board()
         {
@@ -57,6 +52,8 @@
             _bounds = new Dictionary<Component, Bounds>(schema.Components.Count);
             _pinLocations = new Dictionary<Component, Dictionary<string, Point>>(schema.Components.Count);
             _traces = new List<ICollection<IList<TraceNode>>>();
+
+            Margin = new BoardMargin();
         }
 
         public Schematic Schema { get; }
@@ -355,48 +352,6 @@
                     }
                 }
             }
-
-#if DEBUG            
-            if (_wValues != null)
-            {
-                using (var f = File.Open(@"D:\debug.txt", FileMode.Create, FileAccess.ReadWrite))
-                {
-                    using (var sw = new StreamWriter(f))
-                    {
-                        sw.WriteLine("target : " + _targets.Count);
-                        for (var k = 0; k < _wValues.GetLength(0); k++)
-                        {
-                            for (var i =0; i < _wValues.GetLength(1); i++)
-                            {
-                                for (var j = _wValues.GetLength(2)-1; j >= 0; j--)
-                                {
-                                    var s = _wValues[k, i, j].ToString();
-                                    var v = new LPoint((WorkspaceLayer)k, new IntPoint(i, j));
-                                    if (_targets.Contains(v))
-                                    {
-                                        s += "+";
-                                    }
-
-                                    s = s.PadLeft(5, ' ');
-                                    sw.Write(s);
-                                    sw.Write(",");
-                                    if (k == 0 && _wValues[k, i, j] < 0)
-                                    {
-                                        var p = new Point((i)*_cellSize, (j)*_cellSize);
-                                        canvas.DrawRectangle(DrawingMode.DrillHole,p, _cellSize, _cellSize);
-                                    }
-                                }
-
-                                sw.WriteLine();
-                            }
-
-                            sw.WriteLine();
-                            sw.WriteLine();
-                        }
-                    }
-                }
-            }
-#endif
         }
     }
 }

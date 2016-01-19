@@ -1,12 +1,11 @@
 ﻿namespace BoardCraft.Routing
 {
+    using Drawing;
     using Models;
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.IO;
     using System.Linq;
-    using System.Text;
 
     public enum WorkspaceLayer
     {
@@ -14,6 +13,21 @@
         TopLayer
     }
 
+    public sealed class BoardMargin
+    {
+        internal BoardMargin()
+        {
+            Top = 500;
+            Left = 500;
+            Bottom = 500;
+            Right = 500;
+        }
+
+        public int Top { get; }
+        public int Left { get; }
+        public int Bottom { get; }
+        public int Right { get; }
+    }
 
     internal class RouterWorkspace
     {
@@ -25,8 +39,11 @@
 
         public Board Board { get; }
 
+        public int OffsetX { get; }
+        public int OffsetY { get; }
+
         public int Width { get; }
-        public int Height { get; }
+        public int Height { get; }        
 
         public RouterWorkspace(Board board, double cellSize)
         {
@@ -34,12 +51,40 @@
             var s = board.GetSize();
             _cellSize = cellSize;
 
-            Width = (int)Math.Ceiling((s.Width+500)/cellSize);
-            Height = (int)Math.Ceiling((s.Height+500)/cellSize);
+            OffsetX = (int) Math.Ceiling(board.Margin.Left/cellSize);
+            OffsetY = (int) Math.Ceiling(board.Margin.Bottom/cellSize);
+
+            var extrax = (int) Math.Ceiling(board.Margin.Right/cellSize);
+            var extray = (int) Math.Ceiling(board.Margin.Top/cellSize);
+
+            var bWidth = (int) Math.Ceiling(s.Width/cellSize);
+            var bHeight = (int) Math.Ceiling(s.Height/cellSize);
+
+            Width = OffsetX + bWidth + extrax;
+            Height = OffsetY + bHeight + extray;
 
             _data = new int[2, Width, Height];
             _pinObstacle = new Dictionary<Tuple<Component, string>, ISet<LPoint>>(Board.Schema.Connections.Count);
             _trackObstacle = new Dictionary<Connection, ISet<LPoint>>();
+        }
+
+        internal IntPoint PointToIntPoint(Point p)
+        {
+            var px = p.X/_cellSize;
+            var py = p.Y/_cellSize;
+
+            px = Math.Round(px);
+            py = Math.Round(py);
+
+            return new IntPoint((int)px + OffsetX, (int)py + OffsetY);
+        }
+
+        internal Point IntPointToPoint(IntPoint p)
+        {
+            var px = (.5 + p.X - OffsetX) * _cellSize;
+            var py = (.5 + p.Y - OffsetY) * _cellSize;
+
+            return new Point(px, py);
         }
 
         public void SetPinObstacle(Component component, string pinName, IEnumerable<LPoint> obstacle)

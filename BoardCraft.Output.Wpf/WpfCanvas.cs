@@ -29,7 +29,7 @@
             {
                 [DrawingMode.Component] = new SolidColorBrush(Color.FromRgb(255, 0, 0)),
                 [DrawingMode.BottomCopper] = new SolidColorBrush(Color.FromRgb(63, 63, 255)),
-                [DrawingMode.TopCopper] = new SolidColorBrush(Color.FromRgb(63, 255, 255)),
+                [DrawingMode.TopCopper] = new SolidColorBrush(Color.FromRgb(255, 255, 63)),
                 [DrawingMode.DrillHole] = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
                 [DrawingMode.Pad] = new SolidColorBrush(Color.FromRgb(63, 255, 63)),
                 [DrawingMode.Via] = new SolidColorBrush(Color.FromRgb(127, 127, 255))
@@ -41,11 +41,12 @@
 
             CurrentCanvas = canvas;
             var trans = new TransformGroup();
+
             trans.Children.Add(new ScaleTransform(1, -1, 0.5, 0.5));
+            trans.Children.Add(new ScaleTransform(0.2, 0.2));            
 
-            trans.Children.Add(new ScaleTransform(0.2, 0.2));
             CurrentCanvas.LayoutTransform = trans;
-
+            CurrentCanvas.RenderTransform = new TranslateTransform(200, -200);
             Clear();
         }
 
