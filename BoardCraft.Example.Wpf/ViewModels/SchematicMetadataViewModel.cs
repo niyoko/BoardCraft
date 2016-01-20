@@ -16,11 +16,14 @@
         private Population _currentPopulation;
         private Population _showedPopulation;
 
+        private readonly Stopwatch _gaStopwatch;
+        private readonly Stopwatch _routingStopwatch;
+
         private Board _showedPlacement;        
 
         private ManualResetEvent _stopRequested;
 
-        enum State
+        private enum State
         {
             Initial,            
             GARunning,
@@ -47,8 +50,14 @@
             Properties = new SchematicProperties();
             UpdatePropertiesFromSchema();
 
-            _timer = new DispatcherTimer(DispatcherPriority.Normal, Application.Current.Dispatcher);
-            _timer.Interval = TimeSpan.FromSeconds(1);
+            _gaStopwatch = new Stopwatch();
+            _routingStopwatch = new Stopwatch();
+
+            _timer = new DispatcherTimer(DispatcherPriority.Normal, Application.Current.Dispatcher)
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+
             _timer.Tick += PeriodicalUpdate;
             _timer.Start();
         }
@@ -87,14 +96,20 @@
             _state = State.Routing;
             UpdateButtonState();
 
-            Board b = null;
+            lock (_routingStopwatch)
+            {
+                _routingStopwatch.Start();
+            }
             await Task.Run(() =>
             {
                 var p = _currentPopulation.BestPlacement;
-                b = p;
                 var t = new Router(40, 10, 5);
                 t.Route(p);                
             });
+            lock (_routingStopwatch)
+            {
+                _routingStopwatch.Stop();
+            }
 
             _state = State.RoutingFinished;
             UpdateButtonState();
@@ -108,12 +123,21 @@
             UpdateButtonState();
             await Task.Run(() =>
             {
+                lock (_gaStopwatch)
+                {
+                    _gaStopwatch.Start();
+                }
+
                 while (true)
                 {
                     if (_stopRequested != null)
                     {
                         _stopRequested.Set();
-                        break;                        
+                        lock (_gaStopwatch)
+                        {
+                            _gaStopwatch.Stop();
+                        }
+                        break;
                     }
 
                     Placer.NextGeneration();
@@ -139,7 +163,7 @@
             throw new Exception("GA stuck");
         }
 
-        void UpdateButtonState()
+        private void UpdateButtonState()
         {
             RunGACommand.RaiseCanExecuteChanged();            
             StopGACommand.RaiseCanExecuteChanged();
@@ -153,19 +177,25 @@
 
         private void UpdatePopulation(bool force)
         {
-            var c = _currentPopulation;
+            lock (_gaStopwatch)
+            {
+                Properties.GATime = _gaStopwatch.Elapsed;
+            }
 
-            var f2 = false;
+            lock (_routingStopwatch)
+            {
+                Properties.RoutingTime = _routingStopwatch.Elapsed;
+            }
+
+            var c = _currentPopulation;
             if (c == _showedPopulation)
             {
                 if (!force)
                 {
                     return;
                 }
-                else
-                {
-                    ShowedPlacement = null;
-                }
+
+                ShowedPlacement = null;
             }
 
             _showedPopulation = c;
@@ -175,6 +205,8 @@
                 Properties.GenerationCount = null;
                 Properties.MaxFitness = null;
                 Properties.AverageFitness = null;
+                Properties.Panjang = null;
+                Properties.Lebar = null;
             }
             else
             {
@@ -185,6 +217,13 @@
                 Properties.GenerationCount = c.Generation;
                 Properties.AverageFitness = fits.Average();
                 Properties.MaxFitness = fits.Max();
+
+                var s = p.GetSize();
+                var pjg = (int) s.Width + p.Margin.Left + p.Margin.Right;
+                var lbr = (int) s.Height + p.Margin.Bottom + p.Margin.Top;
+
+                Properties.Panjang = pjg;
+                Properties.Lebar = lbr;
             }
         }
 

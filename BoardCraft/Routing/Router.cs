@@ -146,10 +146,15 @@
 
             var distances = board.CalculatePinDistances();
 
-            var zl = distances.OrderBy(x => x.Value.Max)
+            var zl = distances
+                    .OrderBy(x => x.Key.Pins.Count)
+                    .ThenBy(x => x.Value.Max)
                     .Select(x => x.Key)
-                    .Take(10)
                     .ToList();
+
+#if DEBUG
+            int s = 0, f = 0;
+#endif
 
             foreach (var z in zl)
             {
@@ -165,27 +170,19 @@
                 var res = r.Route();
                 if (res)
                 {
-                    //return;
+#if DEBUG
+                    s++;
+#endif
                 }
                 else
                 {
 #if DEBUG
-                    /*
-                    Debug.WriteLine("Fail to route " + z.Id);
-                    workspace.DumpState();
-                    board.Workspace = workspace;
-                    return;*/
+
+                    f++;
 #endif
                 }
-#if DEBUG
-                var sw = Stopwatch.StartNew();
-#endif
-                var l = Buffer(r.Trace, workspace);
-#if DEBUG
-                sw.Stop();
-                Debug.WriteLine("Method1 : " + sw.ElapsedMilliseconds);
-#endif
 
+                var l = Buffer(r.Trace, workspace);
                 workspace.SetTrackObstacle(z, l);
 
                 var r2 = r.TraceNodes
@@ -200,6 +197,9 @@
 
                 board.Vias.UnionWith(v2);
             }
+#if DEBUG
+            Debug.WriteLine($"Success : {s} Failed : {f}");
+#endif
         }
     }
 }

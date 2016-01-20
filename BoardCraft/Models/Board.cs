@@ -368,7 +368,7 @@
 
             foreach (var via in Vias)
             {
-                canvas.DrawFilledEllipse(DrawingMode.Via, via, 15, 15);
+                canvas.DrawFilledEllipse(DrawingMode.Via, via, 20, 20);
                 canvas.DrawFilledEllipse(DrawingMode.DrillHole, via, 10, 10);
             }
 

@@ -71,6 +71,8 @@
         public double EvaluateFitness(Board board)
         {
             board.CalculateBounds();
+            var dist = board.CalculatePinDistances();
+            var dd = 100*dist.Values.Select(x => x.Max).Average();
 
             var b = new Bounds[board.Schema.Components.Count];
             int i = 0;
@@ -83,10 +85,11 @@
             var f1 = GetOverlappedArea(b);
             var sqEqOl = Math.Sqrt(f1);
 
-            var d = 100*AverageDistance(b);
-            //var d2 = GetDistributionFactor(b);
+            var d = 10*AverageDistance(b);
+            
+            
 
-            return (1 / (sqEqOl + 1)) + (1 / (d + 1));
+            return (1 / (sqEqOl + 1)) + (1 / (d + 1)) + (1/(dd+1));
         }
 
         private static double GetOutOfRangeArea(Bounds b)

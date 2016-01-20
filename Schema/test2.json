@@ -80,6 +80,13 @@
                 { "component":"CON2", "pin":"P1" },
                 { "component":"IC1", "pin":"P3" }
             ]
+        },
+		{
+            "id":"CONN3",
+            "pins":[
+                { "component":"C1", "pin":"P1" },
+                { "component":"IC1", "pin":"P5" }
+            ]
         }
     ]
 }

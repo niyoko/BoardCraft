@@ -1,10 +1,8 @@
 ﻿namespace BoardCraft.Routing
 {
-    using System.Diagnostics;
-    using BoardCraft.Helpers;
+    using Helpers;
     using System.Collections.Generic;
     using System.Linq;
-    using NLog.Targets;
 
     internal class LeeMultipointRouter
     {
@@ -27,18 +25,7 @@
             Vias = new HashSet<IntPoint>();
         }
 
-        public ISet<LPoint> Pins
-        {
-            get
-            {
-                if (_pinsWrapper == null)
-                {
-                    _pinsWrapper = new ReadOnlySet<LPoint>(_pins);
-                }
-
-                return _pinsWrapper;
-            }
-        }
+        public ISet<LPoint> Pins => _pinsWrapper ?? (_pinsWrapper = new ReadOnlySet<LPoint>(_pins));
 
         public bool Route()
         {

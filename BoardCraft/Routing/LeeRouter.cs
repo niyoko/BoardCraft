@@ -39,7 +39,7 @@ namespace BoardCraft.Routing
 
         static LeeRouter()
         {
-            const int radi = 5;
+            const int radi = 3;
             var t = RoutingHelper.GetPointsInCircle(new IntPoint(0, 0), radi);
             ViaBufferOffset = new HashSet<IntPoint>(t);
         }
@@ -61,27 +61,14 @@ namespace BoardCraft.Routing
         public bool Route()
         {
             Init();
-#if DEBUG
-            var sw = Stopwatch.StartNew();
-#endif
             var end = ExpandWave();
-#if DEBUG
-            sw.Stop();
-            Debug.WriteLine("Expand wave : " + sw.ElapsedMilliseconds);
-#endif
             if (end == null)
             {
                 Debug.WriteLine("Expand wave fail");
                 return false;
             }
-#if DEBUG
-            sw = Stopwatch.StartNew();
-#endif
+
             Backtrace(end.Value);
-#if DEBUG
-            sw.Stop();
-            Debug.WriteLine("Backtrace : " + sw.ElapsedMilliseconds);
-#endif
             return true;
         }
 
