@@ -30,7 +30,8 @@
         private readonly Dictionary<Component, PlacementInfo> _placement;
         private static readonly PlacementInfo DefaultPlacementInfo;
 
-        internal readonly ICollection<ICollection<IList<TraceNode>>> Traces;
+        //internal readonly ICollection<ICollection<IList<TraceNode>>> Traces;
+        internal IDictionary<Connection, IList<TraceSegment>> TraceSegments { get; } 
         internal readonly ISet<Point> Vias; 
 
         public BoardMargin Margin { get; }
@@ -58,7 +59,8 @@
             _pinLocations = new Dictionary<Component, Dictionary<string, Point>>(schema.Components.Count);
 
 
-            Traces = new List<ICollection<IList<TraceNode>>>();
+            //Traces = new List<ICollection<IList<TraceNode>>>();
+            TraceSegments = new Dictionary<Connection, IList<TraceSegment>>(schema.Connections.Count);
             Vias = new HashSet<Point>();
 
             Margin = new BoardMargin();
@@ -345,6 +347,7 @@
                 canvas.Transform.PopMatrix();
             }
 
+            /*
             if (Traces.Any())
             {
                 var tr = Traces.SelectMany(x => x);
@@ -363,6 +366,15 @@
                             canvas.DrawLine(md, t[i - 1].Point, t[i].Point);
                         }
                     }
+                }
+            }
+            */
+
+            foreach (var segment in TraceSegments)
+            {
+                foreach (var traceSegment in segment.Value)
+                {
+                    
                 }
             }
 

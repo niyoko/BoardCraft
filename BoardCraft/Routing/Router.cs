@@ -65,7 +65,7 @@
             if (csq != null)
             {
                 //bottom
-                var o1 = (csq.SquareSide/2);
+                var o1 = (csq.SquareSide/2) + Clearance + ((TraceWidth - _cellSize) / 2);
                 var o = (int) (Math.Ceiling(o1/_cellSize));
                 for (var i = -o; i <= o; i++)
                 {
@@ -189,7 +189,30 @@
                     .Select(x => (IList<TraceNode>)x.Select(y => LNodeToTraceNode(y, workspace)).ToList())
                     .ToList();
 
-                board.Traces.Add(r2);
+                var segments = new List<TraceSegment>();
+                TraceSegment cs = null;
+                for(var i = 0; i<r2.Count; i++)
+                {
+                    var xr = r2[i];
+                    for (var j = 0; j < xr.Count;j++)
+                    {
+                        if (j == 0 || xr[j].Layer != xr[j - 1].Layer)
+                        {
+                            if (i != 0)
+                            {
+                                segments.Add(cs);
+                            }
+
+                            cs = new TraceSegment(xr[j].Layer);
+                        }
+
+                        cs.AddNode(xr[j].Point);
+                    }
+                }
+
+                board.TraceSegments.Add(z, segments);
+                //board.Traces.Add(r2);
+
 
                 var v2 = r.Vias
                     .Select(x => workspace.IntPointToPoint(x))

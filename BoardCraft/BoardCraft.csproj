@@ -78,6 +78,7 @@
     <Compile Include="Models\Pin.cs" />
     <Compile Include="Models\PlacementInfo.cs" />
     <Compile Include="Models\Size.cs" />
+    <Compile Include="Models\TraceSegment.cs" />
     <Compile Include="Output\IPlacementModelRenderer.cs" />
     <Compile Include="Placement\GA\Bounds.cs" />
     <Compile Include="Placement\GA\CrossoverOperator.cs" />

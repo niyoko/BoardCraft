@@ -72,12 +72,12 @@
 
         [Category("Informasi GA")]
         [DisplayName("Waktu GA")]
-        [Description("Waktu yang telah dihabiskan untuk melakukan proses penempatan dengan GA")]
+        [Description("Waktu yang telah diperlukan untuk melakukan proses penempatan dengan GA")]
         public string GATimeDisplay => _gaTime?.ToString(@"mm\:ss\.ff") ?? "";
 
         [Category("Informasi Routing")]
         [DisplayName("Waktu Routing")]
-        [Description("Waktu yang telah dihabiskan untuk melakukan proses routing")]
+        [Description("Waktu yang telah diperlukan untuk melakukan proses routing")]
         public string RoutingTimeDisplay => _routingTime?.ToString(@"mm\:ss\.ff") ?? "";
 
         [Category("Informasi PCB")]

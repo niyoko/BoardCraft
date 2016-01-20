@@ -28,13 +28,13 @@
 
             Brushes = new Dictionary<DrawingMode, Brush>
             {
-                [DrawingMode.Component] = new SolidColorBrush(Color.FromRgb(255, 0, 0)),
-                [DrawingMode.BottomCopper] = new SolidColorBrush(Color.FromRgb(63, 63, 255)),
-                [DrawingMode.TopCopper] = new SolidColorBrush(Color.FromRgb(255, 255, 63)),
-                [DrawingMode.DrillHole] = new SolidColorBrush(Color.FromRgb(127, 127, 127)),
-                [DrawingMode.Pad] = new SolidColorBrush(Color.FromRgb(63, 255, 63)),
-                [DrawingMode.Via] = new SolidColorBrush(Color.FromRgb(127, 127, 255)),
-                [DrawingMode.BoardBoundary] = new SolidColorBrush(Color.FromRgb(63, 200, 200))
+                [DrawingMode.Component] = new SolidColorBrush(Color.FromRgb(0, 190, 75)),
+                [DrawingMode.BottomCopper] = new SolidColorBrush(Color.FromRgb(0, 0, 255)),
+                [DrawingMode.TopCopper] = new SolidColorBrush(Color.FromRgb(255, 0, 0)),
+                [DrawingMode.DrillHole] = new SolidColorBrush(Color.FromRgb(220, 220, 220)),
+                [DrawingMode.Pad] = new SolidColorBrush(Color.FromRgb(220, 0, 220)),
+                [DrawingMode.Via] = new SolidColorBrush(Color.FromRgb(220, 220, 0)),
+                [DrawingMode.BoardBoundary] = new SolidColorBrush(Color.FromRgb(0, 0, 0))
 #if DEBUG
                 ,[DrawingMode.TopWave] = new SolidColorBrush(Color.FromRgb(255, 255, 63))
                 ,[DrawingMode.BottomWave] = new SolidColorBrush(Color.FromRgb(255, 63, 63))
@@ -115,7 +115,7 @@
                 X2 = point2.X,
                 Y2 = point2.Y,
                 Stroke = Brushes[mode],
-                StrokeThickness = 8,
+                StrokeThickness = /*mode == DrawingMode.TopCopper || mode == DrawingMode.BottomCopper ? 30 :*/ 8,
                 RenderTransform = ApplyTransform()
             };
 
