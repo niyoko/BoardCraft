@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using System.Net.Sockets;
-    using Drawing;
     using Models;
     using Drawing.PinStyles;
 
@@ -16,8 +14,8 @@
         private int Divider { get; }
         private readonly double _cellSize;
 
-        private readonly ISet<IntPoint> _trackBufferOffset;
-
+        private readonly ISet<IntPoint> _traceBufferOffset;
+        private readonly ISet<IntPoint> _viaObs; 
         public Router(double traceWidth, double clearance, int cellDivider)
         {
             TraceWidth = traceWidth;
@@ -27,19 +25,22 @@
             _cellSize = (traceWidth + clearance) / Divider;
             
             var t = RoutingHelper.GetPointsInCircle(new IntPoint(0, 0),  Divider - 1);
-            _trackBufferOffset = new HashSet<IntPoint>(t);
+            _traceBufferOffset = new HashSet<IntPoint>(t);
+
+            const int viaRadi = 15;
+            var realRadi = viaRadi + Clearance + ((TraceWidth - _cellSize) / 2);
+            var r2 = (int)(Math.Ceiling(realRadi/_cellSize));
+
+            var t2 = RoutingHelper.GetPointsInCircle(new IntPoint(0, 0), r2);
+            _viaObs = new HashSet<IntPoint>(t2);
         }
         
-        private IEnumerable<LPoint> GetObstacleForPin(Board board, Component component, string pinName, RouterWorkspace workspace)
+        private IEnumerable<LPoint> GetObstacleForPin(Board board, ComponentPin pin, RouterWorkspace workspace)
         {
-            var pin = component.Package.Pins.SingleOrDefault(x => x.Name == pinName);
-            if (pin == null)
-                yield break;
-
-            var pos = board.GetPinLocation(component, pinName);
+            var pos = board.GetPinLocation(pin);
             var pp = workspace.PointToIntPoint(pos);
 
-            var c = pin.Style as CirclePinStyle;
+            var c = pin.PackagePin.Style as CirclePinStyle;
             if(c != null)
             {
                 //bottom
@@ -52,7 +53,7 @@
                 }
 
                 //top
-                var rad3 = c.DrillDiameter / 2;
+                var rad3 = (c.DrillDiameter / 2) + Clearance + ((TraceWidth - _cellSize) / 2);
                 var rad4 = (int)(Math.Ceiling(rad3 / _cellSize));
                 var pts2 = RoutingHelper.GetPointsInCircle(pp, rad4);
                 foreach (var p2 in pts2)
@@ -61,7 +62,7 @@
                 }
             }
 
-            var csq = pin.Style as SquarePinStyle;
+            var csq = pin.PackagePin.Style as SquarePinStyle;
             if (csq != null)
             {
                 //bottom
@@ -76,7 +77,7 @@
                 }
 
                 //top
-                var rad3 = csq.DrillDiameter / 2;
+                var rad3 = (csq.DrillDiameter / 2) + Clearance + ((TraceWidth - _cellSize) / 2);
                 var rad4 = (int)(Math.Ceiling(rad3 / _cellSize));
                 var pts2 = RoutingHelper.GetPointsInCircle(pp, rad4);
                 foreach (var p2 in pts2)
@@ -94,23 +95,28 @@
             //setup setiap pin sebagai obstacle
             foreach (var c in board.Schema.Components)
             {
-                foreach (var pin in c.Package.Pins)
+                foreach (var pin in c.Pins)
                 {
-                    var obs = GetObstacleForPin(board, c, pin.Name, workspace);
+                    var obs = GetObstacleForPin(board, pin, workspace);
                     obs = obs.Where(x => workspace.IsPointValid(x.Point));
-                    workspace.SetPinObstacle(c, pin.Name, obs);
+                    workspace.PinObstacle[pin] = new HashSet<LPoint>(obs);
                 }
             }
         }
 
-        private ISet<LPoint> Buffer(ISet<LPoint> tracks, RouterWorkspace workspace)
+        private void RevertRoute(Connection connection)
+        {
+            
+        }
+
+        private ISet<LPoint> Buffer(ISet<LPoint> traces, RouterWorkspace workspace)
         {
             var clist = (List<LPoint>) null;
             var set = new HashSet<LPoint>();
-            foreach (var t in tracks)
+            foreach (var t in traces)
             {
                 var nl = new List<LPoint>();
-                foreach (var o in _trackBufferOffset)
+                foreach (var o in _traceBufferOffset)
                 {
                     var cl = RoutingHelper.OffsetPoint(t, o);
                     if (!workspace.IsPointValid(cl.Point))
@@ -129,13 +135,54 @@
             return set;
         }
 
-        private static TraceNode LNodeToTraceNode(LPoint lp, RouterWorkspace workspace)
+        private IEnumerable<LPoint> GetObstacleForVia(IntPoint point, RouterWorkspace workspace)
         {
-            var p = workspace.IntPointToPoint(lp.Point);
-            var l = lp.Layer == WorkspaceLayer.BottomLayer 
-                    ? TraceLayer.BottomLayer 
-                    : TraceLayer.TopLayer;
-            return new TraceNode(p, l);
+            var enu = _viaObs.Select(x => new IntPoint(x.X + point.X, x.Y + point.Y));
+            enu = enu.Where(workspace.IsPointValid);
+            var enu2 = enu.SelectMany(
+                x => new[] { WorkspaceLayer.TopLayer, WorkspaceLayer.BottomLayer }, 
+                (a, b) => new LPoint(b, a)
+            );
+
+            return enu2;
+        } 
+
+        private bool RouteConnection(Board board, RouterWorkspace workspace, Connection connection)
+        {
+            var pinLoc = connection.Pins
+                    .Select(x => board.GetPinLocation(x.Pin))
+                    .Select(workspace.PointToIntPoint);
+
+            var pts = new HashSet<IntPoint>(pinLoc);
+
+            //setup worskspace
+            workspace.SetupWorkspaceForRouting(connection);
+
+            //doing route
+            var r = new LeeMultipointRouter(workspace, pts);
+            var result = r.Route();
+
+            //if routing fails, return false
+            if (!result)
+                return false;
+
+            workspace.TraceSegments[connection] = r.TraceSegments;
+            workspace.TracePoint[connection] = r.TracePoints;
+            workspace.Vias[connection] = r.Vias;
+
+            //set obstacles for next routing
+            var l = Buffer(r.TracePoints, workspace);
+            workspace.TraceObstacle[connection] = l;
+
+            var l1 = new List<LPoint>();
+            foreach (var v in r.Vias)
+            {
+                var viaObs = GetObstacleForVia(v, workspace);
+                l1.AddRange(viaObs);
+            }
+            workspace.ViaObstacle[connection] = new HashSet<LPoint>(l1);           
+
+            return true;
         }
 
         public void Route(Board board)
@@ -147,82 +194,20 @@
             var distances = board.CalculatePinDistances();
 
             var zl = distances
-                    .OrderBy(x => x.Key.Pins.Count)
-                    .ThenBy(x => x.Value.Max)
-                    .Select(x => x.Key)
-                    .ToList();
-
-#if DEBUG
-            int s = 0, f = 0;
-#endif
+                .OrderBy(x => x.Key.Pins.Count)
+                .ThenBy(x => x.Value.Max)
+                .Select(x => x.Key)
+                .ToList();
 
             foreach (var z in zl)
             {
-                var pinLoc = z.Pins
-                    .Select(x => board.GetPinLocation(x.Component, x.Pin))
-                    .Select(workspace.PointToIntPoint);
-
-                var pts = new HashSet<IntPoint>(pinLoc);
-
-                workspace.SetupWorkspaceForRouting(z);
-
-                var r = new LeeMultipointRouter(workspace, pts);
-                var res = r.Route();
-                if (res)
-                {
+                var result = RouteConnection(board, workspace, z);
 #if DEBUG
-                    s++;
+                Debug.WriteLine($"Routing {z.Id} Result : {(result?"Success":"Fail")}");
 #endif
-                }
-                else
-                {
-#if DEBUG
-
-                    f++;
-#endif
-                }
-
-                var l = Buffer(r.Trace, workspace);
-                workspace.SetTrackObstacle(z, l);
-
-                var r2 = r.TraceNodes
-                    .Select(x => (IList<TraceNode>)x.Select(y => LNodeToTraceNode(y, workspace)).ToList())
-                    .ToList();
-
-                var segments = new List<TraceSegment>();
-                TraceSegment cs = null;
-                for(var i = 0; i<r2.Count; i++)
-                {
-                    var xr = r2[i];
-                    for (var j = 0; j < xr.Count;j++)
-                    {
-                        if (j == 0 || xr[j].Layer != xr[j - 1].Layer)
-                        {
-                            if (i != 0)
-                            {
-                                segments.Add(cs);
-                            }
-
-                            cs = new TraceSegment(xr[j].Layer);
-                        }
-
-                        cs.AddNode(xr[j].Point);
-                    }
-                }
-
-                board.TraceSegments.Add(z, segments);
-                //board.Traces.Add(r2);
-
-
-                var v2 = r.Vias
-                    .Select(x => workspace.IntPointToPoint(x))
-                    .ToList();
-
-                board.Vias.UnionWith(v2);
             }
-#if DEBUG
-            Debug.WriteLine($"Success : {s} Failed : {f}");
-#endif
+
+            workspace.WriteToBoard();
         }
     }
 }

@@ -72,7 +72,7 @@
         {
             board.CalculateBounds();
             var dist = board.CalculatePinDistances();
-            var dd = 100*dist.Values.Select(x => x.Max).Average();
+            var dd = dist.Values.Count == 0 ? 0 : 100*dist.Values.Select(x => x.Max).Average();
 
             var b = new Bounds[board.Schema.Components.Count];
             int i = 0;
@@ -86,8 +86,6 @@
             var sqEqOl = Math.Sqrt(f1);
 
             var d = 10*AverageDistance(b);
-            
-            
 
             return (1 / (sqEqOl + 1)) + (1 / (d + 1)) + (1/(dd+1));
         }

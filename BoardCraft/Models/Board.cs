@@ -30,15 +30,10 @@
         private readonly Dictionary<Component, PlacementInfo> _placement;
         private static readonly PlacementInfo DefaultPlacementInfo;
 
-        //internal readonly ICollection<ICollection<IList<TraceNode>>> Traces;
-        internal IDictionary<Connection, IList<TraceSegment>> TraceSegments { get; } 
-        internal readonly ISet<Point> Vias; 
+        internal IDictionary<Connection, ICollection<TraceSegment>> TraceSegments { get; set; } 
+        internal IDictionary<Connection, ISet<Point>> Vias { get; set; }
 
         public BoardMargin Margin { get; }
-
-#if DEBUG
-        internal RouterWorkspace Workspace;
-#endif
 
         static Board()
         {
@@ -54,14 +49,13 @@
 
             Schema = schema;
 
-            _placement = new Dictionary<Component, PlacementInfo>(schema.Components.Count);
-            _bounds = new Dictionary<Component, Bounds>(schema.Components.Count);
-            _pinLocations = new Dictionary<Component, Dictionary<string, Point>>(schema.Components.Count);
+            var compCount = schema.Components.Count;
+            var pinCount = schema.Components.Select(x => x.Pins.Count).Sum();
 
+            _placement = new Dictionary<Component, PlacementInfo>(compCount);
+            _bounds = new Dictionary<Component, Bounds>(compCount);
+            _pinLocations = new Dictionary<ComponentPin, Point>(pinCount);
 
-            //Traces = new List<ICollection<IList<TraceNode>>>();
-            TraceSegments = new Dictionary<Connection, IList<TraceSegment>>(schema.Connections.Count);
-            Vias = new HashSet<Point>();
 
             Margin = new BoardMargin();
         }
@@ -85,7 +79,11 @@
         {            
             _placement[component] = info;
             _bounds.Remove(component);
-            _pinLocations.Remove(component);
+
+            foreach (var p in component.Pins)
+            {
+                _pinLocations.Remove(p);
+            }
         }
 
         public Board Clone()
@@ -100,7 +98,7 @@
         }
 
         private readonly Dictionary<Component, Bounds> _bounds;
-        private readonly Dictionary<Component, Dictionary<string, Point>> _pinLocations;
+        private readonly Dictionary<ComponentPin, Point> _pinLocations;
 
         public void CalculateBounds()
         {
@@ -118,13 +116,19 @@
         public void CalculatePinLocations()
         {
             var cl = Schema.Components
+                .SelectMany(x => x.Pins)
                 .Where(x => !_pinLocations.ContainsKey(x))
+                .Select(x => x.Component)
+                .Distinct()
                 .ToList();
 
             foreach (var c in cl)
             {
                 var d = GetComponentPinLocation(c);
-                _pinLocations.Add(c, d);
+                foreach (var p in d)
+                {
+                    _pinLocations[p.Key] = p.Value;
+                }
             }
         }
 
@@ -142,16 +146,20 @@
             return bx;
         }
 
-        public Point GetPinLocation(Component component, string pin)
+        public Point GetPinLocation(ComponentPin pin)
         {
-            Dictionary<string, Point> p;
-            if (_pinLocations.TryGetValue(component, out p))
+            Point p;
+            if (_pinLocations.TryGetValue(pin, out p))
             {
-                return p[pin];
+                return p;
             }
 
-            var ppx = GetComponentPinLocation(component);
-            _pinLocations.Add(component, ppx);
+            var comp = pin.Component;
+            var ppx = GetComponentPinLocation(comp);
+            foreach (var point in ppx)
+            {
+                _pinLocations[point.Key] = point.Value;
+            }
 
             return ppx[pin];
         }
@@ -281,8 +289,8 @@
                         var p1 = cs[i];
                         var p2 = cs[j];
 
-                        var pos1 = GetPinLocation(p1.Component, p1.Pin);
-                        var pos2 = GetPinLocation(p2.Component, p2.Pin);
+                        var pos1 = GetPinLocation(p1.Pin);
+                        var pos2 = GetPinLocation(p2.Pin);
                         var sx = pos1.X - pos2.X;
                         var sy = pos1.Y - pos2.Y;
 
@@ -297,11 +305,11 @@
             return _stats;
         }
 
-        private Dictionary<string, Point> GetComponentPinLocation(Component component)
+        private Dictionary<ComponentPin, Point> GetComponentPinLocation(Component component)
         {
             var pack = component.Package;
             var plac = GetComponentPlacement(component);
-            var ret = new Dictionary<string, Point>(pack.Pins.Count);
+            var ret = new Dictionary<ComponentPin, Point>(pack.Pins.Count);
 
             var t = PointTransformer[(int)plac.Orientation];
 
@@ -314,7 +322,8 @@
                 x += plac.Position.X;
                 y += plac.Position.Y;
 
-                ret.Add(pin.Name, new Point(x, y));
+                var cp = component.GetPin(pin.Name);
+                ret.Add(cp, new Point(x, y));
             }
 
             return ret;
@@ -347,41 +356,15 @@
                 canvas.Transform.PopMatrix();
             }
 
-            /*
-            if (Traces.Any())
+            if (TraceSegments != null)
             {
-                var tr = Traces.SelectMany(x => x);
-
-                foreach (var t in tr)
+                foreach (var segment in TraceSegments)
                 {
-                    for (var i = 1; i < t.Count; i++)
+                    foreach (var traceSegment in segment.Value.Where(x => x.Layer == TraceLayer.BottomLayer))
                     {
-                        var l1 = t[i - 1].Layer;
-                        var l2 = t[i].Layer;
-                        if (l1 == l2)
-                        {
-                            var md = l1 == TraceLayer.BottomLayer 
-                                ? DrawingMode.BottomCopper 
-                                : DrawingMode.TopCopper;
-                            canvas.DrawLine(md, t[i - 1].Point, t[i].Point);
-                        }
+                        traceSegment.Draw(canvas);
                     }
                 }
-            }
-            */
-
-            foreach (var segment in TraceSegments)
-            {
-                foreach (var traceSegment in segment.Value)
-                {
-                    
-                }
-            }
-
-            foreach (var via in Vias)
-            {
-                canvas.DrawFilledEllipse(DrawingMode.Via, via, 20, 20);
-                canvas.DrawFilledEllipse(DrawingMode.DrillHole, via, 10, 10);
             }
 
             foreach (var point in _placement)
@@ -398,9 +381,27 @@
                 point.Key.Package.DrawDrillHole(canvas);
                 canvas.Transform.PopMatrix();
             }
-#if DEBUG
-            Workspace?.Render(canvas);
-#endif
+
+            if (TraceSegments != null)
+            {
+                foreach (var segment in TraceSegments)
+                {
+                    foreach (var traceSegment in segment.Value.Where(x => x.Layer == TraceLayer.TopLayer))
+                    {
+                        traceSegment.Draw(canvas);
+                    }
+                }
+            }
+
+            if (Vias != null)
+            {
+                foreach (var via in Vias.SelectMany(x => x.Value))
+                {
+                    canvas.DrawFilledEllipse(DrawingMode.Via, via, 20, 20);
+                    canvas.DrawFilledEllipse(DrawingMode.DrillHole, via, 10, 10);
+                }
+            }
+
             canvas.Transform.PopMatrix();
         }
     }

@@ -1,5 +1,6 @@
 ﻿namespace BoardCraft.Models
 {
+    using System.Globalization;
     using Drawing;
     using Drawing.PinStyles;
 
@@ -12,10 +13,11 @@
             Style = style;
         }
 
-        public string Name { get; set; }
+        public Component Parent { get; }
+        public string Name { get; }
 
-        public Point Position { get; set; }
-        public PinStyle Style { get; set; }
+        public Point Position { get; }
+        public PinStyle Style { get; }
 
         public void DrawPad(ICanvas canvas)
         {
@@ -26,5 +28,18 @@
         {
             Style.DrawDrillHole(canvas, Position);
         }
+    }
+
+    public class ComponentPin
+    {
+        public ComponentPin(Component component, Pin packagePin)
+        {
+            Component = component;
+            PackagePin = packagePin;
+        }
+
+        public Component Component { get; }
+        public Pin PackagePin { get; }
+        public string Name => PackagePin.Name;
     }
 }

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
@@ -35,10 +36,6 @@
                 [DrawingMode.Pad] = new SolidColorBrush(Color.FromRgb(220, 0, 220)),
                 [DrawingMode.Via] = new SolidColorBrush(Color.FromRgb(220, 220, 0)),
                 [DrawingMode.BoardBoundary] = new SolidColorBrush(Color.FromRgb(0, 0, 0))
-#if DEBUG
-                ,[DrawingMode.TopWave] = new SolidColorBrush(Color.FromRgb(255, 255, 63))
-                ,[DrawingMode.BottomWave] = new SolidColorBrush(Color.FromRgb(255, 63, 63))
-#endif
             };
 
             CurrentCanvas = canvas;
@@ -115,7 +112,7 @@
                 X2 = point2.X,
                 Y2 = point2.Y,
                 Stroke = Brushes[mode],
-                StrokeThickness = /*mode == DrawingMode.TopCopper || mode == DrawingMode.BottomCopper ? 30 :*/ 8,
+                StrokeThickness = mode == DrawingMode.TopCopper || mode == DrawingMode.BottomCopper ? 20 : 8,
                 RenderTransform = ApplyTransform()
             };
 
@@ -256,6 +253,19 @@
                 RenderTransform = ApplyTransform()
             };
 
+            CurrentCanvas.Children.Add(p);
+        }
+
+        public override void DrawPolyline(DrawingMode mode, IEnumerable<Point> nodes)
+        {
+            var pts = nodes.Select(x => new System.Windows.Point(x.X, x.Y));
+            var p = new Polyline
+            {
+                Stroke = GetBrush(mode),
+                StrokeThickness = mode == DrawingMode.TopCopper || mode == DrawingMode.BottomCopper ? 20 : 8,
+                RenderTransform = ApplyTransform(),
+                Points = new PointCollection(pts)
+            };
             CurrentCanvas.Children.Add(p);
         }
     }

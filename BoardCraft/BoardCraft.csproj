@@ -98,6 +98,7 @@
     <Compile Include="Placement\GA\TournamentSelectionOperator.cs" />
     <Compile Include="Placement\GA\RandomPlacer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Routing\AbstractTraceSegment.cs" />
     <Compile Include="Routing\IntPoint.cs" />
     <Compile Include="Routing\LeeMultipointRouter.cs" />
     <Compile Include="Routing\LeeRouter.cs" />

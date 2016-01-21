@@ -80,16 +80,6 @@
                     shy = -1 * amount;
                 }
 
-                if (info.Position.X + shx + mutated.Package.Boundaries.Left < 0)
-                {
-                    shx = -mutated.Package.Boundaries.Left - info.Position.X;
-                }
-
-                if (info.Position.Y + shy + mutated.Package.Boundaries.Bottom < 0)
-                {
-                    shy = -mutated.Package.Boundaries.Bottom - info.Position.Y;
-                }
-
                 info = new PlacementInfo(new Point(info.Position.X + shx, info.Position.Y + shy), info.Orientation);
                 placement.SetComponentPlacement(mutated, info);
             }

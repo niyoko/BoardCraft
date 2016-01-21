@@ -23,7 +23,13 @@
 
         public PinConnectionInfo AddPin(Component component, string pin)
         {
-            var info= new PinConnectionInfo(this, component, pin);
+            var cp = component.GetPin(pin);
+            return AddPin(cp);
+        }
+
+        public PinConnectionInfo AddPin(ComponentPin pin)
+        {
+            var info = new PinConnectionInfo(this, pin);
             _pins.Add(info);
             return info;
         }
@@ -31,15 +37,13 @@
 
     public sealed class PinConnectionInfo
     {
-        internal PinConnectionInfo(Connection connection, Component component, string pin)
+        internal PinConnectionInfo(Connection connection, ComponentPin pin)
         {
             Connection = connection;
-            Component = component;
             Pin = pin;
         }
 
         public Connection Connection { get; }
-        public Component Component { get; }
-        public string Pin { get; }
+        public ComponentPin Pin { get; }
     }
 }

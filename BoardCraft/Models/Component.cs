@@ -1,5 +1,8 @@
 ﻿namespace BoardCraft.Models
 {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
     using Drawing;
 
     /// <summary>
@@ -7,6 +10,8 @@
     /// </summary>
     public class Component
     {
+        private Dictionary<string, ComponentPin> _internalPins; 
+
         /// <summary>
         ///     Create instance of a <see cref="Component" />
         /// </summary>
@@ -16,10 +21,23 @@
         {
             Id = id;
             Package = package;
+
+            var p = package.Pins.Select(ConvertPin);
+            _internalPins = p.ToDictionary(x => x.Name);
+        }
+
+        private ComponentPin ConvertPin(Pin packagePin)
+        {
+            return new ComponentPin(this, packagePin);
         }
 
         public string Id { get; }
-
         public Package Package { get; }
+        public ICollection<ComponentPin> Pins => _internalPins.Values;
+
+        public ComponentPin GetPin(string name)
+        {
+            return _internalPins[name];
+        }
     }
 }

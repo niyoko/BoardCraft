@@ -21,7 +21,8 @@
 
         public void Draw(ICanvas canvas)
         {
-            
+            var mode = Layer == TraceLayer.BottomLayer ? DrawingMode.BottomCopper : DrawingMode.TopCopper;
+            canvas.DrawPolyline(mode, Nodes);
         }
     }
 }

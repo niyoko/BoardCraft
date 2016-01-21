@@ -4,11 +4,8 @@
     using Models;
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
-    using System.Text;
     using NLog;
-    using System.IO;
     using System.Runtime.CompilerServices;
 
     public enum WorkspaceLayer
@@ -44,13 +41,20 @@
     {
         private Logger _logger = LogManager.GetCurrentClassLogger();
 
+        //data
         internal readonly int[,,] Data;
         internal readonly CellMetadata[,,] Metadata;
 
-        internal readonly IDictionary<Tuple<Component, string>, ISet<LPoint>> PinObstacle;
-        internal readonly IDictionary<Connection, ISet<LPoint>> TrackObstacle;
+        //obstacle data
+        internal readonly IDictionary<ComponentPin, ISet<LPoint>> PinObstacle;       
+        internal readonly IDictionary<Connection, ISet<LPoint>> TraceObstacle;
+        internal readonly IDictionary<Connection, ISet<LPoint>> ViaObstacle; 
 
         private readonly double _cellSize;
+
+        internal readonly IDictionary<Connection, ISet<LPoint>> TracePoint;
+        internal readonly IDictionary<Connection, ICollection<AbstractTraceSegment>> TraceSegments;
+        internal readonly IDictionary<Connection, ISet<IntPoint>> Vias; 
 
         public Board Board { get; }
 
@@ -81,8 +85,16 @@
             Data = new int[2, Width, Height];
             Metadata = new CellMetadata[2, Width, Height];
 
-            PinObstacle = new Dictionary<Tuple<Component, string>, ISet<LPoint>>(Board.Schema.Connections.Count);
-            TrackObstacle = new Dictionary<Connection, ISet<LPoint>>();
+            var pinCount = Board.Schema.Components.Select(x => x.Pins.Count).Sum();
+            var conCount = Board.Schema.Connections.Count;
+
+            PinObstacle = new Dictionary<ComponentPin, ISet<LPoint>>(pinCount);
+            TraceObstacle = new Dictionary<Connection, ISet<LPoint>>(conCount);
+            ViaObstacle = new Dictionary<Connection, ISet<LPoint>>(conCount);
+
+            TracePoint = new Dictionary<Connection, ISet<LPoint>>(conCount);
+            TraceSegments = new Dictionary<Connection, ICollection<AbstractTraceSegment>>(conCount);
+            Vias = new Dictionary<Connection, ISet<IntPoint>>(conCount);
         }
 
         internal IntPoint PointToIntPoint(Point p)
@@ -96,6 +108,41 @@
             return new IntPoint((int)px + OffsetX, (int)py + OffsetY);
         }
 
+        TraceSegment TranslateSegment(AbstractTraceSegment segment)
+        {
+            var l = segment.Layer == WorkspaceLayer.BottomLayer ? TraceLayer.BottomLayer : TraceLayer.TopLayer;
+            var s = new TraceSegment(l);
+
+            var nds = segment.Nodes.Select(IntPointToPoint);
+            foreach (var p in nds)
+            {
+                s.AddNode(p);
+            }
+
+            return s;
+        }
+
+        internal void WriteToBoard()
+        {
+            var s = new Dictionary<Connection, ICollection<TraceSegment>>(TraceSegments.Count);
+            foreach (var segment in TraceSegments)
+            {
+                var val = new List<TraceSegment>(segment.Value.Select(TranslateSegment));
+                s.Add(segment.Key, val);
+            }
+
+            Board.TraceSegments = s;
+            
+            var vias =  new Dictionary<Connection, ISet<Point>>();
+            foreach (var via in Vias)
+            {
+                var v = via.Value.Select(IntPointToPoint);
+                vias.Add(via.Key, new HashSet<Point>(v));
+            }
+
+            Board.Vias = vias;
+        }
+
         internal Point IntPointToPoint(IntPoint p)
         {
             var px = (.5 + p.X - OffsetX) * _cellSize;
@@ -104,26 +151,13 @@
             return new Point(px, py);
         }
 
-        public void SetPinObstacle(Component component, string pinName, IEnumerable<LPoint> obstacle)
-        {
-            var key = Tuple.Create(component, pinName);
-            var el = new HashSet<LPoint>(obstacle);
-            PinObstacle.Add(key, el);
-        }
-
-        public void SetTrackObstacle(Connection connection, ISet<LPoint> obstacle)
-        {
-            var el = obstacle;
-            TrackObstacle.Add(connection, el);
-        }
-
         public void SetupWorkspaceForRouting(Connection connection)
         {
             Array.Clear(Data, 0, Data.Length);
             Array.Clear(Metadata, 0, Metadata.Length);
 
-            var tupled = connection.Pins.Select(x => Tuple.Create(x.Component, x.Pin));
-            var hashTupled = new HashSet<Tuple<Component, string>>(tupled);
+            var tupled = connection.Pins.Select(x => x.Pin);
+            var hashTupled = new HashSet<ComponentPin>(tupled);
             
             foreach (var o in PinObstacle)
             {
@@ -139,11 +173,19 @@
                 }
             }
 
-            foreach (var o in TrackObstacle)
+            foreach (var o in TraceObstacle)
             {
                 foreach (var v in o.Value)
                 {
                     SetMetadata(v, CellMetadata.Obstacle);
+                }
+            }
+
+            foreach (var v in ViaObstacle)
+            {
+                foreach (var v2 in v.Value)
+                {                    
+                    SetMetadata(v2, CellMetadata.Obstacle);                    
                 }
             }
         }
@@ -157,53 +199,6 @@
             return valid;
         }
 
-#if DEBUG
-        internal void DumpState()
-        {
-            var s2 = new StringBuilder();
-            for (var k = 0; k < 2; k++)
-            {
-                for (var j = Height - 1; j >= 0; j--)
-                {
-                    for (var i = 0; i < Width; i++)
-                    {
-                            
-                        var v = new LPoint((WorkspaceLayer)k, new IntPoint(i, j));
-                        var s = this[v].ToString();
-                        s = s.PadLeft(5, ' ');
-                        s2.Append(s);
-                        s2.Append(",");
-                    }
-
-                    s2.AppendLine();
-                }
-
-                s2.Append("----------------------------");
-                s2.AppendLine();
-            }
-
-            File.WriteAllText(@"D:\debug.txt", s2.ToString());
-        }
-
-        internal void Render(ICanvas canvas)
-        {
-            Debug.WriteLine("Workspace rendered");
-            for (var k = 0; k < 2; k++)
-            {
-                for (var j = Height - 1; j >= 0; j--)
-                {
-                    for (var i = 0; i < Width; i++)
-                    {
-                        var idx = new LPoint((WorkspaceLayer)k, new IntPoint(i, j));
-                        if (idx.Layer == WorkspaceLayer.BottomLayer && this[idx] == -1)
-                        {
-                            canvas.DrawRectangle(DrawingMode.DrillHole, IntPointToPoint(idx.Point), _cellSize, _cellSize);
-                        }
-                    }
-                }
-            }            
-        }
-#endif
         public int this[LPoint index]
         {
             get { return Data[(int)index.Layer, index.Point.X, index.Point.Y]; }

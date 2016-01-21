@@ -103,8 +103,8 @@
             await Task.Run(() =>
             {
                 var p = _currentPopulation.BestPlacement;
-                var t = new Router(40, 10, 5);
-                t.Route(p);                
+                var t = new Router(20, 10, 3);
+                t.Route(p);
             });
             lock (_routingStopwatch)
             {

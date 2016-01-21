@@ -12,13 +12,13 @@ namespace BoardCraft.Routing
         private readonly RouterWorkspace _workspace;
         private readonly ISet<LPoint> _starts;
         private readonly ISet<LPoint> _targets;
-        private readonly ISet<LPoint> _internalTrack;
-        private readonly IList<LPoint> _internalNodes;
-        private readonly ISet<IntPoint> _internalVias; 
-        
 
-        public ISet<LPoint> Track { get; }
-        public IList<LPoint> TrackNodes { get; }
+        private readonly List<LPoint> _internalTracePoint;
+        private readonly List<AbstractTraceSegment> _internalTraceSegments;
+        private readonly HashSet<IntPoint> _internalVias;
+        
+        public IList<LPoint> TracePoints { get; }
+        public IList<AbstractTraceSegment> TraceSegments { get; }
         public ISet<IntPoint> Vias { get; } 
 
         private static readonly Dictionary<IntPoint, int> Neighbors = new Dictionary<IntPoint, int>
@@ -49,12 +49,12 @@ namespace BoardCraft.Routing
             _workspace = workspace;
             _starts = starts;
             _targets = targets;
-            _internalTrack = new HashSet<LPoint>();
-            _internalNodes = new List<LPoint>();
+            _internalTracePoint = new List<LPoint>();
+            _internalTraceSegments = new List<AbstractTraceSegment>();
             _internalVias = new HashSet<IntPoint>();
 
-            Track = new ReadOnlySet<LPoint>(_internalTrack);
-            TrackNodes = new ReadOnlyCollection<LPoint>(_internalNodes);
+            TracePoints = new ReadOnlyCollection<LPoint>(_internalTracePoint);
+            TraceSegments = new ReadOnlyCollection<AbstractTraceSegment>(_internalTraceSegments);
             Vias = new ReadOnlySet<IntPoint>(_internalVias);
         }
 
@@ -64,11 +64,12 @@ namespace BoardCraft.Routing
             var end = ExpandWave();
             if (end == null)
             {
-                Debug.WriteLine("Expand wave fail");
                 return false;
             }
 
             Backtrace(end.Value);
+            ConvertToVector();
+
             return true;
         }
 
@@ -180,20 +181,99 @@ namespace BoardCraft.Routing
             return end;
         }
 
+        private static IEnumerable<IntPoint> ConvertToVector2(IEnumerable<IntPoint> points)
+        {
+            int pdx = 0, pdy = 0;
+            var pp = default(IntPoint);
+            var i = 0;
+
+            foreach (var p in points)
+            {
+                if (i == 0)
+                {
+                    pp = p;
+                    i++;
+                    continue;
+                }
+
+                var dx = p.X - pp.X;
+                var dy = p.Y - pp.Y;
+
+                if (dx != pdx || dy != pdy)
+                {
+                    yield return pp;
+                }
+
+                pp = p;
+                i++;
+                pdx = dx;
+                pdy = dy;
+            }
+
+            if (i > 0)
+            {
+                yield return pp;
+            }
+        }
+
+        private void ConvertToVector()
+        {
+            if (_internalTracePoint.Count < 2)
+            {
+                throw new InvalidOperationException("Cannot route zero or single point");
+            }
+
+            IList<IntPoint> cl = new List<IntPoint>();
+            for (var i = 0; i < _internalTracePoint.Count; i++)
+            {
+                if (i != 0)
+                {
+                    var pLayer = _internalTracePoint[i - 1].Layer;
+                    var cLayer = _internalTracePoint[i].Layer;
+                    
+                    if (pLayer != cLayer)
+                    {
+                        //changing in layers
+                        var pPoint = _internalTracePoint[i - 1].Point;
+                        var cPoint = _internalTracePoint[i].Point;
+
+                        if (pPoint != cPoint)
+                        {
+                            throw new Exception("Failed to change raster to vector");
+                        }
+
+                        _internalVias.Add(cPoint);
+
+                        var nodes = ConvertToVector2(cl);
+                        var s = new AbstractTraceSegment(pLayer, nodes);
+                        
+                        _internalTraceSegments.Add(s);
+
+                        cl = new List<IntPoint>();
+                    }
+                }
+
+                cl.Add(_internalTracePoint[i].Point);
+
+                if (i == _internalTracePoint.Count - 1)
+                {
+                    var nodes = ConvertToVector2(cl);
+                    var s = new AbstractTraceSegment(_internalTracePoint[i].Layer, nodes);
+                    _internalTraceSegments.Add(s);
+                }
+            }
+        }
+
         private void Backtrace(IntPoint start)
         {
             var c = new LPoint(WorkspaceLayer.BottomLayer, start);
-            var pdx = 0;
-            var pdy = 0;
-            var pdl = 0;
-
-            _internalTrack.Add(c);
+            _internalTracePoint.Add(c);
             while (true)
             {
                 var cval = _workspace[c];
                 if (cval == 1)
                 {
-                    _internalNodes.Add(c);
+                    //backtrace finished
                     return;
                 }
 
@@ -218,7 +298,6 @@ namespace BoardCraft.Routing
                     }
                 }
 
-                var via = false;
                 //layer move
                 if (CanCreateVia(c.Point))
                 {
@@ -233,7 +312,6 @@ namespace BoardCraft.Routing
                     {
                         mn = nl;
                         mVal = val2;
-                        via = true;
                     }
                 }
 
@@ -247,25 +325,8 @@ namespace BoardCraft.Routing
                 {
                     Debug.WriteLine("Unnatural trace found - " + sel);
                 }
-#endif
-                var dx = mn.Point.X - c.Point.X;
-                var dy = mn.Point.Y - c.Point.Y;
-                var dl = (int)mn.Layer - (int)c.Layer;
-
-                if (dx != pdx || dy != pdy || dl != pdl)
-                {
-                    _internalNodes.Add(c);
-                }
-                
-                _internalTrack.Add(mn);
-                if (via)
-                {
-                    _internalVias.Add(mn.Point);
-                }
-
-                pdx = dx;
-                pdy = dy;
-                pdl = dl;
+#endif                
+                _internalTracePoint.Add(mn);
                 c = mn;
             }
         }

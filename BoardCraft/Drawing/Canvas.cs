@@ -1,4 +1,6 @@
-﻿namespace BoardCraft.Drawing
+﻿using System.Collections.Generic;
+
+namespace BoardCraft.Drawing
 {
     public abstract class Canvas : ICanvas
     {
@@ -16,6 +18,7 @@
         public abstract void DrawEllipse(DrawingMode mode, Point center, double xRadius, double yRadius);
         public abstract void DrawFilledEllipse(DrawingMode mode, Point center, double xRadius, double yRadius);        
         public abstract void DrawLine(DrawingMode mode, Point a, Point b);
-        public abstract void DrawArcSegment(DrawingMode mode, Point center, double xRadius, double yRadius, double startAngle, double endAngle);        
+        public abstract void DrawArcSegment(DrawingMode mode, Point center, double xRadius, double yRadius, double startAngle, double endAngle);
+        public abstract void DrawPolyline(DrawingMode mode, IEnumerable<Point> nodes);
     }
 }
