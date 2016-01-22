@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Text;
     using Models;
     using Drawing.PinStyles;
 
@@ -197,14 +198,21 @@
                 .OrderBy(x => x.Key.Pins.Count)
                 .ThenBy(x => x.Value.Max)
                 .Select(x => x.Key)
-                //.Reverse()
                 .ToList();
 
             var failedCount = 0;
+            var reorderCount = 0;
+
+            var problematic = new Stack<Connection>();
             var unprocessedStack = new Stack<Connection>(conns);
             var processedStack = new Stack<Connection>(distances.Count);
             var ret = true;
 
+#if DEBUG
+            var l1 = unprocessedStack.Take(10).Select(x => x.Id);
+            var s = string.Join(",", l1);
+            Debug.WriteLine("Order: " + s);
+#endif
             while(unprocessedStack.Count > 0)
             {
                 var connection = unprocessedStack.Pop();
@@ -217,12 +225,56 @@
                 else
                 {
                     Debug.WriteLine($"Fail to route {connection.Id}");
-                    failedCount++;
+                    if(!problematic.Contains(connection))
+                        problematic.Push(connection);
 
+                    failedCount++;
                     if (failedCount >= conns.Count)
                     {
-                        ret = false;
-                        break;
+                        reorderCount++;
+                        if (reorderCount > 10)
+                        {
+                            Debug.WriteLine("Exceed reorder limit. Reporting failure");
+                            ret = false;
+                            break;
+                        }
+
+                        //so problematic that need to reorder
+                        Debug.WriteLine($"Reordering #{reorderCount}");
+                        foreach (var p in processedStack)
+                        {
+                            workspace.RewindRoute(p);
+                        }
+
+                        unprocessedStack.Clear();
+                        processedStack.Clear();
+
+                        //add non problematic connection
+                        //so it will routed last
+                        foreach (var c2 in conns)
+                        {
+                            if (!problematic.Contains(c2))
+                            {
+                                unprocessedStack.Push(c2);
+                            }
+                        }
+
+                        //add problematic connection
+                        while (problematic.Count > 0)
+                        {
+                            var c1 = problematic.Pop();
+                            unprocessedStack.Push(c1);
+                        }
+
+                        problematic.Clear();
+#if DEBUG
+                        var l2 = unprocessedStack.Take(10).Select(x => x.Id);
+                        var s2 = string.Join(",", l2);
+                        Debug.WriteLine("Order: " + s2);
+#endif
+
+                        failedCount = 0;
+                        continue;
                     }
 
                     if (processedStack.Count == 0)

@@ -65,7 +65,7 @@ namespace BoardCraft.Routing
             var end = ExpandWave();
             if (end == null)
             {
-#if DEBUG
+#if FALSE
                 var botIm = new Bitmap(_workspace.Width, _workspace.Height);
 
                 _workspace.Dump(botIm);
