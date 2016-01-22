@@ -329,6 +329,15 @@
             return ret;
         }
 
+        public Size GetRenderSize()
+        {
+            var s = GetSize();
+            return new Size(
+                s.Width + Margin.Left + Margin.Right + 100, 
+                s.Height + Margin.Bottom + Margin.Top + 100
+            );
+        }
+
         public void Draw(ICanvas canvas)
         {
             if (canvas == null)
@@ -340,7 +349,7 @@
             canvas.Clear();
             canvas.Transform.Translate(Margin.Left + 50, Margin.Bottom + 50);
             var s = GetSize();
-            canvas.DrawRectangle(DrawingMode.BoardBoundary, new Point(-Margin.Left, -Margin.Bottom), s.Width+Margin.Left+Margin.Right, s.Height + Margin.Bottom+Margin.Top);
+            canvas.DrawRectangle(DrawingMode.BoardEdge, new Point(-Margin.Left, -Margin.Bottom), s.Width+Margin.Left+Margin.Right, s.Height + Margin.Bottom+Margin.Top);
             
             foreach (var point in _placement)
             {
@@ -398,7 +407,7 @@
                 foreach (var via in Vias.SelectMany(x => x.Value))
                 {
                     canvas.DrawFilledEllipse(DrawingMode.Via, via, 20, 20);
-                    canvas.DrawFilledEllipse(DrawingMode.DrillHole, via, 10, 10);
+                    canvas.DrawFilledEllipse(DrawingMode.ViaDrillHole, via, 10, 10);
                 }
             }
 

@@ -6,14 +6,9 @@
         BottomCopper,
         TopCopper,
         Pad,
-        DrillHole,
+        PadDrillHole,
+        ViaDrillHole,
         Via,
-        BoardBoundary
-#if DEBUG
-        ,
-        TopWave,
-        BottomWave,
-        BothWave
-#endif
+        BoardEdge
     }
 }

@@ -18,7 +18,7 @@
 
         public override void DrawDrillHole(ICanvas canvas, Point position)
         {
-            canvas.DrawFilledEllipse(DrawingMode.DrillHole, position, 0.5 * DrillDiameter, 0.5 * DrillDiameter);
+            canvas.DrawFilledEllipse(DrawingMode.PadDrillHole, position, 0.5 * DrillDiameter, 0.5 * DrillDiameter);
         }
     }
 }

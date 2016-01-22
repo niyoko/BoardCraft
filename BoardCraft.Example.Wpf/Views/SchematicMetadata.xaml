@@ -18,9 +18,9 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <BitmapImage x:Key="PlayIcon" UriSource="pack://application:,,,/Resources/control_play_16.png"></BitmapImage>
-            <BitmapImage x:Key="PauseIcon" UriSource="pack://application:,,,/Resources/control_pause_16.png"></BitmapImage>
             <BitmapImage x:Key="StopIcon" UriSource="pack://application:,,,/Resources/control_stop_16.png"></BitmapImage>
             <BitmapImage x:Key="RouteIcon" UriSource="pack://application:,,,/Resources/chart_line_16.png"></BitmapImage>
+            <BitmapImage x:Key="SaveIcon" UriSource="pack://application:,,,/Resources/picture_save_16.png"></BitmapImage>
         </ResourceDictionary>
     </UserControl.Resources>
     <i:Interaction.Triggers>
@@ -32,19 +32,25 @@
                 <Button Padding="10 5 10 5" Command="{Binding RunGACommand}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{StaticResource PlayIcon}"></Image>
-                        <TextBlock Margin="5 0 0 0">Start</TextBlock>
+                        <TextBlock Margin="5 0 0 0">Start GA</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button Padding="10 5 10 5" Command="{Binding StopGACommand}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{StaticResource StopIcon}"></Image>
-                        <TextBlock Margin="5 0 0 0">Stop</TextBlock>
+                        <TextBlock Margin="5 0 0 0">Stop GA</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button Padding="10 5 10 5" Command="{Binding BeginRouteCommand}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{StaticResource RouteIcon}"></Image>
-                        <TextBlock Margin="5 0 0 0">Begin Routing</TextBlock>
+                        <TextBlock Margin="5 0 0 0">Routing</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Padding="10 5 10 5" Click="Button_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{StaticResource SaveIcon}"></Image>
+                        <TextBlock Margin="5 0 0 0">Save as Image...</TextBlock>
                     </StackPanel>
                 </Button>
             </ToolBar>
@@ -62,21 +68,27 @@
                                 IsReadOnly="True"
                                 AutoGenerateProperties="True"
                                 SelectedObject="{Binding Properties}">
-                                <xctk:PropertyGrid.EditorDefinitions>
-                                    <xctk:EditorTemplateDefinition TargetProperties="{x:Type sys:Double}">
-                                        <xctk:EditorTemplateDefinition.EditingTemplate>
-                                            <DataTemplate>
-                                                <TextBox Text="{Binding Value, StringFormat=F5}" />
-                                            </DataTemplate>
-                                        </xctk:EditorTemplateDefinition.EditingTemplate>
-                                    </xctk:EditorTemplateDefinition>
-                                </xctk:PropertyGrid.EditorDefinitions>
                             </xctk:PropertyGrid>
+                        </xcad:LayoutAnchorable>
+                        <xcad:LayoutAnchorable Title="Output Setting">
+                            <xctk:PropertyGrid
+                                ShowTitle="False" AutoGenerateProperties="True" SelectedObject="{Binding OutputProperties}"></xctk:PropertyGrid>
                         </xcad:LayoutAnchorable>
                     </xcad:LayoutAnchorablePane>
                     <xcad:LayoutAnchorablePane DockWidth="4*">
-                        <xcad:LayoutAnchorable Title="Log Entries">
-                            <o:BoardCanvas ComponentPlacement="{Binding ShowedPlacement}"  />
+                        <xcad:LayoutAnchorable Title="Workspace">
+                            <o:BoardCanvas
+                                ComponentPlacement="{Binding ShowedPlacement}"
+                                Component="{Binding Component}"
+                                BottomCopper="{Binding BottomCopper}"
+                                TopCopper="{Binding TopCopper}"
+                                DrillHole="{Binding DrillHole}"
+                                Pad="{Binding Pad}"
+                                Via="{Binding Via}"
+                                BoardEdge="{Binding BoardEdge}"
+                                ColorPallete="{Binding ColorPallete}"
+                                Name="Canvas"
+                            />
                         </xcad:LayoutAnchorable>
                     </xcad:LayoutAnchorablePane>
                 </xcad:LayoutPanel>

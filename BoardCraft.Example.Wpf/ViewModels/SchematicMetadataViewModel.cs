@@ -8,7 +8,7 @@
     using System.Windows;
     using System.Windows.Threading;
     using Models;
-    using NLog;
+    using Output.Wpf;
     using Placement.GA;
     using Routing;
     internal class SchematicMetadataViewModel : ViewModelBase
@@ -48,7 +48,13 @@
             Placer = ConstructGAPlacer();
 
             Properties = new SchematicProperties();
+            OutputProperties = new OutputProperties();
             UpdatePropertiesFromSchema();
+
+            OutputProperties.PropertyChanged += (sender, args) =>
+            {
+                OnPropertyChanged(args.PropertyName);
+            };
 
             _gaStopwatch = new Stopwatch();
             _routingStopwatch = new Stopwatch();
@@ -60,10 +66,22 @@
 
             _timer.Tick += PeriodicalUpdate;
             _timer.Start();
+
         }
 
         public Schematic Schematic { get; }
         public GAPlacer Placer { get; }
+
+        //Layers
+        public bool Component => OutputProperties.Component;
+        public bool BottomCopper => OutputProperties.BottomCopper;
+        public bool TopCopper => OutputProperties.TopCopper;
+        public bool DrillHole => OutputProperties.DrillHole;
+        public bool Pad => OutputProperties.Pad;
+        public bool Via => OutputProperties.Via;
+        public bool BoardEdge => OutputProperties.BoardEdge;
+
+        public ColorPallete ColorPallete => OutputProperties.ColorPallete;
 
         public string TabTitle { get; }
 
@@ -85,6 +103,7 @@
         }
 
         public SchematicProperties Properties { get; }
+        public OutputProperties OutputProperties { get; }
 
         public GenericCommand RunGACommand { get; }
         public GenericCommand WindowClosedCommand { get; }

@@ -92,7 +92,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GenericCommand.cs" />
-    <Compile Include="ViewModels\GAParameters.cs" />
+    <Compile Include="ViewModels\ColorPalleteItemSource.cs" />
+    <Compile Include="ViewModels\OutputProperties.cs" />
     <Compile Include="ViewModels\SchematicProperties.cs" />
     <Compile Include="Views\SchematicMetadata.xaml.cs">
       <DependentUpon>SchematicMetadata.xaml</DependentUpon>
@@ -196,6 +197,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\chart_line_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\picture_save_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\picture_save_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions />
