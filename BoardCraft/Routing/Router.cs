@@ -185,7 +185,7 @@
             return true;
         }
 
-        public void Route(Board board)
+        public bool Route(Board board)
         {
             board.CalculatePinLocations();
             var workspace = new RouterWorkspace(board, _cellSize);
@@ -193,21 +193,53 @@
 
             var distances = board.CalculatePinDistances();
 
-            var zl = distances
+            var conns = distances
                 .OrderBy(x => x.Key.Pins.Count)
                 .ThenBy(x => x.Value.Max)
                 .Select(x => x.Key)
+                //.Reverse()
                 .ToList();
 
-            foreach (var z in zl)
+            var failedCount = 0;
+            var unprocessedStack = new Stack<Connection>(conns);
+            var processedStack = new Stack<Connection>(distances.Count);
+            var ret = true;
+
+            while(unprocessedStack.Count > 0)
             {
-                var result = RouteConnection(board, workspace, z);
-#if DEBUG
-                Debug.WriteLine($"Routing {z.Id} Result : {(result?"Success":"Fail")}");
-#endif
+                var connection = unprocessedStack.Pop();
+                var result = RouteConnection(board, workspace, connection);
+
+                if (result)
+                {
+                    processedStack.Push(connection);
+                }
+                else
+                {
+                    Debug.WriteLine($"Fail to route {connection.Id}");
+                    failedCount++;
+
+                    if (failedCount >= conns.Count)
+                    {
+                        ret = false;
+                        break;
+                    }
+
+                    if (processedStack.Count == 0)
+                    {
+                        ret = false;
+                        break;
+                    }
+
+                    var conn2 = processedStack.Pop();
+                    workspace.RewindRoute(conn2);
+                    unprocessedStack.Push(conn2);
+                    unprocessedStack.Push(connection);
+                }
             }
 
             workspace.WriteToBoard();
+            return ret;
         }
     }
 }

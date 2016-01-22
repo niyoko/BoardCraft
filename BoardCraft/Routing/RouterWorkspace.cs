@@ -1,12 +1,14 @@
 ﻿namespace BoardCraft.Routing
 {
-    using Drawing;
     using Models;
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
+    using System.Drawing.Imaging;
     using System.Linq;
     using NLog;
     using System.Runtime.CompilerServices;
+    using Point = Drawing.Point;
 
     public enum WorkspaceLayer
     {
@@ -97,6 +99,15 @@
             Vias = new Dictionary<Connection, ISet<IntPoint>>(conCount);
         }
 
+        internal void RewindRoute(Connection connection)
+        {
+            TraceObstacle.Remove(connection);
+            ViaObstacle.Remove(connection);
+            TracePoint.Remove(connection);
+            TraceSegments.Remove(connection);
+            Vias.Remove(connection);
+        }
+
         internal IntPoint PointToIntPoint(Point p)
         {
             var px = p.X/_cellSize;
@@ -151,6 +162,11 @@
             return new Point(px, py);
         }
 
+        public void ClearData()
+        {
+            Array.Clear(Data, 0, Data.Length);
+        }
+
         public void SetupWorkspaceForRouting(Connection connection)
         {
             Array.Clear(Data, 0, Data.Length);
@@ -167,9 +183,17 @@
                     var isSuspended = isInsideCurrentConection 
                         && ic.Layer == WorkspaceLayer.BottomLayer;
 
-                    SetMetadata(ic, isSuspended ? 
-                        CellMetadata.SuspendedObstacle 
-                        : CellMetadata.Obstacle);
+                    if (!isSuspended)
+                    {
+                        SetMetadata(ic, CellMetadata.Obstacle);
+                    }
+                    else
+                    {
+                        if (GetMetadata(ic) == CellMetadata.Freelane)
+                        {
+                            SetMetadata(ic, CellMetadata.SuspendedObstacle);
+                        }
+                    }
                 }
             }
 
@@ -216,5 +240,68 @@
         {
             Metadata[(int) index.Layer, index.Point.X, index.Point.Y] = value;
         }
+#if DEBUG
+        internal void Dump(Bitmap botIm)
+        {
+            for (var i = Height - 1; i >= 0; i--)
+            {
+                var xi = Height - 1 - i;
+                for (var j = 0; j < Width; j++)
+                {
+                    if (Metadata[0, j, i] == CellMetadata.Obstacle)
+                    {
+                        botIm.SetPixel(j, xi, Color.Black);
+                    }
+                    else if (Metadata[0, j, i] == CellMetadata.SuspendedObstacle)
+                    {
+                        botIm.SetPixel(j, xi, Color.Tomato);
+                    }
+                    else
+                    {
+                        if (Data[0, j, i] == 0)
+                        {
+                            botIm.SetPixel(j, xi, Color.White);
+                        }
+                        else if (Data[0, j, i] == 1)
+                        {
+                            botIm.SetPixel(j, xi, Color.LimeGreen);
+                        }
+                        else
+                        {
+                            botIm.SetPixel(j, xi, FromHsv(Data[0, j, i]/4.0, 1, 1));
+                        }
+                    }
+                }
+            }
+        }
+
+        Color FromHsv(double hue, double saturation, double value)
+        {
+            var hi = Convert.ToInt32(Math.Floor(hue / 60)) % 6;
+            var f = hue / 60 - Math.Floor(hue / 60);
+
+            value = value * 255;
+            var v = Convert.ToInt32(value);
+            var p = Convert.ToInt32(value * (1 - saturation));
+            var q = Convert.ToInt32(value * (1 - f * saturation));
+            var t = Convert.ToInt32(value * (1 - (1 - f) * saturation));
+
+            switch (hi)
+            {
+                case 0:
+                    return Color.FromArgb(255, v, t, p);
+                case 1:
+                    return Color.FromArgb(255, q, v, p);
+                case 2:
+                    return Color.FromArgb(255, p, v, t);
+                case 3:
+                    return Color.FromArgb(255, p, q, v);
+                case 4:
+                    return Color.FromArgb(255, t, p, v);
+                default:
+                    return Color.FromArgb(255, v, p, q);
+            }
+        }
+#endif
     }
 }

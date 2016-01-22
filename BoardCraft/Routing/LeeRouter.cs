@@ -6,6 +6,7 @@ namespace BoardCraft.Routing
     using System;
     using System.Collections.ObjectModel;
     using System.Diagnostics;
+    using System.Drawing;
 
     internal class LeeRouter
     {
@@ -64,6 +65,33 @@ namespace BoardCraft.Routing
             var end = ExpandWave();
             if (end == null)
             {
+#if DEBUG
+                var botIm = new Bitmap(_workspace.Width, _workspace.Height);
+
+                _workspace.Dump(botIm);
+
+                foreach (var t in _targets)
+                {
+                    var d = $"{t.Layer},{t.Point.X},{t.Point.Y} ";
+                    d += $"Top : {_workspace[new LPoint(WorkspaceLayer.TopLayer, t.Point)]} ";
+                    d += $"Bot : {_workspace[t]} ";
+                    d += $"MetaTop : {_workspace.GetMetadata(new LPoint(WorkspaceLayer.TopLayer, t.Point))} ";
+                    d += $"MetaBot : {_workspace.GetMetadata(t)}";
+                    Debug.WriteLine(d);
+
+                    var ti = new IntPoint(t.Point.X, _workspace.Height -1 - t.Point.Y);
+                    var b = RoutingHelper.GetPointsInCircle(ti, 3);
+                    foreach (var v in b)
+                    {
+                        botIm.SetPixel(v.X, v.Y, Color.Gainsboro);
+                    }
+                }
+
+                var di = DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss");
+                var ui = Guid.NewGuid().ToString("N").Substring(0, 5);
+
+                botIm.Save($@"D:\{di}-{ui}.png");
+#endif
                 return false;
             }
 
@@ -99,6 +127,7 @@ namespace BoardCraft.Routing
 
         private void Init()
         {
+            _workspace.ClearData();
             foreach (var s in _starts)
             {
                 _workspace[s] = 1;
