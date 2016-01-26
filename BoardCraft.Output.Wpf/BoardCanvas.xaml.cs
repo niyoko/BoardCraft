@@ -76,7 +76,6 @@ namespace BoardCraft.Output.Wpf
 
         static void Cb(DependencyObject o, DependencyPropertyChangedEventArgs args)
         {
-            Debug.WriteLine($"Property changed {args.Property.Name}");
             var that = (BoardCanvas)o;
 
             that.Canvas.Component = that.Component;

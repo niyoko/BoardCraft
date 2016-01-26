@@ -21,6 +21,7 @@
             <BitmapImage x:Key="StopIcon" UriSource="pack://application:,,,/Resources/control_stop_16.png"></BitmapImage>
             <BitmapImage x:Key="RouteIcon" UriSource="pack://application:,,,/Resources/chart_line_16.png"></BitmapImage>
             <BitmapImage x:Key="SaveIcon" UriSource="pack://application:,,,/Resources/picture_save_16.png"></BitmapImage>
+            <BitmapImage x:Key="StepIcon" UriSource="pack://application:,,,/Resources/control_end_blue_16.png"></BitmapImage>
         </ResourceDictionary>
     </UserControl.Resources>
     <i:Interaction.Triggers>
@@ -33,6 +34,12 @@
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{StaticResource PlayIcon}"></Image>
                         <TextBlock Margin="5 0 0 0">Start GA</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Padding="10 5 10 5" Command="{Binding GANext}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{StaticResource StepIcon}"></Image>
+                        <TextBlock Margin="5 0 0 0">Next Generation</TextBlock>
                     </StackPanel>
                 </Button>
                 <Button Padding="10 5 10 5" Command="{Binding StopGACommand}">

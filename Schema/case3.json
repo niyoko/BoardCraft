@@ -1,0 +1,518 @@
+{
+  "components": [
+      {
+            "id":"R1",
+            "value":"10K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R2",
+            "value":"470K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R3",
+            "value":"6K8",
+            "package":"RES40"            
+      },
+      {
+            "id":"R4",
+            "value":"470K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R5",
+            "value":"1M",
+            "package":"RES40"            
+      },
+      {
+            "id":"R6",
+            "value":"220K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R7",
+            "value":"220K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R8",
+            "value":"1M",
+            "package":"RES40"            
+      },
+      {
+            "id":"R9",
+            "value":"1M",
+            "package":"RES40"            
+      },
+      {
+            "id":"R10",
+            "value":"15K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R11",
+            "value":"15K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R12",
+            "value":"22K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R13",
+            "value":"22K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R14",
+            "value":"15K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R15",
+            "value":"68K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R16",
+            "value":"15K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R17",
+            "value":"1K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R18",
+            "value":"1M",
+            "package":"RES40"            
+      },
+      {
+            "id":"R19",
+            "value":"3M3",
+            "package":"RES40"            
+      },
+      {
+            "id":"R20",
+            "value":"1M",
+            "package":"RES40"            
+      },
+      {
+            "id":"R21",
+            "value":"1M",
+            "package":"RES40"            
+      },
+      {
+            "id":"R22",
+            "value":"3M3",
+            "package":"RES40"            
+      },
+      {
+            "id":"R23",
+            "value":"500K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R24",
+            "value":"150K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R25",
+            "value":"150K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R26",
+            "value":"470K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R27",
+            "value":"10K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R28",
+            "value":"150K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R29",
+            "value":"150K",
+            "package":"RES40"            
+      },
+      {
+            "id":"R30",
+            "value":"150K",
+            "package":"RES40"            
+      },
+      {
+            "id":"C1",
+            "value":"10N",
+            "package":"CAP10"
+      },
+    {
+        "id":"C2",
+        "value":"50N",
+        "package":"CAP10"
+    },
+    {
+        "id":"C3",
+        "value":"10N",
+        "package":"CAP10"
+    },
+    {
+        "id":"C4",
+        "value":"50N",
+        "package":"CAP10"
+    },
+    {
+        "id":"C5",
+        "value":"250P",
+        "package":"CAP10"
+    },
+    {
+        "id":"C6",
+        "value":"1U",
+        "package":"ELEC-RAD10"
+    },
+    {
+        "id":"C7",
+        "value":"50N",
+        "package":"CAP10"
+    },
+    {
+        "id":"C8",
+        "value":"50N",
+        "package":"CAP10"
+    },
+    {
+        "id":"C9",
+        "value":"10N",
+        "package":"CAP10"
+    },
+    {
+        "id":"C10",
+        "value":"10U",
+        "package":"ELEC-RAD10"
+    },
+    {
+        "id":"C11",
+        "value":"15U",
+        "package":"ELEC-RAD10"
+    },
+    {
+        "id":"D1",
+        "value":"1N4001",
+        "package":"DO41"
+    },
+    {
+        "id":"D2",
+        "value":"Z4.7V",
+        "package":"DO41"
+    },
+    {
+        "id":"T1",
+        "value":"2N5292",
+        "package":"TO92"
+    },
+    {
+        "id":"T2",
+        "value":"2N5292",
+        "package":"TO92"
+    },
+    {
+        "id":"IC1",
+        "value":"TL062",
+        "package":"DIL08"
+    },
+    {
+        "id":"IC2",
+        "value":"TL062",
+        "package":"DIL08"
+    },
+    {
+        "id":"IC3",
+        "value":"TL062",
+        "package":"DIL08"
+    },
+    {
+        "id":"POT1",
+        "value":"",
+        "package":"CON-SIL3"        
+    },
+    {
+        "id":"CONN1",
+        "value":"",
+        "package":"TBLOCK-2"        
+    },
+    {
+        "id":"CONN2",
+        "value":"",
+        "package":"CON-SIL2"        
+    },
+    {
+        "id":"CONN3",
+        "value":"",
+        "package":"CON-SIL2"        
+    }
+  ],
+  "connections": [
+       {
+            "id":"VCC",
+            "pins":[
+                {"component":"CONN1", "pin":"P1"},
+                { "component":"R27", "pin":"P1"  },
+                { "component":"IC1", "pin":"P8"  },
+                { "component":"IC2", "pin":"P8"  },
+                { "component":"IC3", "pin":"P8"  }                
+            ]
+        },
+        {
+            "id":"GND",
+            "pins":[
+                {"component":"CONN1", "pin":"P2"},
+                {"component":"CONN2", "pin":"P2"},
+                {"component":"CONN3", "pin":"P2"},
+                { "component":"D1", "pin":"A"  },
+                { "component":"D2", "pin":"A"  },   
+                { "component":"C11", "pin":"P-"  },
+                { "component":"POT1", "pin":"P3"  },
+                { "component":"C10", "pin":"P-"  },
+                { "component":"C4", "pin":"P2"  },
+                { "component":"R18", "pin":"P2"  },
+                { "component":"R7", "pin":"P2"  }
+            ]
+        },
+         {
+            "id":"CON15",
+            "pins":[
+                {"component":"R27", "pin":"P2"},
+                {"component":"D1", "pin":"K"},
+                {"component":"D2", "pin":"K"},
+                {"component":"C11", "pin":"P+"},
+                {"component":"POT1", "pin":"P1"},
+                {"component":"R2", "pin":"P2"},
+                {"component":"R9", "pin":"P2"},
+                {"component":"R12", "pin":"P2"},
+                {"component":"T1", "pin":"P3"},
+                {"component":"R13", "pin":"P2"},
+                {"component":"T2", "pin":"P3"},
+                {"component":"C8", "pin":"P1"},
+                {"component":"C7", "pin":"P1"},
+                {"component":"IC3", "pin":"P3"},
+                {"component":"R25", "pin":"P2"},
+                {"component":"R29", "pin":"P1"}                   
+            ]
+       },
+       {
+            "id":"CON1",
+            "pins":[{"component":"CONN2", "pin":"P1"},
+            {"component":"R1", "pin":"P2"}]
+       },
+       {
+            "id":"CON2",
+            "pins":[{"component":"R1", "pin":"P1"},
+            {"component":"C1", "pin":"P1"}]
+       },
+       {
+            "id":"CON3",
+            "pins":[{"component":"C1", "pin":"P2"},
+            {"component":"R2", "pin":"P1"},
+            {"component":"IC1", "pin":"P3"}]
+       },
+       {
+            "id":"CON4",
+            "pins":[{"component":"IC1", "pin":"P2"},
+            {"component":"IC1", "pin":"P1"},
+            {"component":"R3", "pin":"P2"}]
+       },
+       {
+            "id":"CON5",
+            "pins":[
+                {"component":"R3", "pin":"P1"},
+                {"component":"C2", "pin":"P1"}
+            ]
+       },
+       {
+            "id":"CON6",
+            "pins":[
+                {"component":"C2", "pin":"P2"},
+                {"component":"R6", "pin":"P1"},
+                {"component":"R4", "pin":"P1"}
+            ]
+       },
+       {
+            "id":"CON7",
+            "pins":[
+                {"component":"R4", "pin":"P2"},
+                {"component":"C4", "pin":"P1"},
+                {"component":"C3", "pin":"P1"}
+            ]
+       },
+       {
+            "id":"CON14",
+            "pins":[
+                {"component":"R17", "pin":"P2"},
+                {"component":"R18", "pin":"P1"},
+                {"component":"CONN3", "pin":"P1"}
+            ]
+       },
+       {
+            "id":"CON9",
+            "pins":[
+                {"component":"IC2", "pin":"P2"},
+                {"component":"IC2", "pin":"P1"},
+                {"component":"R10", "pin":"P1"}
+            ]
+       },
+       {
+            "id":"CON10",
+            "pins":[
+                {"component":"R10", "pin":"P2"},
+                {"component":"R12", "pin":"P1"},
+                {"component":"T1", "pin":"P1"},
+                {"component":"R14", "pin":"P1"}
+            ]
+       },
+       {
+            "id":"CON11",
+            "pins":[
+                {"component":"R14", "pin":"P2"},
+                {"component":"R16", "pin":"P2"},
+                {"component":"R15", "pin":"P1"},
+                {"component":"IC3", "pin":"P2"}
+            ]
+       },
+       {
+            "id":"CON12",
+            "pins":[
+                {"component":"R15", "pin":"P2"},
+                {"component":"C6", "pin":"P+"}
+            ]
+       },
+       
+       {
+            "id":"CON16",
+            "pins":[
+                {"component":"R11", "pin":"P2"},
+                {"component":"R16", "pin":"P1"},
+                {"component":"R13", "pin":"P1"},
+                {"component":"T2", "pin":"P1"}
+            ]
+       },
+       {
+            "id":"CON17",
+            "pins":[
+                {"component":"R11", "pin":"P1"},
+                {"component":"IC2", "pin":"P6"},
+                {"component":"IC2", "pin":"P7"}
+            ]
+       },
+      
+       {
+            "id":"CON19",
+            "pins":[
+                {"component":"R8", "pin":"P1"},
+                {"component":"R9", "pin":"P1"},
+                {"component":"R5", "pin":"P2"}
+            ]
+       },
+       {
+            "id":"CON20",
+            "pins":[
+                {"component":"R6", "pin":"P2"},
+                {"component":"R7", "pin":"P1"},
+                {"component":"C5", "pin":"P1"}
+            ]
+       },
+       {
+            "id":"CON21",
+            "pins":[
+                {"component":"POT1", "pin":"P2"},
+                {"component":"R20", "pin":"P2"},
+                {"component":"R21", "pin":"P2"}
+            ]
+       },
+       {
+            "id":"CON22",
+            "pins":[
+                {"component":"R26", "pin":"P1"},
+                {"component":"C9", "pin":"P1"},
+                {"component":"R23", "pin":"P1"}
+            ]
+       },
+       {
+            "id":"CON23",
+            "pins":[
+                {"component":"R26", "pin":"P2"},
+                {"component":"R25", "pin":"P1"}
+            ]
+       },
+        {
+            "id":"CON18",
+            "pins":[
+                {"component":"C5", "pin":"P2"},
+                {"component":"R8", "pin":"P2"}
+            ]
+       },
+       {
+            "id":"CON24",
+            "pins":[
+                {"component":"C9", "pin":"P2"},
+                {"component":"R24", "pin":"P1"}
+            ]
+       },
+       {
+            "id":"CON25",
+            "pins":[
+                {"component":"R23", "pin":"P2"},
+                {"component":"R24", "pin":"P2"},
+                {"component":"R22", "pin":"P2"},
+                {"component":"C10", "pin":"P+"},
+                {"component":"R28", "pin":"P1"}
+            ]
+       },
+       {
+            "id":"CON26",
+            "pins":[
+                {"component":"R28", "pin":"P2"},
+                {"component":"R30", "pin":"P1"}
+            ]
+       },
+       {
+            "id":"CON27",
+            "pins":[
+                {"component":"R29", "pin":"P2"},
+                {"component":"IC3", "pin":"P5"}
+            ]
+       },
+       {
+            "id":"CON28",
+            "pins":[
+                {"component":"R30", "pin":"P2"},
+                {"component":"R19", "pin":"P2"}
+            ]
+       },
+       {
+            "id":"CON29",
+            "pins":[
+                {"component":"R20", "pin":"P1"},
+                {"component":"R19", "pin":"P1"},
+                {"component":"C7", "pin":"P2"}
+            ]
+       },
+       {
+            "id":"CON30",
+            "pins":[
+                {"component":"R22", "pin":"P1"},
+                {"component":"R21", "pin":"P1"},
+                {"component":"C8", "pin":"P2"}
+            ]
+       }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "transistors",
+  "packages": [
+    {
+      "name": "TO92",
+      "boundaries": [150, 150, -150, -150],
+      "footprint":[
+          {
+                "type":"arcsegment",
+                "center":[0,0],
+                "xRadius":125,
+                "yRadius":125,
+                "startAngle":-36.87,
+                "endAngle": 216.87         
+      }, {
+          "type":"line",
+          "p1":[-100,-75],
+          "p2":[100,-75]
+      }],
+      "pins":[{"name":"P1","position":[-80,0]},
+      {"name":"P2","position":[0,0]},
+      {"name":"P3","position":[80,0]}]
+    }
+  ]
+}

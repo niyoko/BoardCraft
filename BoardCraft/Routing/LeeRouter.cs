@@ -348,13 +348,7 @@ namespace BoardCraft.Routing
                 {
                     throw new Exception("Backtrace stuck. Something wrong");
                 }
-#if DEBUG
-                var sel = cval - mVal;
-                if (sel != 10 && sel != 14 && sel != 50)
-                {
-                    Debug.WriteLine("Unnatural trace found - " + sel);
-                }
-#endif                
+                    
                 _internalTracePoint.Add(mn);
                 c = mn;
             }

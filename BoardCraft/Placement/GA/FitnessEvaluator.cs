@@ -1,13 +1,15 @@
 ﻿namespace BoardCraft.Placement.GA
 {
     using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
-    using MathNet.Numerics.Statistics;
+    using Drawing;
     using Models;
 
     public class FitnessEvaluator : IFitnessEvaluator
     {
-        private double GetOverlappedArea(Bounds[] bounds)
+        private static double GetOverlappedArea(Bounds[] bounds)
         {
             var count = bounds.Length;
             var d = bounds;
@@ -39,43 +41,15 @@
             var cnt = bounds.Length;
             return cnt == 0 ? 0 : sum / cnt;
         }
-
-        public double GetDistributionFactor(Bounds[] bounds)
-        {
-            var w = bounds.Select(x => x.Right).Max();
-            var h = bounds.Select(x => x.Top).Max();
-
-            var hx = w / 2;
-            var hy = h / 2;
-
-            var bnds = new[]
-            {
-                new Bounds(hy, hx, 0, 0),
-                new Bounds(hy, w,0,hx),
-                new Bounds(h,hx,hy,0),
-                new Bounds(h,w,hx,hy),    
-            };
-            var area = new double[4];
-            foreach (var b in bounds)
-            {
-                for (var i = 0; i < bnds.Length; i++)
-                {
-                    var ov = GetOverlap(b, bnds[i]);
-                    area[i] += ov;
-                }
-            }
-
-            return area.StandardDeviation();
-        }
-
+        
         public double EvaluateFitness(Board board)
         {
             board.CalculateBounds();
             var dist = board.CalculatePinDistances();
-            var dd = dist.Values.Count == 0 ? 0 : 100*dist.Values.Select(x => x.Max).Average();
+            var dd = dist.Values.Count == 0 ? 0 : 100*dist.Values.Select(x => x.Average).Average();
 
             var b = new Bounds[board.Schema.Components.Count];
-            int i = 0;
+            var i = 0;
             foreach (var component in board.Schema.Components)
             {
                 var bx = board.GetBounds(component);
@@ -87,6 +61,23 @@
 
             var d = 10*AverageDistance(b);
 
+            /*
+            var yy = board.Schema.Components.SelectMany(x => x.Pins).ToList();
+            var z = new List<Point>(yy.Count);
+            z.AddRange(yy.Select(board.GetPinLocation));
+
+            //x axis
+            var cx = new HashSet<int>();
+            var cy = new HashSet<int>();
+
+            for (var p = 0; p < z.Count; p++)
+            {
+                cx.Add((int)(z[p].X/10.0));
+                cy.Add((int)(z[p].Y/10.0));
+            }
+
+            Debug.WriteLine(cx.Count);
+            var c = (2 * z.Count) / (cx.Count + cy.Count);*/
             return (1 / (sqEqOl + 1)) + (1 / (d + 1)) + (1/(dd+1));
         }
 
@@ -109,10 +100,10 @@
 
         private static double GetOverlap(Bounds b1, Bounds b2)
         {
-            var rig = b1.Right < b2.Right ? b1.Right : b2.Right;
-            var lef = b1.Left > b2.Left ? b1.Left : b2.Left;
-            var top = b1.Top < b2.Top ? b1.Top : b2.Top;
-            var bot = b1.Bottom > b2.Bottom ? b1.Bottom : b2.Bottom;
+            var rig = (b1.Right+20) < (b2.Right+20) ? (b1.Right+20) : (b2.Right+20);
+            var lef = (b1.Left-20) > (b2.Left-20) ? (b1.Left-20) : (b2.Left-20);
+            var top = (b1.Top+20) < (b2.Top+20) ? (b1.Top+20) : (b2.Top+20);
+            var bot = (b1.Bottom-20) > (b2.Bottom-20) ? (b1.Bottom-20) : (b2.Bottom-20);
 
             if (lef >= rig || bot >= top)
                 return 0.0;

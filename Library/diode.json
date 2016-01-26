@@ -39,6 +39,45 @@
           "style":"C-150-50"
         }
       ]
+    },
+    {
+      "name": "DO41",
+      "boundaries": [ 75, 275, -75, -275 ],
+      "footprint": [
+        {
+          "type": "rectangle",
+          "position": [ -100, -50 ],
+          "width": 200,
+          "height": 100
+        },
+        {
+          "type": "line",
+          "p1": [ -100, 0 ],
+          "p2": [ -130, 0 ]
+        },
+        {
+          "type": "line",
+          "p1": [ 100, 0 ],
+          "p2": [ 130, 0 ]
+        },
+        {
+          "type": "line",
+          "p1": [ -70, 50 ],
+          "p2": [ -70, -50 ]
+        }
+      ],
+      "pins": [
+        {
+          "name": "K",
+          "position": [ -200, 0 ],
+          "style":"C-90-40"
+        },
+        {
+          "name": "A",
+          "position": [ 200, 0 ],
+          "style":"C-90-40"
+        }
+      ]
     }
   ]
 }

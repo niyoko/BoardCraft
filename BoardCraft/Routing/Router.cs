@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using System.Text;
     using Models;
     using Drawing.PinStyles;
 
@@ -195,14 +194,15 @@
             var distances = board.CalculatePinDistances();
 
             var conns = distances
-                .OrderBy(x => x.Key.Pins.Count)
-                .ThenBy(x => x.Value.Max)
+                .OrderBy(x=>x.Value.Count/4)
+                .ThenByDescending(x => x.Value.Max)
                 .Select(x => x.Key)
                 .ToList();
-
-            var failedCount = 0;
+            
             var reorderCount = 0;
 
+
+            var failCounter = conns.ToDictionary(c => c, c => 0);
             var problematic = new Stack<Connection>();
             var unprocessedStack = new Stack<Connection>(conns);
             var processedStack = new Stack<Connection>(distances.Count);
@@ -220,19 +220,21 @@
 
                 if (result)
                 {
+                    //failedCount = 0;
+                    Debug.WriteLine($"Success to route {connection.Id}");
                     processedStack.Push(connection);
                 }
                 else
                 {
-                    Debug.WriteLine($"Fail to route {connection.Id}");
+                    
                     if(!problematic.Contains(connection))
                         problematic.Push(connection);
 
-                    failedCount++;
-                    if (failedCount >= conns.Count)
+                    failCounter[connection]++;
+                    if (failCounter[connection] >= 10)
                     {
                         reorderCount++;
-                        if (reorderCount > 10)
+                        if (reorderCount > 5)
                         {
                             Debug.WriteLine("Exceed reorder limit. Reporting failure");
                             ret = false;
@@ -272,8 +274,12 @@
                         var s2 = string.Join(",", l2);
                         Debug.WriteLine("Order: " + s2);
 #endif
+                        var k = failCounter.Keys.ToList();                        
+                        foreach (var key in k)
+                        {
+                            failCounter[key] = 0;
+                        }
 
-                        failedCount = 0;
                         continue;
                     }
 
@@ -284,6 +290,7 @@
                     }
 
                     var conn2 = processedStack.Pop();
+                    Debug.WriteLine($"Fail to route {connection.Id}. Rewinding {conn2.Id}");
                     workspace.RewindRoute(conn2);
                     unprocessedStack.Push(conn2);
                     unprocessedStack.Push(connection);

@@ -44,6 +44,7 @@
             RunGACommand = new GenericCommand(StartGA, () => _state == State.Initial || _state == State.GAPaused);
             StopGACommand = new GenericCommand(StopGA, () => _state == State.GARunning && _stopRequested == null);
             BeginRouteCommand = new GenericCommand(BeginRouting, () => _state == State.GAPaused);
+            GANext = new GenericCommand(GANext2, () => _state == State.Initial || _state == State.GAPaused);
 
             Placer = ConstructGAPlacer();
 
@@ -67,6 +68,30 @@
             _timer.Tick += PeriodicalUpdate;
             _timer.Start();
 
+        }
+
+        async void GANext2()
+        {
+            _state = State.GARunning;
+            UpdateButtonState();
+            await Task.Run(() =>
+            {
+                lock (_gaStopwatch)
+                {
+                    _gaStopwatch.Start();
+                }
+
+                Placer.NextGeneration();
+                _currentPopulation = Placer.CurrentPopulation;
+
+                lock (_gaStopwatch)
+                {
+                    _gaStopwatch.Stop();
+                }
+            });
+            _state = State.GAPaused;
+            UpdateButtonState();
+            UpdatePopulation(true);
         }
 
         public Schematic Schematic { get; }
@@ -109,6 +134,7 @@
         public GenericCommand WindowClosedCommand { get; }
         public GenericCommand StopGACommand { get; }
         public GenericCommand BeginRouteCommand { get; }
+        public GenericCommand GANext { get; }
 
         public async void BeginRouting()
         {
@@ -119,11 +145,12 @@
             {
                 _routingStopwatch.Start();
             }
+            var r = false;
             await Task.Run(() =>
             {
                 var p = _currentPopulation.BestPlacement;
                 var t = new Router(20, 10, 3);
-                t.Route(p);
+                r = t.Route(p);
             });
             lock (_routingStopwatch)
             {
@@ -133,7 +160,7 @@
             _state = State.RoutingFinished;
             UpdateButtonState();
             UpdatePopulation(true);
-            MessageBox.Show("Routing selesai");
+            MessageBox.Show(r ? "Routing success" : "Routing failed");
         }
 
         public async void StartGA()
@@ -187,6 +214,7 @@
             RunGACommand.RaiseCanExecuteChanged();            
             StopGACommand.RaiseCanExecuteChanged();
             BeginRouteCommand.RaiseCanExecuteChanged();
+            GANext.RaiseCanExecuteChanged();
         }
 
         private void PeriodicalUpdate(object sender, EventArgs args)

@@ -46,6 +46,34 @@
               "style":"S-80-40"
             }
           ]
+      },
+      {
+          "name":"CON-SIL3",
+          "boundaries":[75, 175, -75, -175],
+          "footprint":[
+              {
+                "type":"rectangle",
+                "position":[ -150, -50 ],
+                "width":300,
+                "height":100
+              }],
+          "pins":[
+            {
+              "name":"P1",
+              "position":[ -100, 0 ],
+              "style":"S-80-40"
+            },
+            {
+              "name":"P2",
+              "position":[ 0, 0 ],
+              "style":"S-80-40"
+            },
+            {
+              "name":"P3",
+              "position":[ 100, 0 ],
+              "style":"S-80-40"
+            }
+          ]
       }
     ]
 }
