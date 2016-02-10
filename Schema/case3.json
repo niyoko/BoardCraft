@@ -228,37 +228,44 @@
     {
         "id":"IC1",
         "value":"TL062",
-        "package":"DIL08"
+        "package":"DIL08",
+        "high-power":true
     },
     {
         "id":"IC2",
         "value":"TL062",
-        "package":"DIL08"
+        "package":"DIL08",
+        "high-power":true
     },
     {
         "id":"IC3",
         "value":"TL062",
-        "package":"DIL08"
+        "package":"DIL08",
+        "high-power":true
     },
     {
         "id":"POT1",
         "value":"",
-        "package":"CON-SIL3"        
+        "package":"CON-SIL3",
+        "high-power":true
     },
     {
         "id":"CONN1",
         "value":"",
-        "package":"TBLOCK-2"        
+        "package":"TBLOCK-2"   ,
+        "high-power":true     
     },
     {
         "id":"CONN2",
         "value":"",
-        "package":"CON-SIL2"        
+        "package":"CON-SIL2"    ,
+        "high-power":true    
     },
     {
         "id":"CONN3",
         "value":"",
-        "package":"CON-SIL2"        
+        "package":"CON-SIL2" ,
+        "high-power":true       
     }
   ],
   "connections": [

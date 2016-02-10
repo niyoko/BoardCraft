@@ -29,11 +29,12 @@ namespace BoardCraft.Input.Parsers.Schematic
 
             var id = o.GetValue<string>("id");
             var pack = o.GetValue<string>("package");
+            var jhp = o.GetValue("high-power");
+            var hp = jhp?.Value<bool>() ?? false;
 
             var pack2 = _repository.GetPackage(pack);
 
-            schematic.AddComponent(id, pack2);
-            
+            schematic.AddComponent(id, pack2, hp);            
         }
     }
 }

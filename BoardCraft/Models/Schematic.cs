@@ -19,9 +19,9 @@
         public ICollection<Component> Components => ComponentDictionary.Values;
         public ICollection<Connection> Connections => _connections.Values; 
 
-        public Component AddComponent(string id, Package package)
+        public Component AddComponent(string id, Package package, bool highPower)
         {
-            var comp = new Component(id, package);
+            var comp = new Component(id, package, highPower);
             ComponentDictionary.Add(id, comp);            
             return comp;
         }

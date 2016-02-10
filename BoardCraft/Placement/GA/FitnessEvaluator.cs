@@ -60,25 +60,38 @@
             var sqEqOl = Math.Sqrt(f1);
 
             var d = 10*AverageDistance(b);
+            
+            return (1 / (sqEqOl + 1)) + (1 / (d + 1)) + (1/(dd+1)) + (1/(5*GetHighPowerAverageDistance(board)+1));
+        }
 
-            /*
-            var yy = board.Schema.Components.SelectMany(x => x.Pins).ToList();
-            var z = new List<Point>(yy.Count);
-            z.AddRange(yy.Select(board.GetPinLocation));
+        private static double GetHighPowerAverageDistance(Board b)
+        {
+            var s = b.GetSize();
+            var hp = b.Schema.Components.Where(x => x.IsHighPower).ToList();
+            var hpc = hp.Count;
+            if (hpc == 0)
+                return 0;
 
-            //x axis
-            var cx = new HashSet<int>();
-            var cy = new HashSet<int>();
-
-            for (var p = 0; p < z.Count; p++)
+            var sum = 0.0;
+            foreach (var c in hp)
             {
-                cx.Add((int)(z[p].X/10.0));
-                cy.Add((int)(z[p].Y/10.0));
+                var p = b.GetComponentPlacement(c).Position;
+                var le = p.X;
+                var bo = p.Y;
+                var to = s.Height - p.Y;
+                var ri = s.Width - p.X;
+
+                var d = le;
+                d = bo < d ? bo : d;
+                d = to < d ? to : d;
+                d = ri < d ? ri : d;
+                if (d < 0)
+                    d = 0;
+                sum += d;
             }
 
-            Debug.WriteLine(cx.Count);
-            var c = (2 * z.Count) / (cx.Count + cy.Count);*/
-            return (1 / (sqEqOl + 1)) + (1 / (d + 1)) + (1/(dd+1));
+            return sum/hpc;
+
         }
 
         private static double GetOutOfRangeArea(Bounds b)

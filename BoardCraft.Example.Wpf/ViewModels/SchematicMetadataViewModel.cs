@@ -280,11 +280,11 @@
             IPopulationGenerator initPlacer = new RandomPopulationGenerator();
             IFitnessEvaluator fitnessEvaluator = new FitnessEvaluator();
             ISelectionOperator selectionOp = new TournamentSelectionOperator(8, 0.5);
-            const double crossoverRate = 1.0;
+            const double crossoverRate = 1;
             var crossedMin = (int)(0.4 * Schematic.Components.Count);
             var crossedMax = (int)(0.6 * Schematic.Components.Count);
             var crossoverOp = new CrossoverOperator(crossedMin, crossedMax);
-            const double mutationRate = 0.1;
+            const double mutationRate = 0.4;
             IMutationOperator mutationOp = new MutationOperator();
 
             IReproductionOperator reproOp = new ReproductionOperator(
