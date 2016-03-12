@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.Linq;
     using Drawing;
@@ -28,25 +29,27 @@
             return sum;
         }       
 
-        public static double AverageDistance(Bounds[] bounds)
+        public static double AverageDistance(Bounds[] bounds, Point anchor)
         {
-            var sumC =
-                from c
-                    in bounds
-                let xp = c.Right*c.Right
-                let yp = c.Top*c.Top
-                select Math.Sqrt(xp + yp);
+            if (bounds.Length == 0)
+            {
+                return 0;
+            }
 
-            var sum = sumC.Sum();
-            var cnt = bounds.Length;
-            return cnt == 0 ? 0 : sum / cnt;
+            var b1 = bounds
+                .Select(x => new Point((x.Left + x.Right)/2, (x.Bottom + x.Top)/2))
+                .Select(x => new {Dx = x.X - anchor.X, Dy = x.Y - anchor.Y})
+                .Select(x => Math.Sqrt(x.Dx*x.Dx + x.Dy*x.Dy))
+                .Average();
+
+            return b1;
         }
         
         public double EvaluateFitness(Board board)
         {
             board.CalculateBounds();
-            var dist = board.CalculatePinDistances();
-            var dd = dist.Values.Count == 0 ? 0 : 100*dist.Values.Select(x => x.Average).Average();
+            //var dist = board.CalculatePinDistances();
+            //var dd = dist.Values.Count == 0 ? 0 : 100*dist.Values.Select(x => x.Average).Average();
 
             var b = new Bounds[board.Schema.Components.Count];
             var i = 0;
@@ -59,9 +62,22 @@
             var f1 = GetOverlappedArea(b);
             var sqEqOl = Math.Sqrt(f1);
 
-            var d = 10*AverageDistance(b);
-            
-            return (1 / (sqEqOl + 1)) + (1 / (d + 1)) + (1/(dd+1)) + (1/(5*GetHighPowerAverageDistance(board)+1));
+            var s = board.GetSize();
+            var d0 = 50*AverageDistance(b, Point.Origin);
+            var d1 = 100*AverageDistance(b, new Point(s.Width, s.Height));
+            var d2 = 100*AverageDistance(b, new Point(s.Width, 0));
+            var d3 = 100*AverageDistance(b, new Point(0, s.Height));
+            var d4 = 1*Math.Sqrt(s.Width*s.Height);
+
+            return
+                  1/(sqEqOl + 1) 
+                + 1/(d0+1) 
+                + 1/(d1+1) 
+                + 1/(d3+1) 
+                + 1/(d2+1) 
+                + 1/(d4+1)
+                + 1/(500*GetHighPowerAverageDistance(board)+100)
+                ;
         }
 
         private static double GetHighPowerAverageDistance(Board b)
